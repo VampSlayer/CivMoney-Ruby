@@ -2,6 +2,10 @@ module Sinatra
   module CivMoneyRoutes
     def self.registered(app)
 
+      app.get '/' do
+        redirect '/CivMoneyHome', 303
+      end
+
       app.get '/login' do
         send_file 'CivMoney/login.html'
       end
