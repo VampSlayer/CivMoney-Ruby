@@ -1,6 +1,7 @@
 development:
   adapter: postgresql
   database: development
-  username: <%= ENV['PG_USER'] %>
-  password: <%= ENV['PG_PASS'] %>
+  username: sayam
+  password: sayam
   host: localhost
+  pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>

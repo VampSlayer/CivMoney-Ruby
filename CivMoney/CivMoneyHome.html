@@ -4,38 +4,48 @@
     <title>CivMoney Home</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/bootstrap.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="assets/metisMenu.min.css" rel="stylesheet">
 
     <!-- Timeline CSS -->
-    <link href="dist/css/timeline.css" rel="stylesheet">
+    <link href="assets/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="assets/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="bower_components/morrisjs/morris.css" rel="stylesheet">
+    <link href="assets/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <link href="Content/Site.css" rel="stylesheet">
+    <link href="assets/Site.css" rel="stylesheet">
 
 </head>
 <body>
+    <script src="assets/jquery.min.js" type="text/javascript"></script>
+
     <!-- jQuery -->
-    <script src="Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/jquery.min.js" type="text/javascript"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/bootstrap.min.js" type="text/javascript"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="Scripts/metisMenu.js" type="text/javascript"></script>
+    <script src="assets/metisMenu.js" type="text/javascript"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="Scripts/sb-admin-2.js" type="text/javascript"></script>
+    <script src="assets/sb-admin-2.js" type="text/javascript"></script>
+
+    <script src="assets/bindingCM.js" type="text/javascript"></script>
+
+    <script src="assets/dates.js" type="text/javascript"></script>
+
+    <script src="assets/transactions.js" type="text/javascript"></script>
+
+    <script src="assets/user.js" type="text/javascript"></script>
 
 <div id="wrapper">
     <!-- Navigation -->
@@ -48,7 +58,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="CivMoneyHome.html">CivMoney</a>
+            <a class="navbar-brand" href="CivMoneyHome">CivMoney</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -60,14 +70,11 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <i style="margin-left:20px" class="fa fa-user fa-fw"></i><span id="userName"></span>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                      <a onclick="logout()" id="logout" class="btn-link"><i class="fa fa-sign-out fa-fw">Logout</i></a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -80,46 +87,43 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="Rate.html"><i class="fa fa-table fa-fw"></i> Rates</a>
+                        <a href="Rate"><i class="fa fa-table fa-fw"></i> Rates</a>
                     </li>
                     <li>
-                        <a href="Manage.html"><i class="fa fa-edit fa-fw"></i> Manage</a>
+                        <a href="Manage"><i class="fa fa-edit fa-fw"></i> Manage</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-sitemap fa-fw"></i> Time Views<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="Week.html">Week</a>
+                                <a href="Week">Week</a>
                             </li>
                             <li>
-                                <a href="Month.html">Month</a>
+                                <a href="Month">Month</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="API.html"><i class="fa fa-edit fa-fw"></i>API</a>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
             </div>
-            <!-- /.sidebar-collapse -->
-        </div>
-        <!-- /.navbar-static-side -->
-    </nav>
+            <!-- /.navbar-static-side -->
+        </nav>
 
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <br/>
                 <div style ="text-align: center" class="panel panel-default panel-heading">
-                    <p style="display: inline" id="Date"></p>
-                    <p style="display: inline" id="TodaysCash">&nbsp;:&nbsp;</p>
+                    <p style="display: inline" id="Date"></p><span>&nbsp;:&nbsp;</span>
+                    <p style="display: inline" id="TodaysCash"></p>
                     <p style="display: inline">&nbsp;CHF</p>
-                    <p style="display: inline">&nbsp;Week</p>
-                    <p style="display: inline" id="WeeksCash">&nbsp;:&nbsp;</p>
+                    <p style="display: inline">&nbsp;Week</p><span>&nbsp;:&nbsp;</span>
+                    <p style="display: inline" id="WeeksCash"></p>
                     <p style="display: inline">&nbsp;CHF</p>
-                    <p style="display: inline">&nbsp;Month</p>
-                    <p style="display: inline" id="MonthsCash">&nbsp;:&nbsp;</p>
+                    <p style="display: inline">&nbsp;Month</p><span>&nbsp;:&nbsp;</span>
+                    <p style="display: inline" id="MonthsCash"></p>
                     <p style="display: inline">&nbsp;CHF</p>
                 </div>
             </div>
@@ -170,8 +174,8 @@
                     <label  style="display: inline"><input type="checkbox" value="" id="Income">&nbsp;Income</label>
                     <label style="display: inline"><input type="checkbox" value="" id="Expense">&nbsp;Expense</label>
                     <br/>
-                    <button onclick="myFunction()" class="form-control danger" id="Add">Add</button>
                     <p id="Added"></p>
+                    <button onclick="addTransaction()" class="form-control danger" id="Add">Add</button>
                 </div>
             </div>
             <!-- /.col-lg-2-->
@@ -182,201 +186,31 @@
 </div>
 
 <script>
-   
+$(document).ready(function () {
 
+bindIt("#Date", getTodaysFullDateSlash());
+var yyyy = getTodaysYear();
+var mm = getTodaysMonth();
+var dd = getTodaysDate();
+var date = getTodaysFullDateDots();
 
-    function bindIt(tag, value) {
-        $(tag).append(value);
-    }
+var urlMonthlyTotal = '/transactions/monthTotal?[year]=' + yyyy + '&[month]=' + mm + '&[day]=' + dd;
+var urlWeeklyTotal =  '/transactions/weekTotal?[year]=' + yyyy + '&[month]=' + mm + '&[day]=' + dd;
+var urlDailyTotal = '/transactions/dateTotal?[date]=' + date;
 
-    function myFunction() {
-        var dateString = $("#Datum").val();
-        var amount = $("#Amount").val();
-        var description = $("#Description").val();
+getTotal(yyyy, mm, dd, urlMonthlyTotal, "#MonthsCash");
+getTotal(yyyy, mm, dd, urlWeeklyTotal, "#WeeksCash");
+getTotal(yyyy, mm, dd, urlDailyTotal, "#TodaysCash");
 
-        var year = dateString.substring(0, 4);
-        var month = dateString.substring(5, 7);
-        var day = dateString.substring(8, 10);
-	var uri = 'http://localhost:4567/transaction?transaction[amount]='; 
+var urlIncomeTable = '/transactions/incomes?[year]=' + yyyy + '&[month]=' + mm + '&[day]=' + dd;
+var urlExpenseTable = '/transactions/expenses?[year]=' + yyyy + '&[month]=' + mm + '&[day]=' + dd;
+var urlSummaryTable = '/transactions/dailyTotalMonth?[year]=' + yyyy + '&[month]=' + mm;
+getTable(yyyy, mm, dd, urlIncomeTable, "#IncomeTable", "amount");
+getTable(yyyy, mm, dd, urlExpenseTable, "#ExpensesTable", "amount");
+getTable(yyyy, mm, dd, urlSummaryTable, "#SummaryTable", "date+amount");
 
-        if (document.getElementById('Income').checked) {
-            $.ajax({
-                type: "POST",
-                url: uri + amount + '&transaction[description]=' + description + '&transaction[date]=' + year + '.' + month + '.' + day,
-                success: function() {
-                    bindIt("#Added", "Yes");
-                }
-            });
-            location.reload();
-        } else if (document.getElementById('Expense').checked) {
-            $.ajax({
-                type: "POST",
-                url: uri + -amount + '&transaction[description]=' + description + '&transaction[date]=' + year + '.' + month + '.' + day,
-                success: function() {
-                    bindIt("#Added", "Yes");
-                }
-            });
-            location.reload();
-        } else {
-            bindIt("#Added", "Income Or Expense?");
-        }
-    }
-
-    $(document).ready(function () {
-
-        function getTodaysDate() {
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
-
-            if (dd < 10) {
-                dd = '0' + dd
-            }
-
-            if (mm < 10) {
-                mm = '0' + mm
-            }
-
-            today = dd + '/' + mm + '/' + yyyy;
-            return today;
-        }
-
-        bindIt("#Date", getTodaysDate());
-
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
-        var yyyy = today.getFullYear();
-
-        var date = yyyy + "." + mm + "." + dd;
-
-        var month = "/Month?year=" + yyyy + "&month=" + mm;
-
-	var uri = '/transactions/'
-
-        $.ajax({
-            url: uri + 'monthTotal?[year]=' + yyyy + '&[month]=' + mm + '&[day]=' + dd,
-            type: "get",
-            dataType: "json",
-            data: {},
-            async: false,
-            success: function (data) {
-               bindIt("#MonthsCash", ( Math.round(data[0].total* 100) / 100 ));
-            }
-        });
-
-        $.ajax({
-            url: uri + 'weekTotal?[year]=' + yyyy + '&[month]=' + mm + '&[day]=' + dd,
-            type: "get",
-            dataType: "json",
-            data: {},
-            success: function (data) {
-                bindIt("#WeeksCash", ( Math.round(data[0].total* 100) / 100 ));
-            }
-        });
-
-        $.ajax({
-            url: uri + 'dateTotal?[date]=' + date,
-            type: "get",
-            dataType: "json",
-            data: {},
-            success: function (data) {
-                bindIt("#TodaysCash", ( Math.round(data[0].total* 100) / 100 ) );
-            }
-        });
-
-        $.ajax({
-            url: uri + 'incomes?[year]=' + yyyy + '&[month]=' + mm + '&[day]=' + dd,
-            type: "get",
-            dataType: "json",
-            data: {},
-            success: function (data) {
-                drawTable(data, "#IncomeTable", "amount");
-            }
-        });
-
-        $.ajax({
-            url: uri + 'expenses?[year]=' + yyyy + '&[month]=' + mm + '&[day]=' + dd,
-            type: "get",
-            dataType: "json",
-            data: {},
-            success: function (data) {
-                drawTable(data, "#ExpensesTable", "amount");
-            }
-        });
-
-        $.ajax({
-            url: uri + 'dailyTotalMonth?[year]=' + yyyy + '&[month]=' + mm,
-            type: "get",
-            dataType: "json",
-            data: {},
-            success: function (data) {
-                drawTable(data, "#SummaryTable", "date+amount");
-            }
-        });
-
-        function drawTable(data, table, rowNeeded) {
-            for (var i = 0; i < data.length; i++) {
-                drawRow(data[i], table, rowNeeded);
-            }
-        }
-
-        function drawRow(rowData, table, rowNeeded) {
-            var row = $("<tr />");
-            if (rowNeeded === "date+amount") {
-                $(table).append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-                row.append($("<td>" + rowData.date + "</td>") );
-                row.append(colorItTag( $("<td>" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>") , rowData.amount ));
-            }
-            else if (rowNeeded === "amount") {
-                $(table).append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-                row.append(colorItTag( $("<td>" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>") , rowData.amount ));
-            }
-            else if (rowNeeded === "Date") {
-                $(table).append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-                row.append($("<td>" + rowData.Date + "</td>"));
-            }
-            else {
-                $(table).append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-                row.append($("<td>" + rowData.Date + "</td>"));
-                row.append($("<td>" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>"));
-                row.append($("<td>" + rowData.Description + "</td>"));
-            }          
-        }
-
-        function colorItTag(tag, data) {
-            console.log(data);
-            var coloredTag;
-            if (data === 0) {
-                coloredTag = tag.css("color", '#ff8c00');
-            } else if (data > 0) {
-                coloredTag = tag.css("color", '#008000');
-            }
-            else if (data < 0) {
-                coloredTag = tag.css("color", '#ff0000');
-            } else {
-                coloredTag = tag.css("color", '#000000');
-            }
-            return coloredTag;
-        }
-
-        function bindIt(tag, data) {
-            $(tag).append(data);
-            var end = tag.length;
-            if (data === 0) {
-                document.getElementById(tag.substring(1,end)).style.color =  '#ff8c00';
-            } else if (data > 0) {
-                document.getElementById(tag.substring(1, end)).style.color = '#008000';
-            }
-            else if (data < 0) {
-                document.getElementById(tag.substring(1, end)).style.color = '#ff0000';
-            } else {
-                document.getElementById(tag.substring(1, end)).style.color = '#000000';
-            }
-        }
-
-    });
+getUsername();
+});
 
 </script>
 </body>
