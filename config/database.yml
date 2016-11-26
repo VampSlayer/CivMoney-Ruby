@@ -1,23 +1,23 @@
 development:
   adapter: postgresql
   database: development
-  username: changetoYourPSQLusername
-  password: changetoYourPSQLpassword
+  username: replaceWithYourUsernameForPostgres
+  password: replaceWithYourPasswordForPostgres
   host: localhost
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
 
 test:
   adapter: postgresql
   database: test
-  username: changetoYourPSQLusername
-  password: changetoYourPSQLpassword
+  username: replaceWithYourUsernameForPostgres
+  password: replaceWithYourPasswordForPostgres
   host: localhost
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
 
-development:
+production:
   adapter: postgresql
-  database: development
-  username: changetoYourPSQLusername
-  password: changetoYourPSQLpassword
+  database: production
+  username: replaceWithYourUsernameForPostgres
+  password: replaceWithYourPasswordForPostgres
   host: localhost
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>

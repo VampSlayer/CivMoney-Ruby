@@ -1,7 +1,7 @@
 require 'zlib'
 #The environment variable DATABASE_URL should be in the following format:
 # => postgres://{user}:{password}@{host}:{port}/path
-configure :development, do
+configure :development do
 	db = URI.parse(ENV['DATABASE_URL'] || 'postgres://username:password@localhost:5432/development')
 
 	ActiveRecord::Base.establish_connection(
