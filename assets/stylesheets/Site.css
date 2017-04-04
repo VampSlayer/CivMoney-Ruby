@@ -66,3 +66,5 @@ border: 1px solid transparent; /* No more visible border */
 #Added{
     color: red;
 }
+
+.bold { font-weight: bold;

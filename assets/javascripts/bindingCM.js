@@ -6,12 +6,24 @@ function clearIt(tag){
   $(tag).empty();
 }
 
+function boldIt(tag){
+  $(tag).toggleClass("bold")
+}
+
 function drawRow(rowData, table, rowNeeded, i) {
     var row = $("<tr />");
     if (rowNeeded === "date+amount") {
         $(table).append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-        row.append($("<td>" + rowData.date + "</td>") );
-        row.append(colorItTag( $("<td>" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>") , rowData.amount ));
+        if(rowData.date == getTodaysFullDateDashes()){
+		row.append($("<td id=\"bold\">" + rowData.date + "</td>") );
+        	row.append(colorItTag( $("<td id=\"boldDate\">" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>") , rowData.amount ));
+                boldIt("#bold");
+		boldIt("#boldDate");
+	}
+	else if(rowData.date != getTodaysFullDateDashes()){
+		row.append($("<td>" + rowData.date + "</td>") );
+		row.append(colorItTag( $("<td>" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>") , rowData.amount ));
+	}
     }
     else if (rowNeeded === "amount") {
         $(table).append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it

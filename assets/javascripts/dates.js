@@ -20,14 +20,26 @@ function getTodaysFullDateDots(){
   return getTodaysYear() + "." + getTodaysMonth() + "." + getTodaysDate();
 }
 
+function getTodaysFullDateDashes(){  
+  return getTodaysYear() + "-" + getTodaysMonth() + "-" + getTodaysDate();
+}
+
 function getTodaysDate(){
   var today = new Date();
-  return today.getDate();
+  today = today.getDate();
+  if(today<10) {
+    today='0'+today
+  } 
+  return today;
 }
 
 function getTodaysMonth(){
   var today = new Date();
-  return today.getMonth() + 1;
+today = today.getMonth()+ 1;
+  if(today<10) {
+    today='0'+today
+   } 	
+  return today;
 }
 
 function getTodaysYear(){
