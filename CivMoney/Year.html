@@ -104,7 +104,7 @@
                               </li>
 			      <li>
                                 <a href="Year">Year</a>
-                            </li>
+                              </li>
                           </ul>
                           <!-- /.nav-second-level -->
                           </li>
@@ -120,7 +120,7 @@
                 <div class="col-lg-12">
                     <br />
                     <div style="text-align: center" class="panel panel-default panel-heading">
-                        <div style="display: inline" id="Month"></div>'s Weekly Totals
+                        <div style="display: inline"></div>Yearly Totals
                     </div>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -132,7 +132,7 @@
                                     <table id="SummaryTable" class="table">
                                         <thead>
                                             <tr>
-                                                <th>Week</th>
+                                                <th>Year</th>
                                                 <th>Total/CHF</th>
                                         </thead>
                                     </table>
@@ -149,11 +149,8 @@
     </div>
     <script>
         $(document).ready(function () {
-	    var months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            var mm = getTodaysMonth(); //January is 0!
-            bindIt("#Month", months[mm - 1] );
-            getThisMonthsWeeksTotals();
 	    getUsername();
+            getYearsTotals()
         });
     </script>
 </body>

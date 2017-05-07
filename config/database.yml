@@ -1,23 +1,23 @@
 development:
   adapter: postgresql
   database: development
-  username: sayam
-  password: sayam
+  username: postgres
+  password: pqo347
   host: localhost
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
 
 test:
   adapter: postgresql
   database: test
-  username: sayam
-  password: sayam
+  username: postgres
+  password: pqo347
   host: localhost
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
 
 production:
   adapter: postgresql
   database: production
-  username: sayam
-  password: sayam
+  username: postgres
+  password: pqo347
   host: localhost
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>

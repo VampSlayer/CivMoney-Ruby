@@ -67,4 +67,11 @@ border: 1px solid transparent; /* No more visible border */
     color: red;
 }
 
-.bold { font-weight: bold;
+.bold { font-weight: bold; }
+
+a.ex1:hover, a.ex1:active {cursor: pointer;}
+
+
+
+
+

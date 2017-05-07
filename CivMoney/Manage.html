@@ -77,7 +77,7 @@
                       </li>
                       <li class="divider"></li>
                       <li>
-                        <a onclick="logout()" id="logout" class="btn-link"><i class="fa fa-sign-out fa-fw">Logout</i></a>
+                        <a onclick="logout()" id="logout" class="ex1"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
                       </li>
                   </ul>
                   <!-- /.dropdown-user -->
@@ -104,6 +104,9 @@
                               <li>
                                   <a href="Month">Month</a>
                               </li>
+			      <li>
+                                <a href="Year">Year</a>
+                            </li>
                           </ul>
                           <!-- /.nav-second-level -->
                           </li>
@@ -129,7 +132,9 @@
                             <div class="panel-body">
                                 <label>Start Date</label><input type="date" style="margin-bottom: 10px" class="form-control" id="FirstDatum" placeholder="Start Date"/>
                                 <label>End Date</label><input type="date" style="margin-bottom: 10px" class="form-control" id="LastDatum" placeholder="Last Date"/>
-                                <button style="margin-bottom: 10px" onclick="getAndDrawRangeTable()" class="form-control danger" id="Get">Get</button>
+                                <button style="margin-bottom: 10px" onclick="getAndDrawRangeTable('All')" class="form-control danger btn-primary" id="Get">Get All</button>
+				<button style="margin-bottom: 10px" onclick="getAndDrawRangeTable('Expenses')" class="form-control danger btn-danger" id="Get">Get Expenses</button>
+				<button style="margin-bottom: 10px" onclick="getAndDrawRangeTable('Incomes')" class="form-control danger btn-success" id="Get">Get Incomes</button>
                                 <p id="Get"></p>
                             </div>
                         </div>

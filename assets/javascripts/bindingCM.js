@@ -43,7 +43,13 @@ function drawRow(rowData, table, rowNeeded, i) {
     else if (rowNeeded === "Week"){
           var row = $("<tr />");
           $(table).append(row);
-          row.append($("<td>" + rowData.datemonth + "</td>"));
+          row.append($("<td>" + rowData.dateweek + "</td>"));
+          row.append(colorItTag($("<td>" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>"), rowData.amount));
+    }
+    else if (rowNeeded === "Year"){
+          var row = $("<tr />");
+          $(table).append(row);
+          row.append($("<td>" + rowData.dateyear+ "</td>"));
           row.append(colorItTag($("<td>" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>"), rowData.amount));
     }
     else {

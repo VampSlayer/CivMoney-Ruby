@@ -113,8 +113,8 @@ module Sinatra
       end
 
       #get transactions for range
-      #http://localhost:4567/transactions/range?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
-      app.get '/transactions/range', :auth => [:user] do
+      #http://localhost:4567/transactions/rangeAll?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
+      app.get '/transactions/rangeAll', :auth => [:user] do
       	content_type :json
       	@year0 = params[:year0]
       	@month0 = params[:month0]
@@ -130,6 +130,42 @@ module Sinatra
       	return_message.to_json
       end
 
+      #get expenses for range
+      #http://localhost:4567/transactions/rangeExpenses?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
+      app.get '/transactions/rangeExpenses', :auth => [:user] do
+      	content_type :json
+      	@year0 = params[:year0]
+      	@month0 = params[:month0]
+      	@day0 = params[:day0]
+      	@date0 = Date.new(@year0.to_i, @month0.to_i, @day0.to_i)
+      	@year1 = params[:year1]
+      	@month1 = params[:month1]
+      	@day1 = params[:day1]
+      	@date1 = Date.new(@year1.to_i, @month1.to_i, @day1.to_i)
+      	@transactions = Transaction.where("date IN (?) AND amount < 0 AND user_id = ?", (@date0)..@date1, session[:id]).order("date ASC")
+      	return_message = {}
+      	return_message = @transactions
+      	return_message.to_json
+      end
+
+      #get incomes for range
+      #http://localhost:4567/transactions/rangeIncomes?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
+      app.get '/transactions/rangeIncomes', :auth => [:user] do
+      	content_type :json
+      	@year0 = params[:year0]
+      	@month0 = params[:month0]
+      	@day0 = params[:day0]
+      	@date0 = Date.new(@year0.to_i, @month0.to_i, @day0.to_i)
+      	@year1 = params[:year1]
+      	@month1 = params[:month1]
+      	@day1 = params[:day1]
+      	@date1 = Date.new(@year1.to_i, @month1.to_i, @day1.to_i)
+      	@transactions = Transaction.where("date IN (?) AND amount > 0 AND user_id = ?", (@date0)..@date1, session[:id]).order("date ASC")
+      	return_message = {}
+      	return_message = @transactions
+      	return_message.to_json
+      end
+
       #delete transaction
       #http://localhost:4567/transactions/delete?[id]=1
       app.delete '/transactions/delete', :auth => [:user] do
@@ -140,6 +176,22 @@ module Sinatra
       	else
       		return 500
       	end
+      end
+
+      #get monthly totals for year
+      #http://localhost:4567/transactions/yearsTotals
+      app.get '/transactions/yearsTotals', :auth => [:user] do
+      	content_type :json
+      	@transactions = Transaction.find_by_sql ["SELECT
+        	date_part('year', transactions.date) AS Dateyear,
+        	SUM(transactions.amount) AS amount
+      	FROM public.transactions
+      	WHERE date_part('year', transactions.date) = date_part('year', current_date) AND user_id = ?
+       	GROUP BY Dateyear
+       	ORDER BY 1 ASC", session[:id]]
+      	return_message = {}
+      	return_message = @transactions
+      	return_message.to_json
       end
 
       #get monthly totals for year
@@ -164,18 +216,18 @@ module Sinatra
       	content_type :json
         #Post.find_by_sql ["SELECT title FROM posts WHERE author = ? AND created > ?", author_id, start_date]
       	@transactions = Transaction.find_by_sql ["SELECT
-        	date_part('week', transactions.date) AS Datemonth,
+        	date_part('week', transactions.date) AS Dateweek,
         	SUM(transactions.amount) AS amount
       	FROM public.transactions
       	WHERE date_part('month', transactions.date) = date_part('month', current_date) AND user_id = ?
-       	GROUP BY Datemonth
+       	GROUP BY Dateweek
        	ORDER BY 1 ASC", session[:id]]
       	return_message = {}
       	return_message = @transactions
       	return_message.to_json
       end
 
-      #post montly rates TODO turn inner for into method
+      #post montly rates TODO methodize
       app.post '/transactions/addMonthsIncomesExpenses', :auth => [:user] do
         @totalIncome = params[:income]
         @totalExpense = params[:expense]

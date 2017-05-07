@@ -34,6 +34,10 @@ module Sinatra
         send_file 'CivMoney/Week.html'
       end
 
+      app.get '/Year', :auth => [:user] do
+        send_file 'CivMoney/Year.html'
+      end
+
       app.get '/API' do
         send_file 'CivMoney/API.html'
       end

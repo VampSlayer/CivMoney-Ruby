@@ -63,7 +63,7 @@ function getTable(yyyy, mm, dd, uri, tableTag, rowNeeded){
         });
 }
 
-function getAndDrawRangeTable() {
+function getAndDrawRangeTable(transactionType) {
 
     var dateString0 = $("#FirstDatum").val();
     var year0 = dateString0.substring(0, 4);
@@ -77,7 +77,7 @@ function getAndDrawRangeTable() {
     var day1 = dateString1.substring(8, 10);
 
         $.ajax({
-            url: '/transactions/range?[year0]=' + year0 + '&[month0]=' + month0 + '&[day0]=' + day0 + '&[year1]=' + year1 + '&[month1]=' + month1 + '&[day1]=' + day1,
+            url: '/transactions/range' + transactionType + '?[year0]=' + year0 + '&[month0]=' + month0 + '&[day0]=' + day0 + '&[year1]=' + year1 + '&[month1]=' + month1 + '&[day1]=' + day1,
             type: "get",
             dataType: "json",
             data: {},
@@ -130,6 +130,19 @@ function deleteTransaction(data2) {
         }
     }
     getAndDrawRangeTable();
+}
+
+function getYearsTotals(){
+
+                $.ajax({
+                    url: '/transactions/yearsTotals',
+                    type: "get",
+                    dataType: "json",
+                    data: {},
+                    success: function (data) {
+                        drawTable(data, "#SummaryTable", "Year");
+                    }
+                });
 }
 
 function getThisYearsMontlyTotals(){
