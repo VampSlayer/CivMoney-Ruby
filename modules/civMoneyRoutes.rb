@@ -42,6 +42,10 @@ module Sinatra
         send_file 'CivMoney/API.html'
       end
 
+	  app.get '/User' do
+        send_file 'CivMoney/User.html'
+      end
+
     end
   end
 end

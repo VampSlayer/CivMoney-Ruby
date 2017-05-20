@@ -32,6 +32,7 @@ function login() {
 function addUser() {
     var username = $("#username").val();
     var password = $("#password").val();
+	var currency = $("#currency").val();
     var passwordConfirmation = $("#passwordConfirmation").val();
 
     clearIt("#usernameIO");
@@ -69,7 +70,7 @@ function addUser() {
     if (password === passwordConfirmation) {
         $.ajax({
             type: "POST",
-            data: '[username]='+username+'&[password]='+password,
+            data: '[username]='+username+'&[password]='+password+'&[currency]='+currency,
             url: uri,
             success: function() {
                 window.location = '/CivMoneyHome';
@@ -101,6 +102,36 @@ function getUsername(){
       data: {},
       success: function(data) {
          bindIt("#userName", data);
+      }
+  });
+}
+
+function getUserCurrency(){
+  $.ajax({
+      type: "GET",
+      url: '/user/currency',
+      dataType: "json",
+      data: {},
+      success: function(data) {
+         $('.Currency').each(function() {
+		  $(this).before($('<span>').text(data));
+		});
+      }
+  });
+}
+
+function changeUserCurrency(){
+  var currency = $("#currency").val();
+	clearIt("#currencyChange");
+  $.ajax({
+      type: "PATCH",
+      url: '/user/changeCurrency?',
+      data: '[currency]='+currency,
+      success: function() {
+         bindIt("#currencyChange", "Success");
+	  },
+	  error: function(){
+         bindIt("#currencyChange", "Faliure");
       }
   });
 }

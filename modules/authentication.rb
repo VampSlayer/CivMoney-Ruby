@@ -22,6 +22,7 @@ module Sinatra
         @user.username = params[:username]
         @user.password_hash = password_hash
         @user.salt = password_salt
+		@user.currency = params[:currency]
           if @user.save
             @newSavedUser = User.where(username: params[:username])
             session[:id] = @newSavedUser.first.id

@@ -71,7 +71,7 @@
                   </a>
                   <ul class="dropdown-menu dropdown-user">
                       <li>
-                          <i style="margin-left:20px" class="fa fa-user fa-fw"></i><span id="userName"></span>
+                          <a href="User"><i class="fa fa-user fa-fw"></i><span id="userName"></span></a>
                       </li>
                       <li class="divider"></li>
                       <li>
@@ -88,7 +88,7 @@
               <div class="sidebar-nav navbar-collapse">
                   <ul class="nav" id="side-menu">
                       <li>
-                          <a href="Rate"><i class="fa fa-table fa-fw"></i> Rates</a>
+                          <a href="Rate"><i class="fa fa-table fa-fw"></i> Add Rates</a>
                       </li>
                       <li>
                           <a href="Manage"><i class="fa fa-edit fa-fw"></i> Manage</a>
@@ -133,7 +133,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Year</th>
-                                                <th>Total/CHF</th>
+                                                <th>Total/<span class="Currency"></span></th>
                                         </thead>
                                     </table>
                                 </div>
@@ -150,7 +150,8 @@
     <script>
         $(document).ready(function () {
 	    getUsername();
-            getYearsTotals()
+        getYearsTotals();
+		getUserCurrency();
         });
     </script>
 </body>

@@ -72,7 +72,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <i style="margin-left:20px" class="fa fa-user fa-fw"></i><span id="userName"></span>
+                        <a href="User"><i class="fa fa-user fa-fw"></i><span id="userName"></span></a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -89,7 +89,7 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="Rate"><i class="fa fa-table fa-fw"></i> Rates</a>
+                        <a href="Rate"><i class="fa fa-table fa-fw"></i> Add Rates</a>
                     </li>
                     <li>
                         <a href="Manage"><i class="fa fa-edit fa-fw"></i> Manage</a>
@@ -123,13 +123,13 @@
                 <div style ="text-align: center" class="panel panel-default panel-heading">
                     <p style="display: inline">Today</p><span>&nbsp;:&nbsp;</span>
                     <p style="display: inline" id="TodaysCash"></p>
-                    <p style="display: inline">&nbsp;CHF</p>
+                    <p style="display: inline">&nbsp;<span class="Currency"></span></p>
                     <p style="display: inline">&nbsp;Week</p><span>&nbsp;:&nbsp;</span>
                     <p style="display: inline" id="WeeksCash"></p>
-                    <p style="display: inline">&nbsp;CHF</p>
+                    <p style="display: inline">&nbsp;<span class="Currency"></span></p>
                     <p style="display: inline">&nbsp;Month</p><span>&nbsp;:&nbsp;</span>
                     <p style="display: inline" id="MonthsCash"></p>
-                    <p style="display: inline">&nbsp;CHF</p>
+                    <p style="display: inline">&nbsp;<span class="Currency"></span></p>
                 </div>
             </div>
             <!-- /.col-lg-12 -->
@@ -140,12 +140,12 @@
                 <div class="panel-body">
                     <table id="IncomeTable" class="table">
                         <tr>
-                            <th>Income/CHF</th>
+                            <th>Income/<span class="Currency"></span></th>
                         </tr>
                     </table>
                     <table id="ExpensesTable" class="table">
                         <tr>
-                            <th>Expenses/CHF</th>
+                            <th>Expenses/<span class="Currency"></span></th>
                         </tr>
                     </table>
                 </div>
@@ -159,7 +159,7 @@
                     <table id="SummaryTable" class="table">
                         <tr>
                             <th>Date</th>
-                            <th>Amount/CHF</th>
+                            <th>Amount/<span class="Currency"></span></th>
                         </tr>
                     </table>
                 </div>
@@ -215,6 +215,8 @@ getTable(yyyy, mm, dd, urlExpenseTable, "#ExpensesTable", "amount");
 getTable(yyyy, mm, dd, urlSummaryTable, "#SummaryTable", "date+amount");
 
 getUsername();
+
+getUserCurrency();
 
 EnterClickDocument("#Add");
 });

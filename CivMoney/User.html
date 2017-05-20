@@ -73,7 +73,7 @@
                   </a>
                   <ul class="dropdown-menu dropdown-user">
                       <li>
-                          <a href="User"><i class="fa fa-user fa-fw"></i><span id="userName"></span></a>
+                        <a href="User"><i class="fa fa-user fa-fw"></i><span id="userName"></span></a></span>
                       </li>
                       <li class="divider"></li>
                       <li>
@@ -106,7 +106,7 @@
                               </li>
 			      <li>
                                 <a href="Year">Year</a>
-                              </li>
+                            </li>
                           </ul>
                           <!-- /.nav-second-level -->
                           </li>
@@ -119,33 +119,36 @@
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                    <br />
-                    <div class="panel panel-default panel-heading">
-                        Rates
-                    </div>
-                    <div class="panel-body">
-                        <div class="panel-body">
-                            <p>Add total income and expenses for the month</p>
-                            <input type="number" style="margin-bottom: 10px" class="form-control" id="Income" placeholder="Income">
-                            <input type="text" style="margin-bottom: 10px" class="form-control" id="Expense" placeholder="Expenses">
-                            <button style="margin-bottom: 10px" onclick="addThisMonthsIncomesAndExpenses()" class="form-control danger" id="Add">Add Cost of Living for Month</button>
-                            <p id="Added"></p>
-                        </div>
-                    </div>
+                <div class="col-lg-12">					
+					<div class="form-group">
+								<br/>
+                                  <p>Change Currency</p>
+                                     <select class="form-control" id="currency">
+									  <option value="CHF">CHF</option>
+									  <option value="EUR">EUR</option>
+									  <option value="GBP">GBP</option>
+									  <option value="USD">USD</option>
+									  <option value="JPY">JPY</option>
+									</select> 
+                   </div>
+					<div class="form-group">
+					  <p style="color:red" id="currencyChange"></p>
+                      <a onclick="changeUserCurrency()" id="ChangeCurrency" class="btn btn-danger btn-block">Change Currecny</a>
+                   </div>
                 </div>
-                <!-- /.col-lg-12 -->
-            </div>
+                    <!-- /.col-lg-2-->
+                </div>
 
         </div>
-
+    </div>
     </div>
     <script>
     $(document).ready(function () {
     var data2;
     getUsername();
-    EnterClickDocument("#Add");
+	getUserCurrency();
+    EnterClickDocument("#ChangeCurrency");   	
   });
-  </script>
+    </script>
 </body>
 </html>
