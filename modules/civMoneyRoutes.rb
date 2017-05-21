@@ -42,7 +42,7 @@ module Sinatra
         send_file 'CivMoney/API.html'
       end
 
-	  app.get '/User' do
+	  app.get '/User', :auth => [:user] do
         send_file 'CivMoney/User.html'
       end
 
