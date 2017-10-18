@@ -19,11 +19,11 @@ function drawRow(rowData, table, rowNeeded, i) {
         	row.append(colorItTag( $("<td id=\"boldDate\">" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>") , rowData.amount ));
                 boldIt("#bold");
 		boldIt("#boldDate");
-	}
-	else if(rowData.date != getTodaysFullDateDashes()){
-		row.append($("<td>" + rowData.date + "</td>") );
-		row.append(colorItTag( $("<td>" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>") , rowData.amount ));
-	}
+		}
+		else if(rowData.date != getTodaysFullDateDashes()){
+			row.append($("<td>" + rowData.date + "</td>") );
+			row.append(colorItTag( $("<td>" + ( Math.round(rowData.amount* 100) / 100 ) + "</td>") , rowData.amount ));
+		}
     }
     else if (rowNeeded === "amount") {
         $(table).append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
@@ -72,7 +72,7 @@ function clearTable(tableTag) {
 
 function colorItTag(tag, data) {
     var coloredTag;
-    if (data === 0) {
+    if (data === 0 || data == 0.0) {
         coloredTag = tag.css("color", '#ff8c00');
     } else if (data > 0) {
         coloredTag = tag.css("color", '#008000');
@@ -88,7 +88,7 @@ function colorItTag(tag, data) {
 function bindColorForValue(tag, data) {
     $(tag).append(data);
     var end = tag.length;
-    if (data === 0) {
+    if (data === 0 || data == 0.0) {
         document.getElementById(tag.substring(1,end)).style.color =  '#ff8c00';
     } else if (data > 0) {
         document.getElementById(tag.substring(1, end)).style.color = '#008000';
