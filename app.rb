@@ -1,5 +1,6 @@
 #gems
 require 'sinatra'
+require 'sinatra/cross_origin'
 require 'sinatra/activerecord'
 require 'json'
 require 'date'
@@ -42,5 +43,14 @@ environment.append_path "assets/fonts"
 after do
   ActiveRecord::Base.connection.close
 end
+
+configure do
+    enable :cross_origin
+  end
+
+before do
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+	response.headers['Access-Control-Allow-Credentials'] = 'true'
+  end
 
 end

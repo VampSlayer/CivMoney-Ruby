@@ -41,8 +41,10 @@ module Sinatra
             session[:id] = @user.first.id
             redirect to('/CivMoneyHome')
           else
-            return 500
+            return 401
           end
+        else
+            return 404
         end
       end
 
