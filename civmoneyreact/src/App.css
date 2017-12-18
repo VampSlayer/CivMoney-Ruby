@@ -1,0 +1,40 @@
+.text-orange{
+	color:#ff8c00;
+}
+
+.text-red{
+	color:#ff0000;
+}
+
+.text-green{
+	color:#008000;
+}
+
+.bold { 
+	font-weight: bold; 
+}
+
+.top-bar{
+	background: black;
+	color: white;
+}
+
+.zero-padding{
+	padding-left: 0px;
+}
+
+a:link {
+    color: #FF0000;
+}
+
+a:visited {
+    color: #00FF00;
+}
+
+a:hover {
+    color: #FF00FF;
+}
+
+a:active {
+    color: #0000FF;
+} 

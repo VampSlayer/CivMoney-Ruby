@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+a.whiteText:link {
+    color: #fff;
+    text-decoration: none;
+}
+
+a.whiteText:visited {
+    text-decoration: none;
+    color: #fff;
+}

@@ -31,7 +31,7 @@ register Sinatra::TrasnsactionsRoutes
 register Sinatra::CivMoneyRoutes
 register Sinatra::AssetRoutes
 
-enable :sessions
+use Rack::Session::Cookie
 set :session_secret, "supersecret"
 set :environment, Sprockets::Environment.new
 
@@ -50,7 +50,7 @@ configure do
 
 before do
     response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
-	response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
 end
