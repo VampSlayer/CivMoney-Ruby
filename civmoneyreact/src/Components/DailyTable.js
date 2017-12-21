@@ -24,7 +24,7 @@ class TableRow extends Component {
 class TwoColumnTable extends Component {
   render() {
     return (
-      <table className="table">
+      <table className={'daily-table'}>
 		<thead>
 			<tr>
 				<td><strong>{this.props.headingOne}</strong></td>
@@ -67,6 +67,7 @@ componentDidMount(){this.getTransactions();}
 
   render() {
 	var currency = 'Amount/' + this.props.currency;
+	if(this.props.hasChanged === true){ this.getTransactions() }
     return (
       <div>
            <TwoColumnTable data={this.state.transactions} headingOne={'Description'} headingTwo={currency}/>

@@ -8,22 +8,10 @@ import $ from 'jquery';
 import * as url from './Components/Url.js';
 
 import { user } from 'react-icons-kit/icomoon/user'; 
-import { ic_dashboard } from 'react-icons-kit/md/ic_dashboard';          
+import { ic_dashboard } from 'react-icons-kit/md/ic_dashboard';
+import { table2 } from 'react-icons-kit/icomoon/table2';            
 
 const SideNav = withRR4();
-
-class Sales extends Component {
-
-    componentWillUnmount() {
-        console.log('Sales Will Unmount');
-    }
-
-    render() {
-        return (
-            <div>Sales</div>
-        );
-    }
-}
 
 class Main extends Component {
 constructor(){
@@ -53,12 +41,8 @@ componentDidMount(){this.getUserName();}
         return <CivMoneyHome />;
     }
 
-    renderSales = () => {
-        return <Sales />;
-    }
-
-    renderProducts = () => {
-        return <div>Products</div>;
+    renderManage = () => {
+        return <div>Manage</div>;
     }
 
   render() {
@@ -67,45 +51,40 @@ componentDidMount(){this.getUserName();}
                  <div className="container-fluid">
 	           <div className="row">
                     <div className="zero-padding col-lg-2">
-			<div style={{ display: 'flex', padding: 16, background: 'black' }}>
+			<div style={{ display: 'flex', padding: 16}}>
                         <div style={{ width: 40, height: 40 }}>
                             <img
                                 src="https://image.ibb.co/dXwVzm/civMoney.jpg" alt="civMoney"
                                 style={{ borderRadius: '30px', width: 40, height: 40 }}
                             />
                         </div>
-                        <div style={{ paddingLeft: 6, paddingTop: 11, color: 'white'}}>
+                        <div style={{ paddingLeft: 6, paddingTop: 11}}>
                                 {' '}CivMoney{' '}
                         </div>
 			</div>
-                        <SideNav default='dashboard' highlightBgColor='black' highlightColor='white'>
+                        <SideNav default='dashboard' highlightBgColor='white' highlightColor='black'>
 			    <Nav id='user'>
 				<NavIcon><SvgIcon size={20} icon={user}/></NavIcon> 
 				<NavText>{this.state.userName}</NavText>
-				<Nav id='user-list'>
-                                    <NavText> <a>Logout</a> </NavText>
+				<Nav className={'top-slide'} id='user-list'>
+                                    <NavText> <strong><a className={'whiteText'}>Logout</a></strong> </NavText>
                                 </Nav>
 			    </Nav>
                             <Nav id='dashboard'>
 			        <NavIcon><SvgIcon size={20} icon={ic_dashboard}/></NavIcon> 
                                 <NavText>  Dashboard </NavText>
                             </Nav>
-                            <Nav id='sales'>
-                                <NavText> Sales </NavText>
-                                <Nav id='list'>
-                                    <NavText> List Sales </NavText>
-                                </Nav>
-                            </Nav>
-                            <Nav id='products'>
-                                <NavText>  Products </NavText>
+                            <Nav id='manage'>
+				<NavIcon><SvgIcon size={20} icon={table2}/></NavIcon> 
+                                <NavText> Manage </NavText>
                             </Nav>
                         </SideNav>
                     </div>
                     <div>
 			<Route exact path="/" render={this.renderDashboad}/>
                         <Route exact path="/dashboard" render={this.renderDashboad}/>
-                        <Route path="/sales" render={this.renderSales}/>
-                        <Route path="/products" render={this.renderProducts}/>		
+			<Route exact path="/user" render={this.renderDashboad}/>
+                        <Route path="/manage" render={this.renderManage}/>	
                     </div>
                 </div>
 	</div>
