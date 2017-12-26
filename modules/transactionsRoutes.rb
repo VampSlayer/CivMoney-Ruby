@@ -178,6 +178,18 @@ module Sinatra
       	end
       end
 
+      #delete transaction
+      #http://localhost:4567/transactions/delete?[id]=1
+      app.post '/transactions/delete', :auth => [:user] do
+        Date.today
+      	@transaction = Transaction.find(params[:id]).destroy
+      	if @transaction.save
+      		return 200
+      	else
+      		return 500
+      	end
+      end
+
       #get monthly totals for year
       #http://localhost:4567/transactions/yearsTotals
       app.get '/transactions/yearsTotals', :auth => [:user] do
@@ -186,7 +198,7 @@ module Sinatra
         	date_part('year', transactions.date) AS Dateyear,
         	SUM(transactions.amount) AS amount
       	FROM public.transactions
-      	WHERE date_part('year', transactions.date) = date_part('year', current_date) AND user_id = ?
+      	WHERE user_id = ?
        	GROUP BY Dateyear
        	ORDER BY 1 ASC", session[:id]]
       	return_message = {}

@@ -27,6 +27,17 @@ module Sinatra
       	end
       end
 
+   #Change user currency
+	 #"http://localhost:4567/user/changeCurrency?curreny=[CHF]"
+      app.post '/user/changeCurrency', :auth => [:user] do
+      	@user = User.where(id: session[:id])
+      	if @user.update(params)
+      		return 200
+      	else
+      		return 500
+      	end
+      end
+
     end
   end
 end

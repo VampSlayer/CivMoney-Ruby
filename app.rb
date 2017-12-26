@@ -31,7 +31,7 @@ register Sinatra::TrasnsactionsRoutes
 register Sinatra::CivMoneyRoutes
 register Sinatra::AssetRoutes
 
-use Rack::Session::Cookie
+use Rack::Session::Cookie, :session_secret => "supersecret", :secret => "supersecret"
 set :session_secret, "supersecret"
 set :environment, Sprockets::Environment.new
 

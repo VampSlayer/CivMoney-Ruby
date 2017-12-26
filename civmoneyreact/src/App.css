@@ -72,3 +72,11 @@ a:active {
   width: 0px;
   transition: 700ms;
 }
+
+body{
+    background-color: black;
+}
+
+.black-text{
+    color: black;
+}

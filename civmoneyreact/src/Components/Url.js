@@ -1,3 +1,3 @@
-export function GetBaseurl(){
-	return 'http://localhost:9292';
+export function GetBaseurl() {
+				return 'http://localhost:9292';
 }
