@@ -1,5 +1,9 @@
 Web App by Sayam Hussain
 
-Using Ruby, Sinatra and Postgres SQL
+Backend using Ruby, Sinatra and Postgres SQL.
 
-Install instructions on wiki page iii
+Front end now written in React! 
+
+Install instructions on wiki page.
+
+Live website can be found on http://civmoney.com
