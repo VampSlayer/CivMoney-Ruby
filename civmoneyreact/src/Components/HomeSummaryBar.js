@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+
 import * as dates from './Dates.js';
+
 import Total from './Total';
 
 class HomeSummaryBar extends Component {

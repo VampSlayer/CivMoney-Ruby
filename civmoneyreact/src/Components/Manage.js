@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
-import ManageTable from './ManageTable';
+
 import * as url from './Url.js';
+
 import $ from 'jquery';
+
+import ManageTable from './ManageTable';
+import CivMoneyFooter from './CivMoneyFooter';
 
 class Manage extends Component {
     constructor() {
@@ -138,6 +142,7 @@ class Manage extends Component {
                         </div>
                     </div>
                 </div>
+                <CivMoneyFooter/>
             </div>
         );
     }

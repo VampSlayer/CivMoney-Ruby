@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+
 import * as url from './Url.js';
+
 import $ from 'jquery';
+
 import TimeViewTable from './TimeViewTable';
 
 class TimeViews extends Component {

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+
 import * as dates from './Dates.js';
+
 import ReactHover from 'react-hover'
 import DailyTable from './DailyTable';
 

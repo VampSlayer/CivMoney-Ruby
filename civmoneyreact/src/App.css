@@ -7,7 +7,7 @@
 }
 
 .text-green{
-	color:#008000;
+	color:#00FF00;
 }
 
 .bold { 
@@ -33,6 +33,7 @@ a:visited {
 
 a:hover {
     color: #FF00FF;
+    cursor: pointer;
 }
 
 a:active {
@@ -74,9 +75,73 @@ a:active {
 }
 
 body{
-    background-color: black;
+    background-color: #494a4f;
 }
 
 .black-text{
     color: black;
+}
+
+/**
+ * Demo Styles
+ */
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #494a4f;
+  color: white;
+}
+
+a.whiteText:link {
+    color: #fff;
+    text-decoration: none;
+}
+
+a.whiteText:visited {
+    text-decoration: none;
+    color: #fff;
+}
+
+a.whiteText:link {
+    color: #fff;
+    text-decoration: none;
+}
+
+a.whiteText:visited {
+    text-decoration: none;
+    color: #fff;
+}
+
+#root{
+	background: #494a4f;
+	color: white;
 }

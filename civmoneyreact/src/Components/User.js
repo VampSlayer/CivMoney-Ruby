@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
+
 import * as url from './Url.js';
+
 import $ from 'jquery';
+
+import CivMoneyFooter from './CivMoneyFooter';
 
 class User extends Component {
     constructor() {
@@ -41,26 +45,29 @@ class User extends Component {
 
     render() {
         return (
-            <div className="col-lg-10">
-                <div className="form-group">
-                    <br/>
-                    <p>Change Currency</p>
-                    <strong className="text-red">{this.state.hasChanged}</strong>
-                    <select
-                        onChange={this.handleCurrencyChange}
-                        value={this.state.currency}
-                        className="form-control">
-                        <option value="CHF">CHF</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="USD">USD</option>
-                        <option value="JPY">JPY</option>
-                        <option value="PKR">PKR</option>
-                    </select>
+            <div>
+                <div className="col-lg-10">
+                    <div className="form-group">
+                        <br/>
+                        <p>Change Currency</p>
+                        <strong className="text-red">{this.state.hasChanged}</strong>
+                        <select
+                            onChange={this.handleCurrencyChange}
+                            value={this.state.currency}
+                            className="form-control">
+                            <option value="CHF">CHF</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="USD">USD</option>
+                            <option value="JPY">JPY</option>
+                            <option value="PKR">PKR</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <button onClick={this.changeUserCurrency} className="btn btn-danger btn-block">Change Currency</button>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <button onClick={this.changeUserCurrency} className="btn btn-danger btn-block">Change Currency</button>
-                </div>
+                <CivMoneyFooter/>
             </div>
         );
     }

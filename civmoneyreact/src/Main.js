@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
-import CivMoneyHome from './Components/CivMoneyHome'
-import Manage from './Components/Manage'
-import User from './Components/User'
 import {withRR4, Nav, NavText} from 'react-sidenav';
 import SvgIcon from 'react-icons-kit';
 import {NavIcon} from 'react-sidenav';
+
 import $ from 'jquery';
+
 import * as url from './Components/Url.js';
 
 import {user} from 'react-icons-kit/icomoon/user';
 import {ic_dashboard} from 'react-icons-kit/md/ic_dashboard';
 import {table2} from 'react-icons-kit/icomoon/table2';
+
+import CivMoneyHome from './Components/CivMoneyHome'
+import Manage from './Components/Manage'
+import User from './Components/User'
 
 const SideNav = withRR4();
 
@@ -28,7 +31,6 @@ class Main extends Component {
             type: "GET",
             url: url.GetBaseurl() + '/user/username',
             dataType: "json",
-            async: true,
             xhrFields: {
                 withCredentials: true
             },
@@ -67,6 +69,7 @@ class Main extends Component {
                 withCredentials: true
             },
             success: function () {
+                localStorage.setItem("loggedIn", false);
                 window.location = '/login'
             }
         });
@@ -97,13 +100,13 @@ class Main extends Component {
                                         height: 40
                                     }}/>
                                 </div>
-                                <div
+                                <h4
                                     style={{
-                                    paddingLeft: 6,
-                                    paddingTop: 11
+                                    paddingTop: 3,
+                                    paddingLeft: 7
                                 }}>
-                                    {' '}CivMoney{' '}
-                                </div>
+                                    {' '}<strong>CivMoney</strong>{' '}
+                                </h4>
                             </div>
                             <SideNav default='dashboard' highlightBgColor='white' highlightColor='black'>
                                 <Nav id='user'>
@@ -136,7 +139,7 @@ class Main extends Component {
                             <Route exact path="/dashboard" render={this.renderDashboad}/>
                             <Route exact path="/user" render={this.renderUser}/>
                             <Route exact path="/user/user/logout" render={this.renderUser}/>
-                            <Route path="/manage" render={this.renderManage}/>
+                            <Route exact path="/manage" render={this.renderManage}/>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
 import {Link} from 'react-router-dom';
+import {withRouter} from 'react-router';
+
+import $ from 'jquery';
+
 import * as url from './Url.js';
+
+import CivMoneyFooter from './CivMoneyFooter';
 
 class Login extends Component {
   constructor() {
@@ -41,8 +46,14 @@ class Login extends Component {
         withCredentials: true
       },
       success: function () {
-        window.location = '/'
-      },
+        this
+          .props
+          .Auth();
+        this
+          .props
+          .history
+          .push('/');
+      }.bind(this),
       error: function (xhr, statusText, errorThrown) {
         if (xhr.status === 401 || xhr.status === 404) {
           this.setState({error: 'Username not found or password incorrect'});
@@ -105,9 +116,10 @@ class Login extends Component {
             </div>
           </div>
         </div>
+        <CivMoneyFooter/>
       </div>
     );
   }
 }
 
-export default Login;
+export default withRouter(Login);

@@ -7,6 +7,7 @@ import {plus} from 'react-icons-kit/icomoon/plus';
 
 import * as url from './Url.js';
 import * as dates from './Dates.js';
+
 import $ from 'jquery';
 
 import HomeSummaryBar from './HomeSummaryBar';
@@ -14,6 +15,7 @@ import SummaryTable from './SummaryTable';
 import AddTransaction from './AddTransaction';
 import AddMonthlyIncomeExpenses from './AddMonthlyIncomeExpenses';
 import TimeViews from './TimeViews';
+import CivMoneyFooter from './CivMoneyFooter';
 
 class CivMoneyHome extends Component {
     constructor() {
@@ -106,7 +108,6 @@ class CivMoneyHome extends Component {
                 console.log(xhr.status);
             }
         });
-
         $.ajax({
             url: urlMonthlyTotal,
             type: "get",
@@ -234,6 +235,7 @@ class CivMoneyHome extends Component {
                         ? <TimeViews currency={this.state.currency}/>
                         : null}
                 </div>
+                <CivMoneyFooter/>
             </div>
         );
     }

@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
 import {Link} from 'react-router-dom';
+import {withRouter} from 'react-router';
+
+import $ from 'jquery';
+
 import * as url from './Url.js';
+
+import CivMoneyFooter from './CivMoneyFooter';
 
 class Register extends Component {
     constructor() {
@@ -10,7 +15,7 @@ class Register extends Component {
             username: '',
             password: '',
             passwordConfirmation: '',
-            currency: '',
+            currency: 'CHF',
             error: '',
             passwordDoesNotMatchMessage: ''
         };
@@ -40,10 +45,6 @@ class Register extends Component {
         this.setState({passwordConfirmation: event.target.value});
     }
 
-    handlePasswordConfirmationChange(event) {
-        this.setState({passwordConfirmation: event.target.value});
-    }
-
     handleUsernameChange(event) {
         this.setState({username: event.target.value});
     }
@@ -62,8 +63,14 @@ class Register extends Component {
                 withCredentials: true
             },
             success: function () {
-                window.location = '/'
-            },
+                this
+                    .props
+                    .Auth();
+                this
+                    .props
+                    .history
+                    .push('/');
+            }.bind(this),
             error: function (xhr, statusText, errorThrown) {
                 if (xhr.status === 401 || xhr.status === 404) {
                     this.setState({error: 'Username not found or password incorrect'});
@@ -76,7 +83,7 @@ class Register extends Component {
     }
 
     render() {
-        const isEnabled = this.state.username.length > 0 && this.state.password.length > 0 && this.state.passwordConfirmation.length > 0 && this.state.password == this.state.passwordConfirmation;
+        const isEnabled = this.state.username.length > 0 && this.state.password.length > 0 && this.state.passwordConfirmation.length > 0 && this.state.password === this.state.passwordConfirmation;
         return (
             <div className="container">
                 <br/>
@@ -99,7 +106,7 @@ class Register extends Component {
                                                 value={this.state.username}
                                                 onChange={this.handleUsernameChange}/>
                                         </div>
-                                        {this.state.password != this.state.passwordConfirmation
+                                        {this.state.password !== this.state.passwordConfirmation
                                             ? <strong className="text-red">Passwords do not match</strong>
                                             : null}
                                         <div className="form-group">
@@ -123,7 +130,7 @@ class Register extends Component {
                                         <div className="form-group">
                                             <p className="black-text">Currency</p>
                                             <select
-                                                class="form-control"
+                                                className="form-control"
                                                 onChange={this.handleCurrencyChange}
                                                 value={this.state.currency}>
                                                 <option value="CHF">CHF</option>
@@ -152,9 +159,10 @@ class Register extends Component {
                         </div>
                     </div>
                 </div>
+                <CivMoneyFooter/>
             </div>
         );
     }
 }
 
-export default Register;
+export default withRouter(Register);
