@@ -20,6 +20,8 @@ require './modules/userRoutes'
 require './modules/civMoneyRoutes'
 require './modules/assetRoutes'
 require './modules/transactionsRoutes'
+require './modules/totalsRoutes'
+require './modules/adminRoutes'
 
 class CivMoney < Sinatra::Base
 
@@ -30,6 +32,8 @@ register Sinatra::UserRoutes
 register Sinatra::TrasnsactionsRoutes
 register Sinatra::CivMoneyRoutes
 register Sinatra::AssetRoutes
+register Sinatra::TotalsRoutes
+register Sinatra::AdminRoutes
 
 use Rack::Session::Cookie, :session_secret => "supersecret", :secret => "supersecret"
 set :session_secret, "supersecret"

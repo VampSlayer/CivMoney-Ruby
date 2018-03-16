@@ -3,9 +3,8 @@ module Sinatra
     def self.registered(app)
 
       #add new transaction
-      #"http://localhost:4567/transaction?transaction[amount]=1&transaction[description]=hello&transaction[date]=2016.08.08"
+      #/transaction?transaction[amount]=1&transaction[description]=hello&transaction[date]=2016.08.08
       app.post '/transaction', :auth => [:user] do
-      	Date.today
       	@transaction = Transaction.new(params[:transaction])
         @transaction.user_id = session[:id]
       	if @transaction.save
@@ -16,7 +15,7 @@ module Sinatra
       end
 
       #get transaction for date
-      #http://localhost:4567/transactions/date?[date]=2016.08.03
+      #/transactions/date?[date]=2016.08.03
       app.get '/transactions/date', :auth => [:user] do
       	content_type :json
       	@transactions = Transaction.where("date = ? AND user_id = ?", params[:date], session[:id])
@@ -25,66 +24,8 @@ module Sinatra
       	return_message.to_json
       end
 
-      #get total for date
-      #http://localhost:4567/transactions/dateTotal?[date]=2016.08.03
-      app.get '/transactions/dateTotal', :auth => [:user] do
-      	content_type :json
-      	@transactions = Transaction.select("sum(amount) as total").where("date = ? AND user_id = ?", params[:date], session[:id])
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
-      #get total for week
-      #http://localhost:4567/transactions/weekTotal?[year]=2016&[month]=08&[day]=06
-      app.get '/transactions/weekTotal', :auth => [:user] do
-      	content_type :json
-      	@year = params[:year]
-      	@month = params[:month]
-      	@day = params[:day]
-      	@today = Date.new(@year.to_i, @month.to_i, @day.to_i)
-      	@startOfWeek = @today.beginning_of_week
-      	@endOfWeek = @startOfWeek.next_day(7)
-      	@transactions = Transaction.select("sum(amount) as total").where("date BETWEEN ? AND ? AND user_id = ?", @startOfWeek, @endOfWeek, session[:id])
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
-      #get total for month
-      #http://localhost:4567/transactions/monthTotal?[year]=2016&[month]=08&[day]=06
-      app.get '/transactions/monthTotal', :auth => [:user] do
-      	content_type :json
-      	@year = params[:year]
-      	@month = params[:month]
-      	@day = params[:day]
-      	@today = Date.new(@year.to_i, @month.to_i, @day.to_i)
-      	@startOfMonth = @today.beginning_of_month
-      	@endOfMonth = @startOfMonth.beginning_of_month.next_month - 1.day
-      	@transactions = Transaction.select("sum(amount) as total").where("date BETWEEN ? AND ? AND user_id = ?", @startOfMonth, @endOfMonth, session[:id])
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
-      #get total per day for month
-      #http://localhost:4567/transactions/dailyTotalMonth?[year]=2016&[month]=08
-      app.get '/transactions/dailyTotalMonth', :auth => [:user] do
-      	content_type :json
-      	@year = params[:year]
-      	@month = params[:month]
-      	@day = 1
-      	@today = Date.new(@year.to_i, @month.to_i, @day.to_i)
-      	@startOfMonth = @today.beginning_of_month
-      	@endOfMonth = @startOfMonth.beginning_of_month.next_month - 1.day
-      	@transactions = Transaction.select("date,sum(amount) as amount").where("date IN (?) AND user_id = ?", (@startOfMonth)..@endOfMonth, session[:id]).group("date").order("date ASC")
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
       #get expenses for date
-      #http://localhost:4567/transactions/expenses?[year]=2016&[month]=08&[day]=06
+      #/transactions/expenses?[year]=2016&[month]=08&[day]=06
       app.get '/transactions/expenses', :auth => [:user] do
       	content_type :json
       	@year = params[:year]
@@ -99,7 +40,7 @@ module Sinatra
 
 
       #get incomes for date
-      #http://localhost:4567/transactions/incomes?[year]=2016&[month]=08&[day]=06
+      #/transactions/incomes?[year]=2016&[month]=08&[day]=06
       app.get '/transactions/incomes', :auth => [:user] do
       	content_type :json
       	@year = params[:year]
@@ -113,7 +54,7 @@ module Sinatra
       end
 
       #get transactions for range
-      #http://localhost:4567/transactions/rangeAll?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
+      #/transactions/rangeAll?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
       app.get '/transactions/rangeAll', :auth => [:user] do
       	content_type :json
       	@year0 = params[:year0]
@@ -131,7 +72,7 @@ module Sinatra
       end
 
       #get expenses for range
-      #http://localhost:4567/transactions/rangeExpenses?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
+      #/transactions/rangeExpenses?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
       app.get '/transactions/rangeExpenses', :auth => [:user] do
       	content_type :json
       	@year0 = params[:year0]
@@ -149,7 +90,7 @@ module Sinatra
       end
 
       #get incomes for range
-      #http://localhost:4567/transactions/rangeIncomes?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
+      #/transactions/rangeIncomes?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
       app.get '/transactions/rangeIncomes', :auth => [:user] do
       	content_type :json
       	@year0 = params[:year0]
@@ -167,9 +108,8 @@ module Sinatra
       end
 
       #delete transaction
-      #http://localhost:4567/transactions/delete?[id]=1
+      #/transactions/delete?[id]=1
       app.delete '/transactions/delete', :auth => [:user] do
-        Date.today
       	@transaction = Transaction.find(params[:id]).destroy
       	if @transaction.save
       		return 200
@@ -179,9 +119,8 @@ module Sinatra
       end
 
       #delete transaction
-      #http://localhost:4567/transactions/delete?[id]=1
+      #/transactions/delete?[id]=1
       app.post '/transactions/delete', :auth => [:user] do
-        Date.today
       	@transaction = Transaction.find(params[:id]).destroy
       	if @transaction.save
       		return 200
@@ -190,56 +129,8 @@ module Sinatra
       	end
       end
 
-      #get monthly totals for year
-      #http://localhost:4567/transactions/yearsTotals
-      app.get '/transactions/yearsTotals', :auth => [:user] do
-      	content_type :json
-      	@transactions = Transaction.find_by_sql ["SELECT
-        	date_part('year', transactions.date) AS Dateyear,
-        	SUM(transactions.amount) AS amount
-      	FROM public.transactions
-      	WHERE user_id = ?
-       	GROUP BY Dateyear
-       	ORDER BY 1 ASC", session[:id]]
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
-      #get monthly totals for year
-      #http://localhost:4567/transactions/yearsMonthTotals
-      app.get '/transactions/yearsMonthTotals', :auth => [:user] do
-      	content_type :json
-      	@transactions = Transaction.find_by_sql ["SELECT
-        	date_part('month', transactions.date) AS Datemonth,
-        	SUM(transactions.amount) AS amount
-      	FROM public.transactions
-      	WHERE date_part('year', transactions.date) = date_part('year', current_date) AND user_id = ?
-       	GROUP BY Datemonth
-       	ORDER BY 1 ASC", session[:id]]
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
-      #get weekly totals for month
-      #http://localhost:4567/transactions/monthsWeekTotals
-      app.get '/transactions/monthsWeekTotals', :auth => [:user] do
-      	content_type :json
-        #Post.find_by_sql ["SELECT title FROM posts WHERE author = ? AND created > ?", author_id, start_date]
-      	@transactions = Transaction.find_by_sql ["SELECT
-        	date_part('week', transactions.date) AS Dateweek,
-        	SUM(transactions.amount) AS amount
-      	FROM public.transactions
-      	WHERE date_part('month', transactions.date) = date_part('month', current_date) AND user_id = ?
-       	GROUP BY Dateweek
-       	ORDER BY 1 ASC", session[:id]]
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
-      #post montly rates TODO methodize
+      #add monthly income and expenses
+	  #/transactions/addMonthsIncomesExpenses?[income]=1000&[expense]=500&[month]=1
       app.post '/transactions/addMonthsIncomesExpenses', :auth => [:user] do
         @totalIncome = params[:income]
         @totalExpense = params[:expense]

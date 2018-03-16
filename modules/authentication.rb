@@ -4,6 +4,7 @@ module Sinatra
   module Authentication
     def self.registered(app)
 
+	  #set authentication to check if session id is not null and user exists
       app.set(:auth) do |*roles|
           condition do
             unless session[:id].nil?.! && User.exists?(:id => session[:id])
@@ -12,6 +13,8 @@ module Sinatra
           end
       end
 
+	  #register user
+      #/user
       app.post "/user" do
         if User.exists?(:username => params[:username])
           return 500
@@ -34,6 +37,8 @@ module Sinatra
         end
       end
 
+	  #user login
+	  #/login
       app.post '/login' do
         if User.exists?(:username => params[:username])
           @user = User.where(username: params[:username])
@@ -48,6 +53,8 @@ module Sinatra
         end
       end
 
+	  #user logout, clears session
+	  #/logout
       app.post '/logout' do
         session.clear
         redirect('/login')

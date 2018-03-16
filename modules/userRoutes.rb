@@ -2,13 +2,17 @@ module Sinatra
   module UserRoutes
     def self.registered(app)
 
+	  #get user name
+	  #/user/username
       app.get '/user/username', :auth => [:user] do
         @user = User.where(id: session[:id])
         return_message = {}
         return_message = @user.first.username
         return_message.to_json
       end
-
+	
+	  #get user currency
+      #/user/currency
 	  app.get '/user/currency', :auth => [:user] do
         @user = User.where(id: session[:id])
         return_message = {}
@@ -16,8 +20,8 @@ module Sinatra
         return_message.to_json
       end
 
-	 #Change user currency
-	 #"http://localhost:4567/user/changeCurrency?curreny=[CHF]"
+	 #change user currency
+	 #/user/changeCurrency?curreny=[CHF]"
       app.patch '/user/changeCurrency', :auth => [:user] do
       	@user = User.where(id: session[:id])
       	if @user.update(params)
@@ -27,8 +31,8 @@ module Sinatra
       	end
       end
 
-   #Change user currency
-	 #"http://localhost:4567/user/changeCurrency?curreny=[CHF]"
+     #change user currency
+	 #/user/changeCurrency?curreny=[CHF]
       app.post '/user/changeCurrency', :auth => [:user] do
       	@user = User.where(id: session[:id])
       	if @user.update(params)
