@@ -11,10 +11,12 @@ import * as url from './Components/Url.js';
 import {user} from 'react-icons-kit/icomoon/user';
 import {ic_dashboard} from 'react-icons-kit/md/ic_dashboard';
 import {table2} from 'react-icons-kit/icomoon/table2';
+import {arrows_horizontal} from 'react-icons-kit/ikons/arrows_horizontal';
 
 import CivMoneyHome from './Components/CivMoneyHome'
 import Manage from './Components/Manage'
 import User from './Components/User'
+import AddMonthlyFixedTransaction from './Components/AddMonthlyFixedTransaction'
 
 const SideNav = withRR4();
 
@@ -51,6 +53,10 @@ class Main extends Component {
 
     renderDashboad = () => {
         return <CivMoneyHome/>;
+    }
+
+    renderMonthlyFixedTransaction = () => {
+	return <AddMonthlyFixedTransaction/>;
     }
 
     renderManage = () => {
@@ -126,6 +132,12 @@ class Main extends Component {
                                         Dashboard
                                     </NavText>
                                 </Nav>
+				<Nav id='monthlyFixedTransactions'>
+                                    <NavIcon><SvgIcon size={20} icon={arrows_horizontal}/></NavIcon>
+                                    <NavText>
+                                        Monthly Fixed Transactions
+                                    </NavText>
+                                </Nav>
                                 <Nav id='manage'>
                                     <NavIcon><SvgIcon size={20} icon={table2}/></NavIcon>
                                     <NavText>
@@ -140,6 +152,7 @@ class Main extends Component {
                             <Route exact path="/user" render={this.renderUser}/>
                             <Route exact path="/user/user/logout" render={this.renderUser}/>
                             <Route exact path="/manage" render={this.renderManage}/>
+			    <Route exact path="/monthlyFixedTransactions" render={this.renderMonthlyFixedTransaction}/>
                         </div>
                     </div>
                 </div>

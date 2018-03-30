@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import SvgIcon from 'react-icons-kit';
 
-import {arrows_horizontal} from 'react-icons-kit/ikons/arrows_horizontal';
 import {hourGlass} from 'react-icons-kit/icomoon/hourGlass';
 import {plus} from 'react-icons-kit/icomoon/plus';
 
@@ -13,7 +12,6 @@ import $ from 'jquery';
 import HomeSummaryBar from './HomeSummaryBar';
 import SummaryTable from './SummaryTable';
 import AddTransaction from './AddTransaction';
-import AddMonthlyIncomeExpenses from './AddMonthlyIncomeExpenses';
 import TimeViews from './TimeViews';
 import CivMoneyFooter from './CivMoneyFooter';
 
@@ -218,19 +216,12 @@ class CivMoneyHome extends Component {
                     <button
                         className="form-control btn-default"
                         value="Add"
-                        onClick={this.onClickShowInOut}><SvgIcon size={20} icon={arrows_horizontal}/></button>
-                    <br/>
-                    <button
-                        className="form-control btn-default"
-                        value="Add"
                         onClick={this.onClickTimeView}><SvgIcon size={20} icon={hourGlass}/></button>
                 </div>
                 <div className="col-lg-2 top-slide">
                     <br/>{this.state.showAdd
                         ? <AddTransaction onClick={this.updateData}/>
-                        : null} {this.state.showInOut
-                        ? <AddMonthlyIncomeExpenses onClick={this.updateData}/>
-                        : null}
+                        : null} 
                     {this.state.showTimeView
                         ? <TimeViews currency={this.state.currency}/>
                         : null}

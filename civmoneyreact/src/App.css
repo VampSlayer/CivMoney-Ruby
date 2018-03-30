@@ -145,3 +145,7 @@ a.whiteText:visited {
 	background: #494a4f;
 	color: white;
 }
+
+.margin-left-form{
+	margin-left: 5px;
+}

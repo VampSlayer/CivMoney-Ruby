@@ -65,6 +65,12 @@ class App extends Component {
             : <Redirect to="/login"/>}/>
           <Route
             exact
+            path="/monthlyFixedTransactions"
+            component={() => this.loggedIn()
+            ? <Main/>
+            : <Redirect to="/login"/>}/>
+          <Route
+            exact
             path="/user"
             component={() => this.loggedIn()
             ? <Main/>

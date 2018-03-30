@@ -11,8 +11,8 @@ class AddTransaction extends Component {
       amount: '',
       description: '',
       date: '',
-      income: '',
-      expense: '',
+      isIncome: '',
+      isExpense: '',
       transactionAddResult: ''
     };
 
@@ -25,11 +25,8 @@ class AddTransaction extends Component {
     this.handleDateChange = this
       .handleDateChange
       .bind(this);
-    this.handleIncomeChange = this
-      .handleIncomeChange
-      .bind(this);
-    this.handleExpenseChange = this
-      .handleExpenseChange
+    this.handleTypeChange = this
+      .handleTypeChange
       .bind(this);
     this.handleSubmit = this
       .handleSubmit
@@ -48,13 +45,10 @@ class AddTransaction extends Component {
     this.setState({date: event.target.value});
   }
 
-  handleIncomeChange(event) {
-    this.setState({income: event.target.checked});
-  }
-
-  handleExpenseChange(event) {
-    this.setState({expense: event.target.checked});
-  }
+  handleTypeChange(event) {
+    if(event.target.value === "expense"){ this.setState({isExpense: true}); this.setState({isIncome: false});}
+    if(event.target.value === "income"){ this.setState({isIncome: true}); this.setState({isExpense: false});}
+  }		
 
   handleSubmit(event) {
     var addUrl = url.GetBaseurl() + '/transaction?';
@@ -79,10 +73,15 @@ class AddTransaction extends Component {
       }
     });
 
-    if (this.state.income === true) {
+   var amount = this.state.amount;	
+
+    if (this.state.isExpense === true){
+	amount = -amount;
+    }	
+    
       $.ajax({
         type: 'POST',
-        data: 'transaction[amount]=' + this.state.amount + '&transaction[description]=' + this.state.description + '&transaction[date]=' + year + '.' + month + '.' + day,
+        data: 'transaction[amount]=' + amount + '&transaction[description]=' + this.state.description + '&transaction[date]=' + year + '.' + month + '.' + day,
         url: addUrl,
         success: function () {
           this.setState({transactionAddResult: 'Transaction added succesfully'});
@@ -92,28 +91,13 @@ class AddTransaction extends Component {
         }.bind(this)
       });
       event.preventDefault();
-    } else if (this.state.expense === true) {
-      $.ajax({
-        type: 'POST',
-        data: 'transaction[amount]=' + -this.state.amount + '&transaction[description]=' + this.state.description + '&transaction[date]=' + year + '.' + month + '.' + day,
-        url: addUrl,
-        success: function () {
-          this.setState({transactionAddResult: 'Transaction added succesfully'});
-        }.bind(this),
-        error: function () {
-          this.setState({transactionAddResult: 'Transaction not added'});
-        }.bind(this)
-      });
-      event.preventDefault()
-    }
+    
 
-    this
-      .props
-      .onClick();
+    this.props.onClick();
   }
 
   render() {
-    const isEnabled = this.state.amount.length > 0 && this.state.description.length > 0 && this.state.date.length > 0 && (this.state.income === true || this.state.expense === true) && !(this.state.income === true && this.state.expense === true);
+    const isEnabled = this.state.amount.length > 0 && this.state.description.length > 0 && this.state.date.length > 0 && (this.state.isExpense === true || this.state.isIncome === true);
     return (
       <div>
         <div className="panel-black panel-default panel-heading text-center">
@@ -144,14 +128,16 @@ class AddTransaction extends Component {
               onChange={this.handleDateChange}/>
             <br/>
             <label><input
-              type="checkbox"
-              value={this.state.income}
-              onChange={this.handleIncomeChange}/>&nbsp;Income</label>
+              type="radio"
+	      name="type"
+              value="income"
+              onChange={this.handleTypeChange}/>&nbsp;Income</label>
             <span>&nbsp;</span>
             <label><input
-              type="checkbox"
-              value={this.state.expense}
-              onChange={this.handleExpenseChange}/>&nbsp;Expense</label>
+              type="radio"
+	      name="type"
+              value="expense"
+              onChange={this.handleTypeChange}/>&nbsp;Expense</label>
             <br/>
             <p></p>
             <input

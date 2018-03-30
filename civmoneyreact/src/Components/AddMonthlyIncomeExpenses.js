@@ -42,7 +42,7 @@ class AddMonthlyIncomeExpenses extends Component {
       },
       async: true
     });
-//addMonthlyFixedTransaction?[amount]=500&[description]=monthly&[year]=2000&[month]=1
+
     $.ajax({
       type: "POST",
       url: url.GetBaseurl() + '/transactions/addMonthlyFixedTransaction?',

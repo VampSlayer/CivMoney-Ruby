@@ -129,7 +129,7 @@ module Sinatra
       	end
       end
 
-      #add monthly income and expenses
+      #add monthly fixed Transaction
       #/transactions/addMonthlyFixedTransaction?[amount]=500&[description]=monthly&[year]=2000&[month]=1
       app.post '/transactions/addMonthlyFixedTransaction', :auth => [:user] do
         @amount = params[:amount]

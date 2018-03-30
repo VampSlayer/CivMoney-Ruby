@@ -13,7 +13,8 @@
     "react-icons-kit": "^1.0.7",
     "react-redirect": "^1.0.0",
     "react-scripts": "0.9.5",
-    "react-sidenav": "^2.1.2"
+    "react-sidenav": "^2.1.2",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {},
   "scripts": {
