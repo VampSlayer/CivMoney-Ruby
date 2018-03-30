@@ -157,6 +157,7 @@ class AddTransaction extends Component {
             <input
               disabled={!isEnabled}
               type="submit"
+	      value="Add Transaction"
               className="form-control btn-default"/>
           </form>
         </div>

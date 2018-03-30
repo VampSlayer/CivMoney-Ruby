@@ -130,68 +130,23 @@ module Sinatra
       end
 
       #add monthly income and expenses
-	  #/transactions/addMonthsIncomesExpenses?[income]=1000&[expense]=500&[month]=1
-      app.post '/transactions/addMonthsIncomesExpenses', :auth => [:user] do
-        @totalIncome = params[:income]
-        @totalExpense = params[:expense]
+      #/transactions/addMonthlyFixedTransaction?[amount]=500&[description]=monthly&[year]=2000&[month]=1
+      app.post '/transactions/addMonthlyFixedTransaction', :auth => [:user] do
+        @amount = params[:amount]
+	@description = params[:description]
+	@year = params[:year]
         @month = params[:month]
-        if [4,6,9,11].include? @month.to_i
-          @dailyIncome = @totalIncome.to_i / 30
-          @dailyExpense = ((@totalExpense.to_i / 30) * -1)
-          for i in 1..30
-            @transactionI = Transaction.new()
-            @transactionE = Transaction.new()
-            @transactionI.amount = @dailyIncome
-            @transactionI.date = Date.new(Time.new.year.to_i,@month.to_i,i)
-            @transactionI.user_id = session[:id]
-            @transactionI.description = "Daily Income"
-            @transactionI.save
-            @transactionE.amount = @dailyExpense
-            @transactionE.date = Date.new(Time.new.year.to_i,@month.to_i,i)
-            @transactionE.user_id = session[:id]
-            @transactionE.description = "Daily Expenses"
-            @transactionE.save
+	numberOfDaysInMonth = Time.days_in_month(@month.to_i, @year.to_i)
+        @dailyAmount = (@amount.to_f / numberOfDaysInMonth).round(2)
+          for i in 1..numberOfDaysInMonth
+            @transaction = Transaction.new()
+            @transaction.amount = @dailyAmount
+            @transaction.date = Date.new(@year.to_i, @month.to_i, i)
+            @transaction.user_id = session[:id]
+            @transaction.description = @description
+            @transaction.save
           end
           return 200
-        elsif [2].include? @month.to_i
-          @dailyIncome = @totalIncome.to_i / 28
-          @dailyExpense = ((@totalExpense.to_i / 28) * -1)
-          for i in 1..28
-            @transactionI = Transaction.new()
-            @transactionE = Transaction.new()
-            @transactionI.amount = @dailyIncome
-            @transactionI.date = Date.new(Time.new.year.to_i,@month.to_i,i)
-            @transactionI.user_id = session[:id]
-            @transactionI.description = "Daily Income"
-            @transactionI.save
-            @transactionE.amount = @dailyExpense
-            @transactionE.date = Date.new(Time.new.year.to_i,@month.to_i,i)
-            @transactionE.user_id = session[:id]
-            @transactionE.description = "Daily Expenses"
-            @transactionE.save
-          end
-          return 200
-        elsif [1,3,5,7,8,10,12].include? @month.to_i
-          @dailyIncome = @totalIncome.to_i / 31
-          @dailyExpense = ((@totalExpense.to_i / 31) * -1)
-          for i in 1..31
-            @transactionI = Transaction.new()
-            @transactionE = Transaction.new()
-            @transactionI.amount = @dailyIncome
-            @transactionI.date = Date.new(Time.new.year.to_i,@month.to_i,i)
-            @transactionI.user_id = session[:id]
-            @transactionI.description = "Daily Income"
-            @transactionI.save
-            @transactionE.amount = @dailyExpense
-            @transactionE.date = Date.new(Time.new.year.to_i,@month.to_i,i)
-            @transactionE.user_id = session[:id]
-            @transactionE.description = "Daily Expenses"
-            @transactionE.save
-          end
-          return 200
-        else
-          return 500
-        end
       end
 
     end

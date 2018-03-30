@@ -42,11 +42,11 @@ class AddMonthlyIncomeExpenses extends Component {
       },
       async: true
     });
-
+//addMonthlyFixedTransaction?[amount]=500&[description]=monthly&[year]=2000&[month]=1
     $.ajax({
       type: "POST",
-      url: url.GetBaseurl() + '/transactions/addMonthsIncomesExpenses?',
-      data: '[income]=' + this.state.income + '&[expense]=' + this.state.expenses + '&[month]=' + dates.getTodaysMonth(),
+      url: url.GetBaseurl() + '/transactions/addMonthlyFixedTransaction?',
+      data: '[amount]=' + this.state.income + '&[description]=FixedIncome&[year]=' + dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth(),
       success: function () {
         this.setState({transactionAddResult: 'Income and Expenses succesfully added'});
         location.reload();
@@ -55,6 +55,20 @@ class AddMonthlyIncomeExpenses extends Component {
         this.setState({transactionAddResult: 'Income and Expenses  not added'});
       }.bind(this)
     });
+
+    $.ajax({
+      type: "POST",
+      url: url.GetBaseurl() + '/transactions/addMonthlyFixedTransaction?',
+      data: '[amount]=' + -this.state.expenses + '&[description]=FixedExpense&[year]=' + dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth(),
+      success: function () {
+        this.setState({transactionAddResult: 'Income and Expenses succesfully added'});
+        location.reload();
+      }.bind(this),
+      error: function () {
+        this.setState({transactionAddResult: 'Income and Expenses  not added'});
+      }.bind(this)
+    });
+
     event.preventDefault();
   }
 
@@ -86,6 +100,7 @@ class AddMonthlyIncomeExpenses extends Component {
             <input
               disabled={!isEnabled}
               type="submit"
+	      value="Add Monthly Fixed"
               className="form-control btn-default"/>
           </form>
         </div>
