@@ -25,11 +25,11 @@ class HomeSummaryBar extends Component {
   }
 
   render() {
-    var today = 'Today: ' + this.state.todaysDate;
+    var today = 'Today : ' + this.state.todaysDate;
     return (
-      <div className="col">
+      <div>
         <br/>
-        <div className="panel-black panel-default panel-heading text-center">
+        <div className="panel-black panel-default panel-heading text-center homeSummary">
           <Total
             period={today}
             total={this.props.totals.today === null

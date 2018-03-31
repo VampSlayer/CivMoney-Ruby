@@ -73,14 +73,14 @@ class SummaryTable extends Component {
     this.state = {
       totals: []
     }
-  }
-
+  };
   render() {
+    const month = dates.getTodaysMonthName();	
     var headingTwo = 'Total/' + this.props.currency;
     return (
       <div>
         <div className="panel-black panel-default panel-heading text-center">
-          <div className="text-center">Summary</div>
+          <div className="text-center">{month}</div>
         </div>
         <div className="panel-body">
           <TwoColumnTable

@@ -105,7 +105,7 @@ class AddTransaction extends Component {
         </div>
         <div className="panel-body">
           <strong className="text-red">{this.state.transactionAddResult}</strong>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit} className="form-group">
             <input
               type="number"
               className="form-control"
@@ -127,13 +127,16 @@ class AddTransaction extends Component {
               value={this.state.date}
               onChange={this.handleDateChange}/>
             <br/>
-            <label><input
+	    <label>
+            <input
+	      className="form-control"
               type="radio"
 	      name="type"
               value="income"
               onChange={this.handleTypeChange}/>&nbsp;Income</label>
             <span>&nbsp;</span>
             <label><input
+              className="form-control"
               type="radio"
 	      name="type"
               value="expense"

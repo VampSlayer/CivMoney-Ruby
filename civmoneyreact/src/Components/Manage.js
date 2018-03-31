@@ -132,15 +132,11 @@ class Manage extends Component {
                 </div>
 
                 <div className="col-lg-8">
-                    <div className="panel-body">
-                        <div className="panel-body">
-                            <div className="panel-body">
+                            <div>
                                 {this.state.transactions.length > 0
                                     ? <ManageTable totals={this.state.transactions} currency={this.state.currency}/>
                                     : null}
                             </div>
-                        </div>
-                    </div>
                 </div>
                 <CivMoneyFooter/>
             </div>

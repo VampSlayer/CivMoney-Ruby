@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class Total extends Component {
   render() {
     return (
-      <span>
+      <div>
         {this.props.period}
         &nbsp;:&nbsp;
         <span
@@ -15,7 +15,7 @@ class Total extends Component {
           {this.props.total}
         </span>
         &nbsp;{this.props.currency}&nbsp;
-      </span>
+      </div>
     );
   }
 }

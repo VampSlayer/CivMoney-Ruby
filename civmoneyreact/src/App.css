@@ -146,6 +146,41 @@ a.whiteText:visited {
 	color: white;
 }
 
+@media (min-width: 320px) {  
+  *{font-size:1rem;} /*1rem = 16px*/
+.margin-left-form{
+	margin-top: 5px;
+}
+}
+
+@media (min-width: 544px) {  
+  *{font-size:1.5rem;} /*1rem = 16px*/
+.margin-left-form{
+	margin-top: 5px;
+}
+}
+ 
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {  
+  *{font-size:2rem;} /*1rem = 16px*/
 .margin-left-form{
 	margin-left: 5px;
 }
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+  *{font-size:2rem;} /*1rem = 16px*/
+.margin-left-form{
+	margin-left: 5px;
+}
+}
+ 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+  * {font-size:2rem;} /*1rem = 16px*/    
+.margin-left-form{
+	margin-left: 5px;
+}
+}
+

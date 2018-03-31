@@ -186,12 +186,12 @@ class AddMonthlyFixedTransaction extends Component {
 	<p>Add your fixed incomes & expenses for this month here. It will take those fixed incomes & expenses and divide by the number of days in this month and add those transactions 	to your account.</p>
         <div className="panel-body">
           <strong className="text-red">{this.state.transactionAddResult}</strong>
-          <form onSubmit={this.handleSubmit} className="form-inline">
+          <form onSubmit={this.handleSubmit} className="form-inline form-group">
 	  {this.state.fixedCosts.map((fixedCost) => (
 	    <div key={fixedCost.Id}>
             <input
               type="number"
-              className="form-control col-sm-4"
+              className="form-control col-sm-4 margin-left-form"
               placeholder="Amount"
               value={fixedCost.amount}
               onChange={this.handleAmountChange(fixedCost.id)}/>
@@ -222,13 +222,13 @@ class AddMonthlyFixedTransaction extends Component {
 	</div>
 	<div className="col-lg-6">
 	{this.state.incomeTotal > 0 ? 
-		<h3 className="text-green">Incomes Total :<span className="margin-left-form">{this.state.incomeTotal}<span className="margin-left-form">{this.state.currency}</span></span></h3> 
+		<h3 className="text-green">Incomes Total : {this.state.incomeTotal} {this.state.currency}</h3> 
 		: <span></span>}
 	{this.state.expenseTotal > 0 ? 
-		<h3 className="text-red">Expenses Total :<span className="margin-left-form">{this.state.expenseTotal}<span className="margin-left-form">{this.state.currency}</span></span></h3> 
+		<h3 className="text-red">Expenses Total : {this.state.expenseTotal} {this.state.currency}</h3> 
 		: <span></span>}
 	{this.state.incomeTotal > 0 || this.state.expenseTotal > 0 ? 
-		<h2>Total :<span className="margin-left-form">{this.state.total}<span className="margin-left-form">{this.state.currency}</span></span></h2> 
+		<h2>Total : {this.state.total} {this.state.currency}</h2> 
 		: <span></span>}
 	</div>
       </div>

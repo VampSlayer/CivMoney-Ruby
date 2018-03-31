@@ -141,7 +141,7 @@ class ThreeColumnTable extends Component {
 class ManageTable extends Component {
     render() {
         return (
-            <div className="panel-body">
+            <div>
                 <ThreeColumnTable data={this.props.totals} currency={this.props.currency}/>
             </div>
         );
