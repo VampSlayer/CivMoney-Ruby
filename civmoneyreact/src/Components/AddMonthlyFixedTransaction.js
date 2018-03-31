@@ -79,7 +79,7 @@ class AddMonthlyFixedTransaction extends Component {
 	let fixedCosts = this.state.fixedCosts;
 	var doAllFixedCostsHaveValues = false;
 	for(let fixedCost of fixedCosts){
-	  if(fixedCost.amount.length > 0 && fixedCost.amount > 0 && fixedCost.description.length > 0 && (fixedCost.isExpense === true || fixedCost.isIncome === true)){
+	  if(parseFloat(fixedCost.amount) != 0 && fixedCost.amount != "" && fixedCost.description.length > 0 && (fixedCost.isExpense === true || fixedCost.isIncome === true)){
 		doAllFixedCostsHaveValues = true;
 	  }
 	  else{
@@ -121,8 +121,9 @@ class AddMonthlyFixedTransaction extends Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();  	
 
-    $.ajaxSetup({
+   $.ajaxSetup({
       crossDomain: true,
       xhrFields: {
         withCredentials: true
@@ -131,18 +132,19 @@ class AddMonthlyFixedTransaction extends Component {
     });
 	
    for(let fixedCost of this.state.fixedCosts){
-    $.ajax({
-      type: "POST",
-      url: url.GetBaseurl() + '/transactions/addMonthlyFixedTransaction?',
-      data: '[amount]=' + fixedCost.amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth(),
-      success: function () {
-        this.setState({transactionAddResult: 'Succesfully Added. Go to Dashboard to view.'});
-      }.bind(this),
-      error: function () {
-        this.setState({transactionAddResult: 'Not added'});
-      }.bind(this)
-    }); 
-
+	if(parseFloat(fixedCost.amount) != 0 && fixedCost.amount != "" && fixedCost.description.length > 0 && (fixedCost.isExpense === true || fixedCost.isIncome === true)){
+	    $.ajax({
+	      type: "POST",
+	      url: url.GetBaseurl() + '/transactions/addMonthlyFixedTransaction?',
+	      data: '[amount]=' + fixedCost.amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth(),
+	      success: function () {
+		this.setState({transactionAddResult: 'Succesfully Added Transactions. Go to Dashboard to view.'});
+	      }.bind(this),
+	      error: function () {
+		this.setState({transactionAddResult: 'Transactions Not added'});
+	      }.bind(this)
+	    }); 
+	}
     event.preventDefault();
    }
   }
