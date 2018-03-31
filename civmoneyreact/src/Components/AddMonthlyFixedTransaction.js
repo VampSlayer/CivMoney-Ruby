@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 import * as url from './Url.js';
 import * as dates from './Dates.js';
+import MonthlyFixedTransactionTable from './MonthlyFixedTransactionTable'
 
 class AddMonthlyFixedTransaction extends Component {
   constructor() {
@@ -12,11 +13,9 @@ class AddMonthlyFixedTransaction extends Component {
     this.state = {
       transactionAddResult: '',
       enabled: false, 
-      incomeTotal: '',
-      total: '',
-      expenseTotal: '',
       currency: '',
-      fixedCosts: [{id: uuid.v4(), amount: '', description: '', isExpense: '', isIncome: ''}]
+      fixedCosts: [{id: uuid.v4(), amount: '', description: '', isExpense: '', isIncome: ''}],
+      fixedCostsWithTotals: []
     };
 
     this.handleSubmit = this
@@ -28,8 +27,8 @@ class AddMonthlyFixedTransaction extends Component {
     this.doAllFixedCostsHaveValues = this
  	.doAllFixedCostsHaveValues
 	.bind(this);
-   this.calculateAndShowTotals = this
- 	.calculateAndShowTotals
+   this.addTotals = this
+ 	.addTotals
 	.bind(this);
   }
 
@@ -88,30 +87,37 @@ class AddMonthlyFixedTransaction extends Component {
 	  }
 	}
 	this.setState({enabled: doAllFixedCostsHaveValues});
-	this.calculateAndShowTotals();
+	this.addTotals();
   }
 
-  calculateAndShowTotals(){
+  addTotals(){
 	var incomeTotal = 0;
 	var expenseTotal = 0;
-	let fixedCosts = this.state.fixedCosts;
+	console.log(this.state.fixedCosts);
 
+	var fixedCostsWithTotals = [];
+	let fixedCosts = this.state.fixedCosts;
+	
 	for(let fixedCost of fixedCosts){
-	   if(fixedCost.isIncome === true){
-		if(parseFloat(fixedCost.amount) > 0){
-		incomeTotal += parseFloat(fixedCost.amount);
+		   if(fixedCost.isIncome === true){
+			if(parseFloat(fixedCost.amount) < 0){ fixedCost.amount = (fixedCost.amount * -1);}
+			incomeTotal += parseFloat(fixedCost.amount);
+		   }
+		   if(fixedCost.isExpense === true){  
+		      if(parseFloat(fixedCost.amount) > 0){
+			fixedCost.amount = -fixedCost.amount;	
+			}
+			expenseTotal += parseFloat(fixedCost.amount);	
+		   }
+		fixedCostsWithTotals.push(fixedCost);
 		}
-	   }
-	   if(fixedCost.isExpense === true){
-	      if(parseFloat(fixedCost.amount) > 0){
-		expenseTotal += parseFloat(fixedCost.amount);
-		}
-	   }
-	}
-	var total = incomeTotal + -expenseTotal;
-	this.setState({incomeTotal: incomeTotal});
-	this.setState({expenseTotal: expenseTotal});
-	this.setState({total: total});
+
+	var total = incomeTotal + expenseTotal;
+	
+        fixedCostsWithTotals.push({ id: uuid.v4(), amount: incomeTotal, description: 'Income Total', isExpense: '', isIncome: true });
+	fixedCostsWithTotals.push({ id: uuid.v4(), amount: expenseTotal, description: 'Expense Total', isExpense: true, isIncome: '' });
+	fixedCostsWithTotals.push({ id: uuid.v4(), amount: total, description: 'Total', isExpense: '', isIncome: '' });
+	this.setState({fixedCostsWithTotals: fixedCostsWithTotals});
   }
 
   handleSubmit(event) {
@@ -124,18 +130,11 @@ class AddMonthlyFixedTransaction extends Component {
       async: true
     });
 	
-   for(let fixedCost of this.state.fixedCosts){ 
-
-    var amount = fixedCost.amount;
-
-    if(fixedCost.isExpense){
-	amount = -amount;
-    }
-
+   for(let fixedCost of this.state.fixedCosts){
     $.ajax({
       type: "POST",
       url: url.GetBaseurl() + '/transactions/addMonthlyFixedTransaction?',
-      data: '[amount]=' + amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth(),
+      data: '[amount]=' + fixedCost.amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth(),
       success: function () {
         this.setState({transactionAddResult: 'Succesfully Added. Go to Dashboard to view.'});
       }.bind(this),
@@ -221,14 +220,8 @@ class AddMonthlyFixedTransaction extends Component {
         </div>
 	</div>
 	<div className="col-lg-6">
-	{this.state.incomeTotal > 0 ? 
-		<h3 className="text-green">Incomes Total : {this.state.incomeTotal} {this.state.currency}</h3> 
-		: <span></span>}
-	{this.state.expenseTotal > 0 ? 
-		<h3 className="text-red">Expenses Total : {this.state.expenseTotal} {this.state.currency}</h3> 
-		: <span></span>}
-	{this.state.incomeTotal > 0 || this.state.expenseTotal > 0 ? 
-		<h2>Total : {this.state.total} {this.state.currency}</h2> 
+	{this.state.fixedCostsWithTotals.length > 0 && this.state.fixedCostsWithTotals[0].amount.length > 0 
+		? <MonthlyFixedTransactionTable totals={this.state.fixedCostsWithTotals} currency={this.state.currency}/> 
 		: <span></span>}
 	</div>
       </div>

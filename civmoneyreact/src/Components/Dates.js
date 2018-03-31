@@ -47,6 +47,13 @@ export function getTodaysYear() {
   return today.getFullYear();
 }
 
+
+export function getNumberOfDaysThisMonth(){
+   var today = new Date();
+   var lastDay = new Date(today.getYear(), today.getMonth() +1, 0);	
+   return lastDay.getDate();
+}
+
 export function getTodaysMonthName(){
   var today = new Date();
   today = today.getMonth() + 1;
