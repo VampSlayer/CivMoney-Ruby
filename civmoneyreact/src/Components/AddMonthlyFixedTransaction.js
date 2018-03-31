@@ -65,7 +65,7 @@ class AddMonthlyFixedTransaction extends Component {
   handleRemoveShareholder = (id) => () => {
     let fixedCosts = this.state.fixedCosts;
     let index = this.findIndex(id);
-    fixedCosts.splice(index, 1);
+    fixedCosts.splice(index, 1); 
     this.setState({fixedCosts: fixedCosts});
     this.doAllFixedCostsHaveValues();
   }
@@ -207,7 +207,7 @@ class AddMonthlyFixedTransaction extends Component {
 		<input onChange={this.handleTypeChange(fixedCost.id)} className="form-control input-group margin-left-form" type="radio" name={"1" + fixedCost.id} value="expense"/>&nbsp;Expense
 	    </label>
 	    <button type="button" onClick={this.handleAddShareholder} className="form-control small margin-left-form">+</button>
-	    <button type="button" onClick={this.handleRemoveShareholder(fixedCost.id)} className="form-control small margin-left-form">--</button>	
+	    <button disabled={this.state.fixedCosts.length === 1} type="button" onClick={this.handleRemoveShareholder(fixedCost.id)} className="form-control small margin-left-form">--</button>	
             <br/>
 	    </div>
 	   ))}
@@ -220,7 +220,7 @@ class AddMonthlyFixedTransaction extends Component {
         </div>
 	</div>
 	<div className="col-lg-6">
-	{this.state.fixedCostsWithTotals.length > 0 && this.state.fixedCostsWithTotals[0].amount.length > 0 
+	{this.state.fixedCostsWithTotals.length > 0
 		? <MonthlyFixedTransactionTable totals={this.state.fixedCostsWithTotals} currency={this.state.currency}/> 
 		: <span></span>}
 	</div>
