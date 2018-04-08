@@ -2,7 +2,7 @@ language: ruby
 rvm:
   - 2.4.1
 before_script:
-  - bundle exec rake db:reset RACK_ENV=test
+  - bundle exec RACK_ENV=test rake db:reset
 script:
   - bundle exec rspec
 services:

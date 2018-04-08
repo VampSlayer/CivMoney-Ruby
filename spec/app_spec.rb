@@ -12,10 +12,11 @@ end
 describe "Civ Money" do
   @user = User.where(:username => 'TestUser').destroy_all
       it "should register new user" do
-        post '/user', :username => 'TestUser', :password =>'123456'
+        post '/user', :username => 'TestUser', :password =>'123456', :currency => 'CHF'
         expect(last_response).to be_redirect  # This works, but I want it to be more specific
         follow_redirect!
-        expect(last_request.url).to eq('http://example.org/CivMoneyHome')
+	expect(last_request.url).to eq('http://example.org/CivMoneyHome')
+        expect(last_response.status).to eq(200)
       end
 end
 
@@ -25,6 +26,7 @@ describe "Civ Money" do
         expect(last_response).to be_redirect  # This works, but I want it to be more specific
         follow_redirect!
         expect(last_request.url).to eq('http://example.org/CivMoneyHome')
+	expect(last_response.status).to eq(200)
       end
 end
 
