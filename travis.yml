@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - 2.4.1
+before_script:
+  - bundle exec rake db:reset RACK_ENV=test
+script:
+  - rspec
+services:
+  - postgresql
+notifications:
+  email: false

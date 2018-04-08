@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/VampSlayer/CivMoney.svg?branch=master)](https://travis-ci.org/VampSlayer/CivMoney)
+
 Money Management Web App by Sayam Hussain.
 
 Based of the game Civilization.

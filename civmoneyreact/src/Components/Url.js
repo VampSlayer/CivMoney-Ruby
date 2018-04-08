@@ -1,3 +1,3 @@
 export function GetBaseurl() {
-				return 'http://localhost:9292';
+				return 'http://civmoney.com:9292';
 }
