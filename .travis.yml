@@ -4,7 +4,7 @@ rvm:
 before_script:
   - bundle exec rake db:reset RACK_ENV=test
 script:
-  - rspec
+  - bundle exec rspec
 services:
   - postgresql
 notifications:
