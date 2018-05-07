@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import Login from './Components/Login'
 import Main from './Main';
 import Register from './Components/Register';
+import NotFound from './Components/NotFound';
 
 import './App.css';
 import './Table.css';
@@ -75,8 +76,15 @@ class App extends Component {
             component={() => this.loggedIn()
             ? <Main/>
             : <Redirect to="/login"/>}/>
+			<Route
+            exact
+            path="/notFound"
+            component={() => this.loggedIn()
+            ? <NotFound/>
+            : <Redirect to="/login"/>}/>
           <Route exact path="/register" component={() => <Register Auth={this.Auth}/>}/>
           <Route exact path="/login" component={() => <Login Auth={this.Auth}/>}/>
+		  <Route nomatch component={() => <Redirect to="/notFound"/>}/>
         </div>
       </Router>
     );
