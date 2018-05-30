@@ -76,7 +76,7 @@ class App extends Component {
             component={() => this.loggedIn()
             ? <Main/>
             : <Redirect to="/login"/>}/>
-			<Route
+	  <Route
             exact
             path="/notFound"
             component={() => this.loggedIn()
@@ -84,7 +84,6 @@ class App extends Component {
             : <Redirect to="/login"/>}/>
           <Route exact path="/register" component={() => <Register Auth={this.Auth}/>}/>
           <Route exact path="/login" component={() => <Login Auth={this.Auth}/>}/>
-		  <Route nomatch component={() => <Redirect to="/notFound"/>}/>
         </div>
       </Router>
     );

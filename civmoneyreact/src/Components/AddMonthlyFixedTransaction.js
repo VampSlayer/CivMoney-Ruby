@@ -16,7 +16,8 @@ class AddMonthlyFixedTransaction extends Component {
       currency: '',
       fixedCosts: [{id: uuid.v4(), amount: '', description: '', isExpense: '', isIncome: ''}],
       fixedCostsWithTotals: [],
-      month: 1
+      months: ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      month: 'January'
     };
 
     this.handleSubmit = this
@@ -31,11 +32,13 @@ class AddMonthlyFixedTransaction extends Component {
    this.addTotals = this
  	.addTotals
 	.bind(this);
+   this.handleMonthChange = this
+ 	.handleMonthChange
+	.bind(this);
   }
 	
-  handleMonthChange = () => (event) => {
-   var monthNumber = dates.getMonthNumber(event.target.value);	  
-   this.setState({month: monthNumber});
+  handleMonthChange(event) { 
+   this.setState({month: event.target.value});
   }
 
   handleAmountChange = (id) => (event) =>  {
@@ -85,7 +88,7 @@ class AddMonthlyFixedTransaction extends Component {
 	let fixedCosts = this.state.fixedCosts;
 	var doAllFixedCostsHaveValues = false;
 	for(let fixedCost of fixedCosts){
-	  if(parseFloat(fixedCost.amount) != 0 && fixedCost.amount != "" && fixedCost.description.length > 0 && (fixedCost.isExpense === true || fixedCost.isIncome === true)){
+	  if(parseFloat(fixedCost.amount) !== 0 && fixedCost.amount !== "" && fixedCost.description.length > 0 && (fixedCost.isExpense === true || fixedCost.isIncome === true)){
 		doAllFixedCostsHaveValues = true;
 	  }
 	  else{
@@ -99,14 +102,13 @@ class AddMonthlyFixedTransaction extends Component {
   addTotals(){
 	var incomeTotal = 0;
 	var expenseTotal = 0;
-	console.log(this.state.fixedCosts);
 
 	var fixedCostsWithTotals = [];
 	let fixedCosts = this.state.fixedCosts;
 	
 	for(let fixedCost of fixedCosts){
 		   if(fixedCost.isIncome === true){
-			if(parseFloat(fixedCost.amount) < 0){ fixedCost.amount = (fixedCost.amount * -1);}
+			if(parseFloat(fixedCost.amount) < 0){ fixedCost.amount = -fixedCost.amount;}
 			incomeTotal += parseFloat(fixedCost.amount);
 		   }
 		   if(fixedCost.isExpense === true){  
@@ -138,11 +140,11 @@ class AddMonthlyFixedTransaction extends Component {
     });
 	
    for(let fixedCost of this.state.fixedCosts){
-	if(parseFloat(fixedCost.amount) != 0 && fixedCost.amount != "" && fixedCost.description.length > 0 && (fixedCost.isExpense === true || fixedCost.isIncome === true)){
+	if(parseFloat(fixedCost.amount) !== 0 && fixedCost.amount !== "" && fixedCost.description.length > 0 && (fixedCost.isExpense === true || fixedCost.isIncome === true)){
 	    $.ajax({
 	      type: "POST",
 	      url: url.GetBaseurl() + '/transactions/addMonthlyFixedTransaction?',
-	      data: '[amount]=' + fixedCost.amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + this.state.month,
+	      data: '[amount]=' + fixedCost.amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + dates.getMonthNumber(this.state.month),
 	      success: function () {
 		this.setState({transactionAddResult: 'Succesfully Added Transactions. Go to Dashboard to view.'});
 	      }.bind(this),
@@ -160,8 +162,6 @@ class AddMonthlyFixedTransaction extends Component {
             type: "GET",
             url: url.GetBaseurl() + '/user/currency',
             dataType: "json",
-            data: {},
-            async: true,
             xhrFields: {
                 withCredentials: true
             },
@@ -195,7 +195,7 @@ class AddMonthlyFixedTransaction extends Component {
           <strong className="text-red">{this.state.transactionAddResult}</strong>
           <form onSubmit={this.handleSubmit} className="form-inline form-group">
 	  {this.state.fixedCosts.map((fixedCost) => (
-	    <div key={fixedCost.Id}>
+	    <div key={fixedCost.id}>
             <input
               type="number"
               className="form-control col-sm-4 margin-left-form"
@@ -220,15 +220,17 @@ class AddMonthlyFixedTransaction extends Component {
 	    </div>
 	   ))}
 	   <label>Select Month for this year
-	    <select value={this.state.month} onChange={this.handleMonthChange}>
-		    {date.getMonths().map(x => <option>{x}</option>)}
-	</select>
+	    <select className="form-control margin-left-form text-black" value={this.state.month} onChange={this.handleMonthChange}>
+		    {this.state.months.map(x => <option key={x}>{x}</option>)}
+	    </select>
 		</label>
+	<p>
 	      <input
               disabled={!this.state.enabled}
               type="submit"
 	      value="Add Monthly Fixed Transactions"
               className="form-control btn-default"/>
+	</p>
           </form>
         </div>
 	</div>
