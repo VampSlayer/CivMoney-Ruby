@@ -16,7 +16,7 @@ class AddMonthlyFixedTransaction extends Component {
       currency: '',
       fixedCosts: [{id: uuid.v4(), amount: '', description: '', isExpense: '', isIncome: ''}],
       fixedCostsWithTotals: [],
-      month: ''
+      month: 1
     };
 
     this.handleSubmit = this
@@ -142,7 +142,7 @@ class AddMonthlyFixedTransaction extends Component {
 	    $.ajax({
 	      type: "POST",
 	      url: url.GetBaseurl() + '/transactions/addMonthlyFixedTransaction?',
-	      data: '[amount]=' + fixedCost.amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth(),
+	      data: '[amount]=' + fixedCost.amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + this.state.month,
 	      success: function () {
 		this.setState({transactionAddResult: 'Succesfully Added Transactions. Go to Dashboard to view.'});
 	      }.bind(this),
@@ -219,8 +219,11 @@ class AddMonthlyFixedTransaction extends Component {
             <br/>
 	    </div>
 	   ))}
-	   <label>Month</label>
-	    <select multiple={false} value={dates.getMonths()} onChange={this.handleMonthChange}>
+	   <label>Select Month for this year
+	    <select value={this.state.month} onChange={this.handleMonthChange}>
+		    {date.getMonths().map(x => <option>{x}</option>)}
+	</select>
+		</label>
 	      <input
               disabled={!this.state.enabled}
               type="submit"
