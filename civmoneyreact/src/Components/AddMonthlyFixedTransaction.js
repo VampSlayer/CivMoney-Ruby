@@ -34,7 +34,7 @@ class AddMonthlyFixedTransaction extends Component {
   }
 	
   handleMonthChange = () => (event) => {
-   var monthNumber = dates.GetMonthNumber(event.target.value);	  
+   var monthNumber = dates.getMonthNumber(event.target.value);	  
    this.setState({month: monthNumber});
   }
 
@@ -220,7 +220,7 @@ class AddMonthlyFixedTransaction extends Component {
 	    </div>
 	   ))}
 	   <label>Month</label>
-	    <select multiple={true} value={dates.GetMonths()} onChange={this.handleMonthChange}>
+	    <select multiple={false} value={dates.getMonths()} onChange={this.handleMonthChange}>
 	      <input
               disabled={!this.state.enabled}
               type="submit"
