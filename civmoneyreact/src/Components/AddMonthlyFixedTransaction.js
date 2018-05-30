@@ -190,7 +190,7 @@ class AddMonthlyFixedTransaction extends Component {
         <div className="text-center">Monthly Fixed Transactions</div>
         </div>
 	<div className="col-lg-6">
-	<p>Add your fixed incomes & expenses for this month here. It will take those fixed incomes & expenses and divide by the number of days in this month and add those transactions 	to your account.</p>
+	<p>Add your fixed incomes & expenses for your selected month here. It will take those fixed incomes & expenses and divide by the number of days in that month and add those transactions 	to your account.</p>
         <div className="panel-body">
           <strong className="text-red">{this.state.transactionAddResult}</strong>
           <form onSubmit={this.handleSubmit} className="form-inline form-group">
