@@ -15,7 +15,8 @@ class AddMonthlyFixedTransaction extends Component {
       enabled: false, 
       currency: '',
       fixedCosts: [{id: uuid.v4(), amount: '', description: '', isExpense: '', isIncome: ''}],
-      fixedCostsWithTotals: []
+      fixedCostsWithTotals: [],
+      month: 1
     };
 
     this.handleSubmit = this
@@ -30,6 +31,11 @@ class AddMonthlyFixedTransaction extends Component {
    this.addTotals = this
  	.addTotals
 	.bind(this);
+  }
+	
+  handleMonthChange = () => (event) => {
+   var monthNumber = dates.getMonthNumber(event.target.value);	  
+   this.setState({month: monthNumber});
   }
 
   handleAmountChange = (id) => (event) =>  {
@@ -136,7 +142,7 @@ class AddMonthlyFixedTransaction extends Component {
 	    $.ajax({
 	      type: "POST",
 	      url: url.GetBaseurl() + '/transactions/addMonthlyFixedTransaction?',
-	      data: '[amount]=' + fixedCost.amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth(),
+	      data: '[amount]=' + fixedCost.amount + '&[description]=' + fixedCost.description + '&[year]=' + dates.getTodaysYear() + '&[month]=' + this.state.month,
 	      success: function () {
 		this.setState({transactionAddResult: 'Succesfully Added Transactions. Go to Dashboard to view.'});
 	      }.bind(this),
@@ -184,7 +190,7 @@ class AddMonthlyFixedTransaction extends Component {
         <div className="text-center">Monthly Fixed Transactions</div>
         </div>
 	<div className="col-lg-6">
-	<p>Add your fixed incomes & expenses for this month here. It will take those fixed incomes & expenses and divide by the number of days in this month and add those transactions 	to your account.</p>
+	<p>Add your fixed incomes & expenses for your selected month here. It will take those fixed incomes & expenses and divide by the number of days in that month and add those transactions 	to your account.</p>
         <div className="panel-body">
           <strong className="text-red">{this.state.transactionAddResult}</strong>
           <form onSubmit={this.handleSubmit} className="form-inline form-group">
@@ -213,6 +219,11 @@ class AddMonthlyFixedTransaction extends Component {
             <br/>
 	    </div>
 	   ))}
+	   <label>Select Month for this year
+	    <select value={this.state.month} onChange={this.handleMonthChange}>
+		    {date.getMonths().map(x => <option>{x}</option>)}
+	</select>
+		</label>
 	      <input
               disabled={!this.state.enabled}
               type="submit"
