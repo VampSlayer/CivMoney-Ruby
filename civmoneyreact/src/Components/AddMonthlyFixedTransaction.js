@@ -15,7 +15,8 @@ class AddMonthlyFixedTransaction extends Component {
       enabled: false, 
       currency: '',
       fixedCosts: [{id: uuid.v4(), amount: '', description: '', isExpense: '', isIncome: ''}],
-      fixedCostsWithTotals: []
+      fixedCostsWithTotals: [],
+      month: ''
     };
 
     this.handleSubmit = this
@@ -30,6 +31,11 @@ class AddMonthlyFixedTransaction extends Component {
    this.addTotals = this
  	.addTotals
 	.bind(this);
+  }
+	
+  handleMonthChange = () => (event) => {
+   var monthNumber = dates.GetMonthNumber(event.target.value);	  
+   this.setState({month: monthNumber});
   }
 
   handleAmountChange = (id) => (event) =>  {
@@ -213,6 +219,8 @@ class AddMonthlyFixedTransaction extends Component {
             <br/>
 	    </div>
 	   ))}
+	   <label>Month</label>
+	    <select multiple={true} value={dates.GetMonths()} onChange={this.handleMonthChange}>
 	      <input
               disabled={!this.state.enabled}
               type="submit"
