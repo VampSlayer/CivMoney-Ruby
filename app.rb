@@ -55,7 +55,7 @@ configure do
   end
 
 before do
-    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    response.headers['Access-Control-Allow-Origin'] = 'http://civmoney.com:3000'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
