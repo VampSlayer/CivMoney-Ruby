@@ -15,12 +15,14 @@ return parseFloat(date.slice(-2));
   render() {
     const month = dates.getTodaysMonthName();
 	const amountLabel = "Amount / " + this.props.currency;
-    return (
+	if(this.props.data !== undefined && this.props.data.length > 0){
+    return (	
      <div>
         <div className="panel-black panel-default panel-heading text-center">
           <div className="text-center">{month}</div>
         </div>
-		<div className="panel-size">
+	
+	<div className="panel-size">
         <ResponsiveContainer width="100%" height="100%">
         <BarChart data={this.props.data}>
 		  <ReferenceLine y={0} stroke="#ff8c00" strokeDasharray="3 3" />
@@ -31,8 +33,10 @@ return parseFloat(date.slice(-2));
 		</BarChart>
 	</ResponsiveContainer>
 	</div>
-      </div>
-    );
+      </div>);
+}
+
+    return null;
   }
 }
 

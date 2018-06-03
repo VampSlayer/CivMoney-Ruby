@@ -198,7 +198,7 @@ class CivMoneyHome extends Component {
                     onClick={this.handleMainScreenClick}>
 
                     <HomeSummaryBar totals={totals} currency={this.state.currency}/>
-		    <SummaryChart
+			<SummaryChart
                         data={this.state.thisMonthTotals}
                         currency={this.state.currency}/>
                 </div>

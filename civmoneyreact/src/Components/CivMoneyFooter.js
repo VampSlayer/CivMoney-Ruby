@@ -5,7 +5,7 @@ import * as dates from './Dates.js';
 class CivMoneyFooter extends Component {
     render() {
         return (
-            <div className="footer">
+            <div className="footer fixed-bottom">
                 <a
                     href="https://github.com/VampSlayer/CivMoney"
                     style={{

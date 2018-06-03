@@ -5,7 +5,8 @@ import $ from 'jquery';
 
 import * as url from './Url.js';
 import * as dates from './Dates.js';
-import MonthlyFixedTransactionTable from './MonthlyFixedTransactionTable'
+import MonthlyFixedTransactionTable from './MonthlyFixedTransactionTable';
+import CivMoneyFooter from './CivMoneyFooter';
 
 class AddMonthlyFixedTransaction extends Component {
   constructor() {
@@ -239,9 +240,9 @@ class AddMonthlyFixedTransaction extends Component {
 		? <MonthlyFixedTransactionTable totals={this.state.fixedCostsWithTotals} currency={this.state.currency}/> 
 		: <span></span>}
 	</div>
+	<CivMoneyFooter/>
       </div>
     );
   }
 }
-
 export default AddMonthlyFixedTransaction;

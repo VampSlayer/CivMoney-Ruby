@@ -40,11 +40,13 @@ class ChartCustomToolTip extends Component {
 
     if (active) {
       const { label, currency, payload } = this.props;
-      if(this.state.date !== label){this.getTransactions(label);}
+      if(typeof label !== "undefined" && payload !== null){
+      if(typeof label !== "undefined" && this.state.date !== label){this.getTransactions(label);}
       
       return (
 	<DailyTable transactions={this.state.transactions} currency={currency} total={payload[0].value} date={label}/>
       );
+	}
     }
 
     return null;
