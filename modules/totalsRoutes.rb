@@ -59,7 +59,7 @@ module Sinatra
       	@today = Date.new(@year.to_i, @month.to_i, @day.to_i)
       	@startOfMonth = @today.beginning_of_month
       	@endOfMonth = @startOfMonth.beginning_of_month.next_month - 1.day
-      	@transactions = Transaction.select("date,sum(amount) as amount").where("date IN (?) AND user_id = ?", (@startOfMonth)..@endOfMonth, session[:id]).group("date").order("date ASC")
+      	@transactions = Transaction.select("date, sum(amount) as amount").where("date IN (?) AND user_id = ?", (@startOfMonth)..@endOfMonth, session[:id]).group("date").order("date ASC")
       	return_message = {}
       	return_message = @transactions
       	return_message.to_json

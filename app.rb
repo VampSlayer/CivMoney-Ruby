@@ -9,6 +9,8 @@ require 'dm-aggregates'
 require 'sinatra/base'
 require 'sprockets'
 require 'time'
+require 'active_support'
+require 'active_support/core_ext/object/json'
 #enviroments
 require './config/environments'
 #models
@@ -57,4 +59,10 @@ before do
     response.headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
+end
+
+class BigDecimal
+	def as_json(*)
+		to_f
+	end
 end

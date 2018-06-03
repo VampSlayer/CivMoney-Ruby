@@ -27,14 +27,21 @@ class TableRow extends Component {
 class TwoColumnTable extends Component {
   render() {
     return (
-      <table className={'daily-table'}>
+      <table className="daily-table">
         <thead>
+	  <tr><th className="text-center" colSpan="2"><strong>{this.props.date + " : Total "} 
+		<span className={this.props.total === '0.0' || this.props.total === '0'
+        ? "text-orange"
+        : this.props.total > 0
+          ? "text-green"
+          : "text-red"}>{this.props.total}</span> {this.props.currency}
+	  </strong></th></tr>
           <tr>
             <td>
               <strong>{this.props.headingOne}</strong>
             </td>
             <td>
-              <strong>{this.props.headingTwo}</strong>
+              <strong>{"Amount/" + this.props.currency}</strong>
             </td>
           </tr>
         </thead>
@@ -45,49 +52,16 @@ class TwoColumnTable extends Component {
 }
 
 class DailyTable extends Component {
-  constructor() {
-    super();
-    this.state = {
-      transactions: []
-    }
-  }
-
-  getTransactions() {
-    var urlTransactions = url.GetBaseurl() + '/transactions/date?[date]=' + this.props.date;
-    $.ajax({
-      url: urlTransactions,
-      type: "get",
-      dataType: "json",
-      data: {},
-      async: true,
-      xhrFields: {
-        withCredentials: true
-      },
-      success: function (data) {
-        this.setState({transactions: data})
-      }.bind(this),
-      error: function (xhr, status, error) {
-        console.log(xhr.status);
-      }
-    });
-  }
-
-  compomentWillMount() {
-    this.getTransactions();
-  }
-
-  componentDidMount() {
-    this.getTransactions();
-  }
 
   render() {
-    var currency = 'Amount/' + this.props.currency;
     return (
       <div>
         <TwoColumnTable
-          data={this.state.transactions}
-          headingOne={'Description'}
-          headingTwo={currency}/>
+          data={this.props.transactions}
+          headingOne={"Description"}
+          currency={this.props.currency}
+	  date={this.props.date}
+	  total={this.props.total} />
       </div>
     );
   }

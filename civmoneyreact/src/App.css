@@ -1,3 +1,16 @@
+.custom-tooltip{
+	background:#fff;
+	color:#000;
+}
+
+.panel-size{
+	height:500px;
+}
+
+.text-absolute-black{
+	color:#000
+}
+
 .text-black{
 	color:#494a4f;
 }

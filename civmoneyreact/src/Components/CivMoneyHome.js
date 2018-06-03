@@ -10,10 +10,10 @@ import * as dates from './Dates.js';
 import $ from 'jquery';
 
 import HomeSummaryBar from './HomeSummaryBar';
-import SummaryTable from './SummaryTable';
 import AddTransaction from './AddTransaction';
 import TimeViews from './TimeViews';
 import CivMoneyFooter from './CivMoneyFooter';
+import SummaryChart from './SummaryChart';
 
 class CivMoneyHome extends Component {
     constructor() {
@@ -177,11 +177,6 @@ class CivMoneyHome extends Component {
         this.getTotals();
     }
 
-    compomentWillMount() {
-        this.getCurrency();
-        this.getTotals();
-    }
-
     componentDidMount() {
         this.getCurrency();
         this.getTotals()
@@ -201,9 +196,10 @@ class CivMoneyHome extends Component {
                     ? "col-lg-7"
                     : "col-lg-9"}
                     onClick={this.handleMainScreenClick}>
+
                     <HomeSummaryBar totals={totals} currency={this.state.currency}/>
-                    <SummaryTable
-                        totals={this.state.thisMonthTotals}
+		    <SummaryChart
+                        data={this.state.thisMonthTotals}
                         currency={this.state.currency}/>
                 </div>
                 <div className="col-lg-1">

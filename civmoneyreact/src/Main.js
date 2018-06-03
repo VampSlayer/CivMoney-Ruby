@@ -43,11 +43,7 @@ class Main extends Component {
         });
     }
 
-    compomentWillMount() {
-        this.getUserName();
-    }
-
-    componentDidMount() {
+    componentWillMount() {
         this.getUserName();
     }
 
