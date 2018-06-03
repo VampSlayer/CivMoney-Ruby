@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 
-import $ from 'jquery';
-
-import * as url from './Url.js';
-
 class TableRow extends Component {
   render() {
     const {data} = this.props;

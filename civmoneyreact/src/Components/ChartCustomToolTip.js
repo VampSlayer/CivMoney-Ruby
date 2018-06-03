@@ -36,7 +36,7 @@ class ChartCustomToolTip extends Component {
 
 
   render() {
-    const { label, active } = this.props;
+    const { active } = this.props;
 
     if (active) {
       const { label, currency, payload } = this.props;
