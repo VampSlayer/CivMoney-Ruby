@@ -21,9 +21,7 @@ return parseFloat(date.slice(-2));
         <div className="panel-black panel-default panel-heading text-center">
           <div className="text-center">{month}</div>
         </div>
-	
-	<div className="panel-size">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={500}>
         <BarChart data={this.props.data}>
 		  <ReferenceLine y={0} stroke="#ff8c00" strokeDasharray="3 3" />
 		  <XAxis dataKey="date" tickFormatter={this.formatDate} stroke="#fff" label={{value: "Date", fill:"#fff", position:"insideBottom", offset:-5 }} />
@@ -32,7 +30,6 @@ return parseFloat(date.slice(-2));
 		  <Bar dataKey="amount" fill="#000" />
 		</BarChart>
 	</ResponsiveContainer>
-	</div>
       </div>);
 }
 
