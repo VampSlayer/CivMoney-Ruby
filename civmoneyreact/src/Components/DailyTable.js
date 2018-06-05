@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import * as rounding from './Rounding.js';
+
 class TableRow extends Component {
   render() {
     const {data} = this.props;
@@ -7,7 +9,7 @@ class TableRow extends Component {
     const row = data.map((data) => <tr key={data.id}>
       <td>{data.description}</td>
       <td
-        className={data.amount === '0.0' || data.amount === '0'
+        className={data.amount == 0.00
         ? "text-orange"
         : data.amount > 0
           ? "text-green"
@@ -26,11 +28,11 @@ class TwoColumnTable extends Component {
       <table className="daily-table">
         <thead>
 	  <tr><th className="text-center" colSpan="2"><strong>{this.props.date + " : Total "} 
-		<span className={this.props.total === '0.0' || this.props.total === '0'
+		<span className={this.props.total == 0.0
         ? "text-orange"
         : this.props.total > 0
           ? "text-green"
-          : "text-red"}>{this.props.total}</span> {this.props.currency}
+          : "text-red"}>{rounding.round2Dp(this.props.total)}</span> {this.props.currency}
 	  </strong></th></tr>
           <tr>
             <td>

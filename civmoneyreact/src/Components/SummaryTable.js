@@ -33,7 +33,7 @@ class TableRow extends Component {
         </ReactHover>
       </td>
       <td
-        className={data.amount === '0.0' || data.amount === '0'
+        className={data.amount === 0.0 || data.amount === 0
         ? "text-orange"
         : data.amount > 0
           ? "text-green"

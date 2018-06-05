@@ -7,7 +7,7 @@ class Total extends Component {
         {this.props.period}
         &nbsp;:&nbsp;
         <span
-          className={this.props.total === '0.0' || this.props.total === '0'
+          className={this.props.total == 0.0
           ? "text-orange"
           : this.props.total > 0
             ? "text-green"

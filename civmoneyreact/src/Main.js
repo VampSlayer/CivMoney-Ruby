@@ -43,7 +43,7 @@ class Main extends Component {
         });
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getUserName();
     }
 
@@ -71,7 +71,6 @@ class Main extends Component {
                 withCredentials: true
             },
             success: function () {
-                localStorage.setItem("loggedIn", false);
                 window.location = '/login'
             }
         });

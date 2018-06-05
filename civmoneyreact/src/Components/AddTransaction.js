@@ -34,7 +34,7 @@ class AddTransaction extends Component {
   }
 
   handleAmountChange(event) {
-    this.setState({amount: event.target.value});;
+    this.setState({amount: event.target.value});
   }
 
   handleDescriptionChange(event) {
@@ -85,6 +85,7 @@ class AddTransaction extends Component {
         url: addUrl,
         success: function () {
           this.setState({transactionAddResult: 'Transaction added succesfully'});
+	  this.props.onClick();
         }.bind(this),
         error: function () {
           this.setState({transactionAddResult: 'Transaction not added'});
@@ -92,12 +93,10 @@ class AddTransaction extends Component {
       });
       event.preventDefault();
     
-
-    this.props.onClick();
   }
 
   render() {
-    const isEnabled = this.state.amount.length > 0 && this.state.description.length > 0 && this.state.date.length > 0 && (this.state.isExpense === true || this.state.isIncome === true);
+    const isEnabled = this.state.amount > 0 && this.state.amount.length > 0 && this.state.description.length > 0 && this.state.date.length > 0 && (this.state.isExpense === true || this.state.isIncome === true);
     return (
       <div>
         <div className="panel-black panel-default panel-heading text-center">

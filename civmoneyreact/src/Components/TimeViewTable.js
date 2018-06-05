@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import * as rounding from './Rounding.js';
+
 class TableRow extends Component {
     render() {
         var {data} = this.props;
@@ -10,11 +12,11 @@ class TableRow extends Component {
                     {item.date}
                 </td>
                 <td
-                    className={item.amount === '0.0' || item.amount === '0'
+                    className={item.amount == 0.00
                     ? "text-orange"
                     : item.amount > 0
                         ? "text-green"
-                        : "text-red"}>{item.amount}</td>
+                        : "text-red"}>{rounding.round2Dp(item.amount)}</td>
             </tr>);
         }
 

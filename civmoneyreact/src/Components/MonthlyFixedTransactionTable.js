@@ -11,19 +11,19 @@ class TableRow extends Component {
                 {item.description}
             </td>
             <td
-                className={item.amount === '0.0' || item.amount === '0' || item.amount === 0
+                className={item.amount == 0.00
                 ? "text-orange"
                 : item.amount > 0
                     ? "text-green"
                     : "text-red"}>{(item.amount / parseFloat(dates.getNumberOfDaysThisMonth())).toFixed(2)}</td>
 	    <td
-                className={item.amount === '0.0' || item.amount === '0' || item.amount === 0
+                className={item.amount == 0.00
                 ? "text-orange"
                 : item.amount > 0
                     ? "text-green"
                     : "text-red"}>{(item.amount / 7).toFixed(2)}</td>	
 	    <td onChange={this.calculateAndShowTotals}
-                className={item.amount === '0.0' || item.amount === '0' || item.amount === 0
+                className={item.amount == 0.00
                 ? "text-orange"
                 : item.amount > 0
                     ? "text-green"

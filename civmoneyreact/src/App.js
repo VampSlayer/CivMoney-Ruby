@@ -21,19 +21,19 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (localStorage.loggedIn === 'true') {
+    if (sessionStorage.loggedIn) {
       this.setState({loggedIn: true});
     }
   }
 
   Auth() {
-    localStorage.setItem("loggedIn", true);
-    localStorage.loggedIn = true;
+    sessionStorage.setItem("loggedIn", true);
     this.setState({loggedIn: true});
   }
 
   loggedIn() {
-    return this.state.loggedIn || this.state.loggedIn === 'true' || localStorage.loggedIn === 'true';
+    console.log(sessionStorage.loggedIn);
+    return this.state.loggedIn || sessionStorage.loggedIn;
   }
 
   render() {

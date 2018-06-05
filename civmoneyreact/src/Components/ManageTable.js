@@ -26,7 +26,7 @@ class TableRow extends Component {
                 {item.date}
             </td>
             <td
-                className={item.amount === '0.0' || item.amount === '0'
+                className={item.amount == 0.0
                 ? "text-orange"
                 : item.amount > 0
                     ? "text-green"
