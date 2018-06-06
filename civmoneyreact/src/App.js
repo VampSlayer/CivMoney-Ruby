@@ -32,7 +32,6 @@ class App extends Component {
   }
 
   loggedIn() {
-    console.log(sessionStorage.loggedIn);
     return this.state.loggedIn || sessionStorage.loggedIn;
   }
 

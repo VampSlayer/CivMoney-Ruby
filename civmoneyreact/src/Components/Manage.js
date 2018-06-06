@@ -1,4 +1,3 @@
-//npm install react-search-input --save
 import React, {Component} from 'react';
 import SearchInput, {createFilter} from 'react-search-input'
 
@@ -28,10 +27,16 @@ class Manage extends Component {
         this.searchUpdated = this
             .searchUpdated.
             bind(this);
+	this.deleteAll = this
+            .deleteAll.
+            bind(this);
+	this.delete = this
+            .delete.
+            bind(this);
     }
     
     searchUpdated (term) {
-        this.setState({searchTerm: term})
+        this.setState({searchTerm: term});
     }
 
     handleEndDateChange(event) {
@@ -90,17 +95,61 @@ class Manage extends Component {
         });
     }
 
-    delete() {
-        console.log()
-    }
-
     componentDidMount() {
         this.getCurrency();
     }
 
+    delete(id) {
+        $.ajax({
+            type: "post",
+            url: url.GetBaseurl() + '/transactions/delete?[id]=' + id,
+            async: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function () {
+                for (var i = 0; i < this.state.transactions.length; i++) {
+                    if (this.state.transactions[i].id === id) {
+                        var newTransactions = this.state.transactions;
+                        newTransactions.splice(i, 1);
+                        this.setState({transactions: newTransactions});
+                    }
+                }
+            }.bind(this),
+            error: function (xhr, status, error) {
+                console.log(xhr.status);
+            }
+        });
+    }
+
+    deleteAll(transactions) {
+        for (var i = 0; i < transactions.length; i++) {
+            $.ajax({
+                type: "post",
+                url: url.GetBaseurl() + '/transactions/delete?[id]=' + transactions[i].id,
+                async: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (data) {
+		        for (var i = 0; i < this.state.transactions.length; i++) {
+				for (var j = 0; j < transactions.length; j++) {
+				    if (this.state.transactions[i].id === transactions[j].id) {
+				        var newTransactions = this.state.transactions;
+				        newTransactions.splice(i, 1);
+				        this.setState({transactions: newTransactions});
+				    }
+				}
+		        }
+                }.bind(this),
+                error: function (xhr, status, error) {
+                    console.log(xhr.status);
+                }
+            });
+        }
+    }
+
     render() {
-        const filteredTransactions = 
-              this.state.transactions.filter(createFilter(this.state.searchTerm, ['description', 'date']));
         return (
             <div>
                 <div className="col-lg-10">
@@ -112,8 +161,6 @@ class Manage extends Component {
 
                 <div className="col-lg-2">
                     <div className="panel-body">
-                        <div className="panel-body">
-                            <SearchInput className="search-input" onChange={this.searchUpdated} />
                             <label>Start Date</label><input
                                 type="date"
                                 className="form-control"
@@ -136,14 +183,19 @@ class Manage extends Component {
                             <button
                                 onClick={() => this.getTransactions('Incomes')}
                                 className="form-control danger btn-success">Get Incomes</button>
-                        </div>
+			    <br/>
+			    {this.state.transactions.length > 0 ? <SearchInput placeholder="Filter" className="search-input" onChange={this.searchUpdated} /> : null}
                     </div>
                 </div>
 
                 <div className="col-lg-8">
                             <div>
                                 {this.state.transactions.length > 0
-                                    ? <ManageTable totals={filteredTransactions} currency={this.state.currency}/>
+                                    ? <ManageTable 
+					totals={this.state.transactions.filter(createFilter(this.state.searchTerm, ['description', 'date']))} 
+					currency={this.state.currency}
+					delete={this.delete}
+					deleteAll={this.deleteAll}/>
                                     : null}
                             </div>
                 </div>

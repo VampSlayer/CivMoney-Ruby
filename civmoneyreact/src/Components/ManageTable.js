@@ -33,7 +33,7 @@ class TableRow extends Component {
                     : "text-red"}>{item.amount}</td>
             <td >{item.description}</td>
             <td>
-                <button onClick={() => this.delete(item.id)} className="btn btn-danger">Delete</button>
+                <button onClick={() => this.props.onDelete(item.id)} className="btn btn-danger">Delete</button>
             </td>
         </tr>);
         return (
@@ -42,73 +42,7 @@ class TableRow extends Component {
     }
 }
 
-class ThreeColumnTable extends Component {
-    constructor() {
-        super();
-        this.state = {
-            transactions: []
-        }
-        this.deleteAll = this
-            .deleteAll
-            .bind(this);
-        this.delete = this
-            .delete
-            .bind(this);
-    }
-
-    delete(id) {
-        $.ajax({
-            type: "post",
-            url: url.GetBaseurl() + '/transactions/delete?[id]=' + id,
-            async: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function () {
-                for (var i = 0; i < this.state.transactions.length; i++) {
-                    if (this.state.transactions[i].id === id) {
-                        var newTransactions = this.state.transactions;
-                        newTransactions.splice(i, 1);
-                        this.setState({transactions: newTransactions});
-                    }
-                }
-            }.bind(this),
-            error: function (xhr, status, error) {
-                console.log(xhr.status);
-            }
-        });
-    }
-
-    deleteAll() {
-        for (var i = 0; i < this.state.transactions.length; i++) {
-            $.ajax({
-                type: "post",
-                url: url.GetBaseurl() + '/transactions/delete?[id]=' + this.state.transactions[i].id,
-                async: true,
-                xhrFields: {
-                    withCredentials: true
-                },
-                success: function (data) {
-                    this.setState({transactions: []});
-                }.bind(this),
-                error: function (xhr, status, error) {
-                    console.log(xhr.status);
-                }
-            });
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({transactions: nextProps.data});
-    }
-
-    compomentWillMount() {
-        this.setState({transactions: this.props.data});
-    }
-
-    componentDidMount() {
-        this.setState({transactions: this.props.data});
-    }
+class ManageTable extends Component {
 
     render() {
         return (
@@ -125,25 +59,15 @@ class ThreeColumnTable extends Component {
                             <strong>Description</strong>
                         </td>
                         <td>
-                            <button onClick={this.deleteAll} className="btn btn-danger">Delete All</button>
+                            <button onClick={() => this.props.deleteAll(this.props.totals)} className="btn btn-danger">Delete All</button>
                         </td>
                     </tr>
                 </thead>
                 <TableRow
-                    data={this.state.transactions}
+                    data={this.props.totals}
                     currency={this.props.currency}
-                    onDelete={this.delete}/>
+                    onDelete={this.props.delete}/>
             </table>
-        );
-    }
-}
-
-class ManageTable extends Component {
-    render() {
-        return (
-            <div>
-                <ThreeColumnTable data={this.props.totals} currency={this.props.currency}/>
-            </div>
         );
     }
 }
