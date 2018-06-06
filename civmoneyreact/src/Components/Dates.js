@@ -1,3 +1,7 @@
+ export function toLocaleDate(date){
+	return new Date(date).toLocaleString().split(',')[0];
+}
+
 export function getTodaysFullDateSlash() {
   var today = new Date();
   var dd = today.getDate();

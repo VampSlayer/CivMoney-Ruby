@@ -6,27 +6,9 @@ import * as rounding from './Rounding.js';
 import Total from './Total';
 
 class HomeSummaryBar extends Component {
-  constructor() {
-    super();
-    this.state = {
-      todaysDate: ''
-    }
-  }
-
-  compomentWillMount() {
-    this.setState({
-      todaysDate: dates.getTodaysFullDateDots()
-    });
-  }
-
-  componentDidMount() {
-    this.setState({
-      todaysDate: dates.getTodaysFullDateDots()
-    });
-  }
 
   render() {
-    var today = 'Today : ' + this.state.todaysDate;
+    var today = 'Today : ' + dates.toLocaleDate(dates.getTodaysFullDateDashes());
     return (
       <div>
         <br/>

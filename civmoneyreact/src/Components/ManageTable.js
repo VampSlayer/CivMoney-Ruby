@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import $ from 'jquery';
 
 import * as url from './Url.js';
+import * as dates from './Dates.js';
 
 class TableRow extends Component {
     constructor() {
@@ -23,7 +24,7 @@ class TableRow extends Component {
 
         var row = data.map((item) => <tr key={item.id}>
             <td>
-                {item.date}
+                {dates.toLocaleDate(item.date)}
             </td>
             <td
                 className={item.amount == 0.0

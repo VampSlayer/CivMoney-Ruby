@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import * as rounding from './Rounding.js';
+import * as dates from './Dates.js';
 
 class TableRow extends Component {
   render() {
@@ -27,7 +28,7 @@ class TwoColumnTable extends Component {
     return (
       <table className="daily-table">
         <thead>
-	  <tr><th className="text-center" colSpan="2"><strong>{this.props.date + " : Total "} 
+	  <tr><th className="text-center" colSpan="2"><strong>{dates.toLocaleDate(this.props.date) + " : Total "} 
 		<span className={this.props.total == 0.0
         ? "text-orange"
         : this.props.total > 0

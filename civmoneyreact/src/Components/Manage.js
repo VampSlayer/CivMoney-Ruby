@@ -150,6 +150,8 @@ class Manage extends Component {
     }
 
     render() {
+	var startDateBeforeEndDate = Date.parse(this.state.startDate) > Date.parse(this.state.endDate);
+	var disabled = startDateBeforeEndDate || this.state.startDate === '' || this.state.endDate === '';
         return (
             <div>
                 <div className="col-lg-10">
@@ -161,6 +163,7 @@ class Manage extends Component {
 
                 <div className="col-lg-2">
                     <div className="panel-body">
+			{startDateBeforeEndDate ? <p className="text-red">Start Date must be before End Date</p> : null}
                             <label>Start Date</label><input
                                 type="date"
                                 className="form-control"
@@ -172,19 +175,19 @@ class Manage extends Component {
                                 value={this.state.endDate}
                                 onChange={this.handleEndDateChange}/>
                             <br/>
-                            <button
+                            <button disabled={disabled}
                                 onClick={() => this.getTransactions('All')}
                                 className="form-control danger btn-primary">Get All</button>
                             <br/>
-                            <button
+                            <button disabled={disabled}
                                 onClick={() => this.getTransactions('Expenses')}
                                 className="form-control danger btn-danger">Get Expenses</button>
                             <br/>
-                            <button
+                            <button disabled={disabled}
                                 onClick={() => this.getTransactions('Incomes')}
                                 className="form-control danger btn-success">Get Incomes</button>
 			    <br/>
-			    {this.state.transactions.length > 0 ? <SearchInput placeholder="Filter" className="search-input" onChange={this.searchUpdated} /> : null}
+			    {this.state.transactions.length > 0 ? <SearchInput placeholder="Filter Description" className="search-input" onChange={this.searchUpdated} /> : null}
                     </div>
                 </div>
 
@@ -192,7 +195,7 @@ class Manage extends Component {
                             <div>
                                 {this.state.transactions.length > 0
                                     ? <ManageTable 
-					totals={this.state.transactions.filter(createFilter(this.state.searchTerm, ['description', 'date']))} 
+					totals={this.state.transactions.filter(createFilter(this.state.searchTerm, ['description']))} 
 					currency={this.state.currency}
 					delete={this.delete}
 					deleteAll={this.deleteAll}/>
