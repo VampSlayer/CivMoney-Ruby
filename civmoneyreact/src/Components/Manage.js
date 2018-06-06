@@ -100,7 +100,7 @@ class Manage extends Component {
 
     render() {
         const filteredTransactions = 
-              this.state.transactions.filter(createFilter(this.state.searchTerm, ['transaction.description']));
+              this.state.transactions.filter(createFilter(this.state.searchTerm, ['description', 'date']));
         return (
             <div>
                 <div className="col-lg-10">
