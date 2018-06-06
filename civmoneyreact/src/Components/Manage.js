@@ -1,4 +1,6 @@
+//npm install react-search-input --save
 import React, {Component} from 'react';
+import SearchInput, {createFilter} from 'react-search-input'
 
 import * as url from './Url.js';
 
@@ -14,7 +16,8 @@ class Manage extends Component {
             transactions: [],
             currency: '',
             startDate: '',
-            endDate: ''
+            endDate: '',
+            searchTerm: ''
         }
         this.handleStartDateChange = this
             .handleStartDateChange
@@ -22,6 +25,13 @@ class Manage extends Component {
         this.handleEndDateChange = this
             .handleEndDateChange
             .bind(this);
+        this.searchUpdated = this
+            .searchUpdated.
+            bind(this);
+    }
+    
+    searchUpdated (term) {
+        this.setState({searchTerm: term})
     }
 
     handleEndDateChange(event) {
@@ -84,15 +94,13 @@ class Manage extends Component {
         console.log()
     }
 
-    compomentWillMount() {
-        this.getCurrency();
-    }
-
     componentDidMount() {
         this.getCurrency();
     }
 
     render() {
+        const filteredTransactions = 
+              this.state.transactions.filter(createFilter(this.state.searchTerm, ['transaction.description']));
         return (
             <div>
                 <div className="col-lg-10">
@@ -105,6 +113,7 @@ class Manage extends Component {
                 <div className="col-lg-2">
                     <div className="panel-body">
                         <div className="panel-body">
+                            <SearchInput className="search-input" onChange={this.searchUpdated} />
                             <label>Start Date</label><input
                                 type="date"
                                 className="form-control"
@@ -134,7 +143,7 @@ class Manage extends Component {
                 <div className="col-lg-8">
                             <div>
                                 {this.state.transactions.length > 0
-                                    ? <ManageTable totals={this.state.transactions} currency={this.state.currency}/>
+                                    ? <ManageTable totals={filteredTransactions} currency={this.state.currency}/>
                                     : null}
                             </div>
                 </div>
