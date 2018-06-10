@@ -58,6 +58,12 @@ export function getNumberOfDaysThisMonth(){
    return lastDay.getDate();
 }
 
+export function getNumberOfDaysForMonth(month){
+   var today = new Date();
+   var lastDay = new Date(today.getYear(), getMonthNumber(month), 0);	
+   return lastDay.getDate();
+}
+
 export function getTodaysMonthName(){
   var today = new Date();
   today = today.getMonth() + 1;

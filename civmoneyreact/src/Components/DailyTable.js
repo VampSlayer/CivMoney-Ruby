@@ -54,7 +54,7 @@ class DailyTable extends Component {
 
   render() {
     return (
-      <div>
+      <div className="white-border">
         <TwoColumnTable
           data={this.props.transactions}
           headingOne={"Description"}

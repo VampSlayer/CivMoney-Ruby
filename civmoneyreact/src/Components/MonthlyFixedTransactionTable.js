@@ -4,7 +4,7 @@ import * as dates from './Dates.js';
 
 class TableRow extends Component {
     render() {
-        var {data} = this.props;
+        var {data, month} = this.props;
 
         var row = data.map((item) => <tr key={item.id}>
             <td>
@@ -15,7 +15,7 @@ class TableRow extends Component {
                 ? "text-orange"
                 : item.amount > 0
                     ? "text-green"
-                    : "text-red"}>{(item.amount / parseFloat(dates.getNumberOfDaysThisMonth())).toFixed(2)}</td>
+                    : "text-red"}>{(item.amount / parseFloat(dates.getNumberOfDaysForMonth(month))).toFixed(2)}</td>
 	    <td
                 className={item.amount == 0.00
                 ? "text-orange"
@@ -37,25 +37,6 @@ class TableRow extends Component {
 }
 
 class ThreeColumnTable extends Component {
-    constructor() {
-        super();
-        this.state = {
-            transactions: []
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({transactions: nextProps.data});
-    }
-
-    compomentWillMount() {
-        this.setState({transactions: this.props.data});
-    }
-
-    componentDidMount() {
-        this.setState({transactions: this.props.data});
-    }
-
     render() {
         return (
             <table className="table">
@@ -76,8 +57,9 @@ class ThreeColumnTable extends Component {
                     </tr>
                 </thead>
                 <TableRow
-                    data={this.state.transactions}
-                    currency={this.props.currency}/>
+                    data={this.props.data}
+                    currency={this.props.currency}
+		    month={this.props.month}/>
             </table>
         );
     }
@@ -87,7 +69,7 @@ class MonthlyFixedTransactionTable extends Component {
     render() {
         return (
             <div>
-                <ThreeColumnTable data={this.props.totals} currency={this.props.currency}/>
+                <ThreeColumnTable data={this.props.totals} currency={this.props.currency} month={this.props.month}/>
             </div>
         );
     }

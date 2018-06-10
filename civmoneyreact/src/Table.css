@@ -1,3 +1,8 @@
+.white-border{
+  border:2px solid white;
+  border-radius: 6px;
+}
+
 .table {
     width: 640px;
     border-collapse: collapse;
@@ -9,13 +14,13 @@
 }
 
 .daily-table{
-	background-color: #494a4f;
-	border: 2px solid white;
+    background-color: #494a4f;
     width: 300px;
     border-collapse: collapse;
     border-spacing: 0;
     text-align: center;
     margin-bottom: 0px;
+    border-radius: 6px;
 }
 
 td, th {

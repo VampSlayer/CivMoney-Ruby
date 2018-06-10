@@ -185,7 +185,8 @@ class AddMonthlyFixedTransaction extends Component {
 
   render() {
     return (
-      <div className="col-lg-10">
+      <div>
+	<div className="col-lg-10">
 	<br/>
         <div className="panel-black panel-default panel-heading text-center">
         <div className="text-center">Monthly Fixed Transactions</div>
@@ -235,10 +236,11 @@ class AddMonthlyFixedTransaction extends Component {
           </form>
         </div>
 	</div>
-	<div className="col-lg-6">
+	<div className="col-lg-4">
 	{this.state.fixedCostsWithTotals.length > 0
-		? <MonthlyFixedTransactionTable totals={this.state.fixedCostsWithTotals} currency={this.state.currency}/> 
+		? <MonthlyFixedTransactionTable totals={this.state.fixedCostsWithTotals} currency={this.state.currency} month={this.state.month}/> 
 		: <span></span>}
+	</div>
 	</div>
 	<CivMoneyFooter/>
       </div>
