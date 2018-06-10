@@ -236,7 +236,7 @@ class AddMonthlyFixedTransaction extends Component {
           </form>
         </div>
 	</div>
-	<div className="col-lg-4">
+	<div className="col-lg-6">
 	{this.state.fixedCostsWithTotals.length > 0
 		? <MonthlyFixedTransactionTable totals={this.state.fixedCostsWithTotals} currency={this.state.currency} month={this.state.month}/> 
 		: <span></span>}
