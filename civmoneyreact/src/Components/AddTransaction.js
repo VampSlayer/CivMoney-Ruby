@@ -128,14 +128,12 @@ class AddTransaction extends Component {
             <br/>
 	    <label>
             <input
-	      className="form-control"
               type="radio"
 	      name="type"
               value="income"
               onChange={this.handleTypeChange}/>&nbsp;Income</label>
             <span>&nbsp;</span>
             <label><input
-              className="form-control"
               type="radio"
 	      name="type"
               value="expense"

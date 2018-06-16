@@ -43,7 +43,7 @@ export function getTodaysMonth() {
   if (today < 10) {
     today = '0' + today
   }
-  return today;
+  return parseFloat(today);
 }
 
 export function getTodaysYear() {

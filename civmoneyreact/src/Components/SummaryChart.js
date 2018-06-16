@@ -18,9 +18,6 @@ return parseFloat(date.slice(-2));
 	if(this.props.data !== undefined && this.props.data.length > 0){
     return (	
      <div>
-        <div className="panel-black panel-default panel-heading text-center">
-          <div className="text-center">{month}</div>
-        </div>
         <ResponsiveContainer width="100%" height={500}>
         <BarChart data={this.props.data}>
 		  <ReferenceLine y={0} stroke="#ff8c00" strokeDasharray="3 3" />

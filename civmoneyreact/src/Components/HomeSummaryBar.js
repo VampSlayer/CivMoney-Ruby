@@ -20,13 +20,13 @@ class HomeSummaryBar extends Component {
             : rounding.round2Dp(this.props.totals.today)}
             currency={this.props.currency}/>
           <Total
-            period={'Week'}
+            period={'This Week'}
             total={this.props.totals.week === null
             ? '0'
             : rounding.round2Dp(this.props.totals.week)}
             currency={this.props.currency}/>
           <Total
-            period={'Month'}
+            period={'Current Month'}
             total={this.props.totals.month === null
             ? '0'
             : rounding.round2Dp(this.props.totals.month)}

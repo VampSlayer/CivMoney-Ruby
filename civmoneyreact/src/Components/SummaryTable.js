@@ -3,32 +3,27 @@ import React, {Component} from 'react';
 import * as dates from './Dates.js';
 
 import ReactHover from 'react-hover'
-import DailyTable from './DailyTable';
+import DailyTableWrapper from './DailyTableWrapper';
 
 const optionsCursorTrueWithMargin = {
   followCursor: true,
-  shiftX: -70,
-  shiftY: -150
+  shiftX: -25,
+  shiftY: -100
 }
 
 class TableRow extends Component {
   render() {
-    const {data} = this.props;
-
-    let currency = this.props.currency;
+    const {data, currency} = this.props;
 
     const row = data.map((data) => <tr
-      className={data.date === dates.getTodaysFullDateDashes()
-      ? "bold"
-      : ""}
-      key={data.date}>
+      key={dates.toLocaleDate(data.date)}>
       <td className={'dailyTableRow'}>
         <ReactHover options={optionsCursorTrueWithMargin}>
           <ReactHover.Trigger type='trigger'>
-            <span>{data.date}</span>
+            <span>{dates.toLocaleDate(data.date)}</span>
           </ReactHover.Trigger>
           <ReactHover.Hover type='hover'>
-            <DailyTable currency={currency} date={data.date}/>
+            <DailyTableWrapper currency={currency} date={data.date} total={data.amount}/>
           </ReactHover.Hover>
         </ReactHover>
       </td>
@@ -68,28 +63,17 @@ class TwoColumnTable extends Component {
 }
 
 class SummaryTable extends Component {
-  constructor() {
-    super();
-    this.state = {
-      totals: []
-    }
-  };
   render() {
     const month = dates.getTodaysMonthName();	
     var headingTwo = 'Total/' + this.props.currency;
     return (
-      <div>
-        <div className="panel-black panel-default panel-heading text-center">
-          <div className="text-center">{month}</div>
-        </div>
         <div className="panel-body">
           <TwoColumnTable
-            data={this.props.totals}
+            data={this.props.data}
             headingOne={'Amount'}
             headingTwo={headingTwo}
             currency={this.props.currency}/>
         </div>
-      </div>
     );
   }
 }

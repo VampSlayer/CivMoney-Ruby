@@ -1,3 +1,20 @@
+.inline{
+display: inline-block;
+}
+
+.sliderCustom{
+height: 20px;
+width:87%;
+}
+
+.smaller{
+width:200px;
+}
+
+.width{
+width:1000px;
+}
+
 .search-input {
   height: 52px;
   position: relative;
