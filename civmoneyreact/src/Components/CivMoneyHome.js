@@ -27,11 +27,11 @@ class CivMoneyHome extends Component {
             showInOut: false,
             today: '',
             week: '',
-            month: '',
 			monthNumber: 0,
             thisMonthTotals: [],
             hasChanged: false,
  	    	type: 'Table',
+			weeksTotals: {}
         };
         this.onClickAdd = this
             .onClickAdd
@@ -60,16 +60,43 @@ class CivMoneyHome extends Component {
  		this.getMonthsDailyTotals = this
 	      .getMonthsDailyTotals
 	      .bind(this);
+		this.getMonthsWeekTotals = this
+            .getMonthsWeekTotals
+            .bind(this);
     }
 
     handleOnSliderChange = (value) => {
     	this.setState({monthNumber: value});
 		this.getMonthsDailyTotals(value);
+		this.getMonthTotal(value);	
+		this.getMonthsWeekTotals(value);
    }
 
 	handleTypeChange(event){
 		this.setState({type: event.target.value});
 	}
+
+	getMonthsWeekTotals(month) {
+        $.ajax({
+            url: url.GetBaseurl() + '/transactions/monthsWeekTotals?month=' +  month,
+            type: "get",
+            dataType: "json",
+            data: {},
+            async: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {
+                var fixedData = data.map((item) => {
+                    return {date: item.dateweek, amount: item.amount}
+                });
+                this.setState({weeksTotals: fixedData});
+            }.bind(this),
+            error: function (xhr, status, error) {
+                console.log(xhr.status);
+            }
+        });
+    }
 
 	getMonthsDailyTotals(month){
 		var urlSummaryTable = url.GetBaseurl() + '/transactions/dailyTotalMonth?[year]=' + dates.getTodaysYear() + '&[month]=' + month;
@@ -93,11 +120,11 @@ class CivMoneyHome extends Component {
 	}
 
     getTotals() {
-        var dateQuery = dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth() + '&[day]=' + dates.getTodaysDate();
-        var urlMonthlyTotal = url.GetBaseurl() + '/transactions/monthTotal?[year]=' + dateQuery;
-        var urlWeeklyTotal = url.GetBaseurl() + '/transactions/weekTotal?[year]=' + dateQuery;
+        var dateQuery = dates.getTodaysYear() + '&[month]=' + dates.getTodaysMonth() + '&[day]=' + dates.getTodaysDate();  
         var urlDailyTotal = url.GetBaseurl() + '/transactions/dateTotal?[date]=' + dates.getTodaysFullDateDots();
+        var urlWeeklyTotal = url.GetBaseurl() + '/transactions/weekTotal?[year]=' + dateQuery;
 		this.getMonthsDailyTotals(this.state.monthNumber);
+		this.getMonthTotal(this.state.monthNumber);
 
         $.ajax({
             url: urlDailyTotal,
@@ -132,7 +159,13 @@ class CivMoneyHome extends Component {
                 console.log(xhr.status);
             }
         });
-        $.ajax({
+
+    }
+
+	getMonthTotal(month){		
+		var dateQuery = dates.getTodaysYear() + '&[month]=' + month + '&[day]=' + dates.getTodaysDate();  
+		var urlMonthlyTotal = url.GetBaseurl() + '/transactions/monthTotal?[year]=' + dateQuery;
+		$.ajax({
             url: urlMonthlyTotal,
             type: "get",
             dataType: "json",
@@ -147,8 +180,8 @@ class CivMoneyHome extends Component {
             error: function (xhr, status, error) {
                 console.log(xhr.status);
             }
-        });
-    }
+			});
+	}
 
     getCurrency() {
         $.ajax({
@@ -210,6 +243,7 @@ class CivMoneyHome extends Component {
     componentDidMount() {
         this.getCurrency();
         this.getTotals();
+		this.getMonthsWeekTotals(this.state.monthNumber);
     }
 
     render() {
@@ -226,7 +260,7 @@ class CivMoneyHome extends Component {
                     ? "col-lg-7"
                     : "col-lg-9"}
                     onClick={this.handleMainScreenClick}>			
-            <HomeSummaryBar totals={totals} currency={this.state.currency}/>
+            <HomeSummaryBar weeksTotals={this.state.weeksTotals} month={this.state.monthNumber} totals={totals} currency={this.state.currency}/>
 			<HomeMonthSelectBar month={this.state.monthNumber} type={this.state.type} handleTypeChange={this.handleTypeChange} handleOnSliderChange={this.handleOnSliderChange}/>
 			{this.state.type === "Graph" ?
 						<SummaryChart

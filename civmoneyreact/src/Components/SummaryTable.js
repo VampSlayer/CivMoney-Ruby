@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import * as dates from './Dates.js';
 
-import ReactHover from 'react-hover'
+import ReactHover from 'react-hover';
 import DailyTableWrapper from './DailyTableWrapper';
 
 const optionsCursorTrueWithMargin = {

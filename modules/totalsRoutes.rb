@@ -108,14 +108,30 @@ module Sinatra
       end
 
       #get weekly totals for month
-      #/transactions/monthsWeekTotals
+      #/transactions/monthsWeekTotals?month=1
       app.get '/transactions/monthsWeekTotals', :auth => [:user] do
       	content_type :json
       	@transactions = Transaction.find_by_sql ["SELECT
         	date_part('week', transactions.date) AS Dateweek,
         	SUM(transactions.amount) AS amount
       	FROM public.transactions
-      	WHERE date_part('month', transactions.date) = date_part('month', current_date) AND date_part('year', transactions.date) = date_part('year', current_date) AND user_id = ?
+      	WHERE date_part('month', transactions.date) = #{params[:month]} AND date_part('year', transactions.date) = date_part('year', current_date) AND user_id = ?
+       	GROUP BY Dateweek
+       	ORDER BY 1 ASC", session[:id]]
+      	return_message = {}
+      	return_message = @transactions
+      	return_message.to_json
+      end
+
+      #get weekly totals for year
+      #/transactions/yearsWeekTotals?year=2018
+      app.get '/transactions/yearsWeekTotals', :auth => [:user] do
+      	content_type :json
+      	@transactions = Transaction.find_by_sql ["SELECT
+        	date_part('week', transactions.date) AS Dateweek,
+        	SUM(transactions.amount) AS amount
+      	FROM public.transactions
+      	WHERE date_part('year', transactions.date) = #{params[:year]} AND user_id = ?
        	GROUP BY Dateweek
        	ORDER BY 1 ASC", session[:id]]
       	return_message = {}

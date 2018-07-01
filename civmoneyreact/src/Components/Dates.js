@@ -64,11 +64,15 @@ export function getNumberOfDaysForMonth(month){
    return lastDay.getDate();
 }
 
+export function getMonthNameFromNumber(monthNumber){
+var months = {1:"January", 2:"Febuary", 3:"March", 4:"April", 5:"May", 6:"June", 7:"July", 8:"August", 9:"September", 10:"October", 11:"November", 12:"December"};
+return months[monthNumber];
+}
+
 export function getTodaysMonthName(){
   var today = new Date();
   today = today.getMonth() + 1;
- var months = {1:"January", 2:"Febuary", 3:"March", 4:"April", 5:"May", 6:"June", 7:"July", 8:"August", 9:"September", 10:"October", 11:"November", 12:"December"};
-return months[today];
+ return getMonthNameFromNumber(today);
 }
 
 export function getMonths(){

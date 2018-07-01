@@ -13,6 +13,19 @@
     margin-bottom: 0px;
 }
 
+.weekly-table{
+    
+    background-color: #494a4f;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: center;
+    margin-bottom: 0px;
+    border-radius: 6px;
+    border: 2px solid white;
+    position: relative; 
+    z-index: 1;
+}
+
 .daily-table{
     background-color: #494a4f;
     width: 300px;

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import * as url from './Url.js';
+import * as dates from './Dates.js';
 
 import $ from 'jquery';
 
@@ -18,8 +19,8 @@ class TimeViews extends Component {
             showMonth: false,
             showYear: false
         };
-        this.getThisMonthsWeekTotals = this
-            .getThisMonthsWeekTotals
+        this.getThisYearsWeekTotals = this
+            .getThisYearsWeekTotals
             .bind(this);
         this.onClickMonth = this
             .onClickMonth
@@ -54,9 +55,9 @@ class TimeViews extends Component {
         });
     }
 
-    getThisMonthsWeekTotals() {
+    getThisYearsWeekTotals() {
         $.ajax({
-            url: url.GetBaseurl() + '/transactions/monthsWeekTotals',
+            url: url.GetBaseurl() + '/transactions/yearsWeekTotals?year=' +  dates.getTodaysYear(),
             type: "get",
             dataType: "json",
             data: {},
@@ -115,14 +116,8 @@ class TimeViews extends Component {
         });
     }
 
-    compomentWillMount() {
-        this.getThisMonthsWeekTotals();
-        this.getThisYearsMonthsTotals();
-        this.getYearlyTotals();
-    }
-
     componentDidMount() {
-        this.getThisMonthsWeekTotals();
+        this.getThisYearsWeekTotals();
         this.getThisYearsMonthsTotals();
         this.getYearlyTotals();
     }
