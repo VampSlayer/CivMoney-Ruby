@@ -9,7 +9,9 @@ class DailyTableWrapper extends Component {
   constructor() {
     super();
     this.state = {
-      transactions: []
+      transactions: [],
+      date: '',
+      total: ''
     }
   }
 
@@ -32,9 +34,15 @@ class DailyTableWrapper extends Component {
     });
   }
 
+componentWillReceiveProps(nextProps) {
+  if (nextProps.total !== this.state.total) {
+    this.getTransactions(nextProps.date);
+  }
+}
+
   componentDidMount(){
 	this.getTransactions(this.props.date);
-	}
+   }
 
   render() {
     return (

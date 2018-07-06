@@ -8,7 +8,7 @@ import DailyTableWrapper from './DailyTableWrapper';
 const optionsCursorTrueWithMargin = {
   followCursor: true,
   shiftX: -25,
-  shiftY: -100
+  shiftY: -200
 }
 
 class TableRow extends Component {
@@ -17,7 +17,7 @@ class TableRow extends Component {
 
     const row = data.map((data) => <tr
       key={dates.toLocaleDate(data.date)}>
-      <td className={'dailyTableRow'}>
+      <td className='dailyTableRow'>
         <ReactHover options={optionsCursorTrueWithMargin}>
           <ReactHover.Trigger type='trigger'>
             <span>{dates.toLocaleDate(data.date)}</span>
@@ -66,6 +66,7 @@ class SummaryTable extends Component {
   render() {
     const month = dates.getTodaysMonthName();	
     var headingTwo = 'Total/' + this.props.currency;
+    if(this.props.data !== undefined && this.props.data.length > 0){
     return (
         <div className="panel-body">
           <TwoColumnTable
@@ -75,6 +76,8 @@ class SummaryTable extends Component {
             currency={this.props.currency}/>
         </div>
     );
+    }
+      return null
   }
 }
 

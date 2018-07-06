@@ -3,8 +3,8 @@ display: inline-block;
 }
 
 .sliderCustom{
-height: 20px;
-width:87%;
+height: 18px;
+width:95%;
 }
 
 .smaller{
@@ -104,6 +104,10 @@ a:hover {
 a:active {
     color: #0000FF;
 } 
+
+.panel-slider{
+	height:50px;
+}
 
 .panel-black{
     background-color: black;

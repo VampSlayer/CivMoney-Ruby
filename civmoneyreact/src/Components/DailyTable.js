@@ -26,7 +26,7 @@ class TableRow extends Component {
 class TwoColumnTable extends Component {
   render() {
     return (
-      <table className="daily-table">
+      <table className="table-width">
         <thead>
 	  <tr><th className="text-center" colSpan="2"><strong>{dates.toLocaleDate(this.props.date) + " : Total "} 
 		<span className={this.props.total == 0.0
@@ -54,7 +54,7 @@ class DailyTable extends Component {
 
   render() {
     return (
-      <div className="white-border">
+      <div className="daily-table">
         <TwoColumnTable
           data={this.props.transactions}
           headingOne={"Description"}
