@@ -35,12 +35,14 @@ class DailyTableWrapper extends Component {
   }
 
 componentWillReceiveProps(nextProps) {
-  if (nextProps.total !== this.state.total) {
-    this.getTransactions(nextProps.date);
+  if (nextProps.total !== this.state.total && this.state.date === nextProps.date) {
+   this.setState({total: nextProps.total});
+   this.getTransactions(nextProps.date);
   }
 }
 
   componentDidMount(){
+	this.setState({total: this.props.total});
 	this.getTransactions(this.props.date);
    }
 
