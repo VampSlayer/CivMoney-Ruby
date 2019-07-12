@@ -2,6 +2,7 @@
 require 'sinatra'
 require 'sinatra/cross_origin'
 require 'sinatra/activerecord'
+require 'sinatra/reloader'
 require 'json'
 require 'date'
 require 'bcrypt'
@@ -10,28 +11,27 @@ require 'sinatra/base'
 require 'sprockets'
 require 'time'
 #enviroments
-require './config/environments'
+require './lib/config/environments'
 #models
-require './models/transaction'
-require './models/user'
+require './lib/models/transaction'
+require './lib/models/user'
 #modules
-require './modules/authentication'
-require './modules/userRoutes'
-require './modules/civMoneyRoutes'
-require './modules/assetRoutes'
-require './modules/transactionsRoutes'
-require './modules/totalsRoutes'
-require './modules/adminRoutes'
+require './lib/modules/authentication'
+require './lib/modules/userRoutes'
+require './lib/modules/transactionsRoutes'
+require './lib/modules/totalsRoutes'
+require './lib/modules/adminRoutes'
 
 class CivMoney < Sinatra::Base
+configure :development do
+  register Sinatra::Reloader
+end
 
 include BCrypt
 
 register Sinatra::Authentication
 register Sinatra::UserRoutes
 register Sinatra::TrasnsactionsRoutes
-register Sinatra::CivMoneyRoutes
-register Sinatra::AssetRoutes
 register Sinatra::TotalsRoutes
 register Sinatra::AdminRoutes
 
@@ -39,13 +39,16 @@ use Rack::Session::Cookie, :session_secret => "supersecret", :secret => "superse
 set :session_secret, "supersecret"
 set :environment, Sprockets::Environment.new
 
-environment.append_path "assets/stylesheets"
-environment.append_path "assets/javascripts"
-environment.append_path "assets/less"
-environment.append_path "assets/fonts"
-
 after do
   ActiveRecord::Base.connection.close
+end
+
+not_found do
+  File.read(File.join('public', 'index.html'))
+end
+
+get '/' do
+  File.read(File.join('public', 'index.html'))
 end
 
 configure do
@@ -53,7 +56,7 @@ configure do
   end
 
 before do
-    response.headers['Access-Control-Allow-Origin'] = 'http://civmoney.com'
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
