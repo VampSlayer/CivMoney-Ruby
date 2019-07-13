@@ -1,4 +1,4 @@
-require './models/user'
+require './lib/models/user'
 require 'sinatra/activerecord'
 require 'bcrypt'
 

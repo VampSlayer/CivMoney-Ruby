@@ -2,7 +2,6 @@ language: ruby
 rvm:
   - 2.5.1
 before_script:
-  - psql -c "CREATE DATABASE test;" -U postgres
   - bundle exec rake RACK_ENV=test db:reset
 script:
   - bundle exec rspec

@@ -11,7 +11,7 @@ require 'sinatra/base'
 require 'sprockets'
 require 'time'
 #enviroments
-require './lib/config/environments'
+require './config/environments'
 #models
 require './lib/models/transaction'
 require './lib/models/user'
