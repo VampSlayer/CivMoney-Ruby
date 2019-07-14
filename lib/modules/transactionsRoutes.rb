@@ -133,10 +133,10 @@ module Sinatra
       #/transactions/addMonthlyFixedTransaction?[amount]=500&[description]=monthly&[year]=2000&[month]=1
       app.post '/transactions/addMonthlyFixedTransaction', :auth => [:user] do
         @amount = params[:amount]
-	@description = params[:description]
-	@year = params[:year]
+	      @description = params[:description]
+	      @year = params[:year]
         @month = params[:month]
-	numberOfDaysInMonth = Time.days_in_month(@month.to_i, @year.to_i)
+	      numberOfDaysInMonth = Time.days_in_month(@month.to_i, @year.to_i)
         @dailyAmount = (@amount.to_f / numberOfDaysInMonth).round(2)
           for i in 1..numberOfDaysInMonth
             @transaction = Transaction.new()

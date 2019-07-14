@@ -8,10 +8,14 @@ module Sinatra
       app.set(:auth) do |*roles|
           condition do
             unless session[:id].nil?.! && User.exists?(:id => session[:id])
-              redirect '/login', 303
+              redirect '/unauthorized', 401
             end
           end
       end
+
+    app.get "/unauthorized" do
+      return 401
+    end
 
 	  #register user
       #/user
@@ -39,12 +43,16 @@ module Sinatra
 
 	  #user login
 	  #/login
-      app.post '/login' do
-        if User.exists?(:username => params[:username])
-          @user = User.where(username: params[:username])
-          if @user.first.password_hash == BCrypt::Engine.hash_secret(params[:password], @user.first.salt)
+      app.post '/api/login' do
+        @json = JSON.parse(request.body.read)
+        if @json["username"].empty? ||  @json["password"].empty?
+          return 400
+        end
+        if User.exists?(:username => @json["username"])
+          @user = User.where(username: @json["username"])
+          if @user.first.password_hash == BCrypt::Engine.hash_secret(@json["password"], @user.first.salt)
             session[:id] = @user.first.id
-            redirect to('/')
+            return 204
           else
             return 401
           end
@@ -55,9 +63,9 @@ module Sinatra
 
 	  #user logout, clears session
 	  #/logout
-      app.post '/logout' do
+      app.post '/api/logout' do
         session.clear
-        redirect('/login')
+        return 204
       end
 
     end

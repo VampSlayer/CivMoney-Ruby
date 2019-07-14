@@ -2,6 +2,17 @@ module Sinatra
   module UserRoutes
     def self.registered(app)
 
+   #get user
+   #/user/username
+   app.get '/api/user/getme', :auth => [:user] do
+       @user = User.where(id: session[:id])
+       return_message = Hash.new
+       return_message["id"] = @user.first.id
+       return_message["firstName"] = @user.first.username
+       return_message["currency"] = @user.first.currency
+       return_message.to_json
+    end
+
 	  #get user name
 	  #/user/username
       app.get '/user/username', :auth => [:user] do
@@ -10,7 +21,7 @@ module Sinatra
         return_message = @user.first.username
         return_message.to_json
       end
-	
+
 	  #get user currency
       #/user/currency
 	  app.get '/user/currency', :auth => [:user] do

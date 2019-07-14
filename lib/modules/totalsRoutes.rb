@@ -1,7 +1,7 @@
 module Sinatra
   module TotalsRoutes
     def self.registered(app)
-  
+
       #get total for week
       #/transactions/weekTotal?[year]=2016&[month]=08&[day]=06
       app.get '/transactions/weekTotal', :auth => [:user] do
@@ -36,7 +36,7 @@ module Sinatra
 
 	  #get total for year
       #/transactions/yearTotal?[year]=2016&[month]=08&[day]=06
-      app.get '/transactions/yearTotal', :auth => [:user] do
+      app.get '/api/transactions/yearTotal', :auth => [:user] do
       	content_type :json
       	@year = params[:year]
       	@month = params[:month]
@@ -51,7 +51,7 @@ module Sinatra
 
       #get total per day for month
       #/transactions/dailyTotalMonth?[year]=2016&[month]=08
-      app.get '/transactions/dailyTotalMonth', :auth => [:user] do
+      app.get '/api/transactions/dailyTotalMonth', :auth => [:user] do
       	content_type :json
       	@year = params[:year]
       	@month = params[:month]
@@ -77,7 +77,7 @@ module Sinatra
 
       #get yearly totals for user
       #/transactions/yearsTotals
-      app.get '/transactions/yearsTotals', :auth => [:user] do
+      app.get '/api/transactions/yearsTotals', :auth => [:user] do
       	content_type :json
       	@transactions = Transaction.find_by_sql ["SELECT
         	date_part('year', transactions.date) AS Dateyear,
@@ -92,16 +92,17 @@ module Sinatra
       end
 
       #get monthly totals for year
-      #/transactions/yearsMonthTotals
-      app.get '/transactions/yearsMonthTotals', :auth => [:user] do
+      #/transactions/yearsMonthTotals?year=2019
+      app.get '/api/transactions/yearsMonthTotals', :auth => [:user] do
+        puts(params[:year])
       	content_type :json
       	@transactions = Transaction.find_by_sql ["SELECT
         	date_part('month', transactions.date) AS Datemonth,
         	SUM(transactions.amount) AS amount
       	FROM public.transactions
-      	WHERE date_part('year', transactions.date) = date_part('year', current_date) AND user_id = ?
+      	WHERE date_part('year', transactions.date) = ? AND user_id = ?
        	GROUP BY Datemonth
-       	ORDER BY 1 ASC", session[:id]]
+       	ORDER BY 1 ASC", params[:year], session[:id]]
       	return_message = {}
       	return_message = @transactions
       	return_message.to_json
