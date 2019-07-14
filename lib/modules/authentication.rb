@@ -25,11 +25,11 @@ module Sinatra
         @user.username = params[:username]
         @user.password_hash = password_hash
         @user.salt = password_salt
-		@user.currency = params[:currency]
+		    @user.currency = params[:currency]
           if @user.save
             @newSavedUser = User.where(username: params[:username])
             session[:id] = @newSavedUser.first.id
-            redirect to('/CivMoneyHome')
+            redirect to('/')
             return 200
           else
             return 500
@@ -44,7 +44,7 @@ module Sinatra
           @user = User.where(username: params[:username])
           if @user.first.password_hash == BCrypt::Engine.hash_secret(params[:password], @user.first.salt)
             session[:id] = @user.first.id
-            redirect to('/CivMoneyHome')
+            redirect to('/')
           else
             return 401
           end

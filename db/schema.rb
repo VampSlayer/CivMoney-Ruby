@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20161118234158) do
 
   create_table "transactions", force: :cascade do |t|
     t.date     "date"
-    t.float  "amount"
+    t.float    "amount"
     t.text     "description"
     t.integer  "user_id"
     t.datetime "created_at"
