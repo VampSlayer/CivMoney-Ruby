@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import router from "./router"
 import user from './services/auth';
 import totals from './services/totals';
+import moment from 'moment';
 
 Vue.use(Vuex);
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
   state: {
     me: null,
     years: {},
+    selectableYears: [],
     loggingIn: false,
     loginError: null
   },
@@ -24,13 +26,40 @@ export default new Vuex.Store({
     },
     updateYears: (state, years) => {
       state.years = years;
+    },
+    updateSelectableYears: (state, years) => {
+      state.selectableYears = years;
     }
   },
   actions: {
     async getYears({ commit }){
       try {
-        var response = await totals.years();
-        commit("updateYears", response.data);
+        let response = await totals.years();
+        let years = response.data;
+        let yearsMap = {};
+        let selectableYears = [];
+        await years.forEach(async (year) =>  {
+          let response = await totals.getTotalPerMonthForYear(year.dateyear);
+          let data = response.data;
+          data.forEach(x => {
+            x.datemonth = moment(`${year.dateyear}-${x.datemonth}-01`).format()
+          });
+          let months = data.map(x => {return x.datemonth});
+          [1,2,3,4,5,6,7,8,9,10,11,12].forEach(x => {
+            if(!months.includes(x)){
+              data.push({
+                amount: 0,
+                datemonth: moment(`${year.dateyear}-${x}-01`).format()
+              })
+            }
+          });
+          yearsMap[year.dateyear] = {};
+          yearsMap[year.dateyear].amount = year.amount;
+          yearsMap[year.dateyear].months = data;
+          selectableYears.push(year.dateyear);
+        });
+        commit("updateSelectableYears", selectableYears);
+        commit("updateYears", yearsMap);
       } catch (error) {
         console.log(error);
       }

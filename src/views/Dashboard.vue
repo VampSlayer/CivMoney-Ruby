@@ -6,20 +6,34 @@
 #me {
     height: 80vh;
 }
+.nav-item .active{
+  color:white !important;
+  /* font-weight: bold; */
+}
 </style>
 
 <template>
   <div class="mt-4">
-    <div>
+    <div class="row">
+      <div class="col-4">
+      <b-nav align="left">
+        <b-nav-item><i title="Add a Transaction" class="fa fa-plus"></i></b-nav-item>
+        <b-nav-item><i title="Add Monthly Transactions" class="fa fa-calendar"></i></b-nav-item>
+        <b-nav-item><i title="Search Transactions" class="fa fa-search"></i></b-nav-item>
+      </b-nav>
+      </div>
+      <div class="col-8">
       <b-nav align="right">
         <b-nav-item
-          v-for="(year, index) in years"
+          active-class="year-active"
+          v-for="(year, index) in selectableYears"
           :key="index"
           :active="year === selectedYear"
-          v-on:click="selectedYear = year.dateyear; selectedMonth = ''">
-          {{ year.dateyear }}
+          v-on:click="selectedYear = year; selectedMonth = ''">
+          {{ year }}
         </b-nav-item>
       </b-nav>
+      </div>
     </div>
     <div id="me" class="row">
         <div id="chartdiv">
@@ -41,9 +55,7 @@ export default {
   data() {
     return {
       selectedYear: "",
-      montlyTotalsForYear: [],
       error: "",
-      months: [1,2,3,4,5,6,7,8,9,10,11,12],
       monthsMap: {
         Jan: "01",
         Feb: "02",
@@ -59,21 +71,20 @@ export default {
         Dec: '12'
       },
       selectedMonth: "",
-      totalsPerDayForMonth: {}
+      totalsPerDayForMonth: []
     };
   },
   watch: {
     selectedMonth: function(newVal){
-      if(newVal === '') this.getTotalPerMonthForYear();
+      if(newVal === '') this.graphYear();
       this.getTotalPerDayForMonth();
     },
     selectedYear: function(){
-      this.getTotalPerMonthForYear();
+      this.graphYear();
     },
-    years: function() {
-      if (this.years){
-        this.selectedYear = this.years[1].dateyear;
-        this.getTotalPerMonthForYear();
+    selectableYears: function(){
+      if(this.selectableYears.length > 0){
+        this.selectedYear = this.selectableYears[this.selectableYears.length - 1];
       }
     }
   },
@@ -81,7 +92,7 @@ export default {
     this.getYears();
   },
   computed: {
-    ...mapState(["years", "me"])
+    ...mapState(["years", "me", "selectableYears"])
   },
   methods: {
     graphMonth() {
@@ -101,7 +112,7 @@ export default {
       dateAxis.renderer.labels.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
 
       let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.title.text = `Amount / ${this.me.currency}` ;
+      valueAxis.title.text = `Total / ${this.me.currency}` ;
 
       // Create series
       let series = chart.series.push(new am4charts.ColumnSeries());
@@ -123,31 +134,27 @@ export default {
       range.contents.fillOpacity = 0.2;
     },
     graphYear() {
+      let data = this.years[this.selectedYear].months;
       am4core.useTheme(am4themes_dark);
       am4core.useTheme(am4themes_animated);
       // Create chart instance
       let chart = am4core.create("chartdiv", am4charts.XYChart);
 
       // Add data
-      this.montlyTotalsForYear.forEach(x => {
-        x.datemonth = moment(`${this.selectedYear}-${x.datemonth}-01`).format();
-      });
-
-      chart.data = this.montlyTotalsForYear;
+      chart.data = this.years[this.selectedYear].months;
 
       // Create axes
       let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
       dateAxis.renderer.minGridDistance = 50;
       dateAxis.renderer.grid.template.location = 0.5;
       dateAxis.dateFormats.setKey("datemonth", "MMMM");
-      console.log(dateAxis.renderer.labels)
       dateAxis.renderer.labels.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
       dateAxis.renderer.labels.template.events.on("hit", (event) => {
         this.selectedMonth = this.monthsMap[event.event.explicitOriginalTarget.data.split(' ')[0]];
       }, this)
 
       let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.title.text = `Amount / ${this.me.currency}` ;
+      valueAxis.title.text = `Total / ${this.me.currency}` ;
 
       // Create series
       let series = chart.series.push(new am4charts.ColumnSeries());
@@ -169,29 +176,8 @@ export default {
       range.contents.fillOpacity = 0.2;
     },
     ...mapActions(["getYears"]),
-    async getTotalPerMonthForYear() {
-      try {
-        var response = await totals.getTotalPerMonthForYear(this.selectedYear);
-        let data = response.data;
-        let months = []
-        data.forEach(x => {
-          months.push(x.datemonth);
-        })
-        this.months.forEach(x => {
-          if(!months.includes(x)){
-            data.push({
-              amount: 0,
-              datemonth: x
-            })
-          }
-        })
-        this.montlyTotalsForYear = data;
-        this.graphYear();
-      } catch (error) {
-        this.error = error.repsonse.data;
-      }
-    },
     async getTotalPerDayForMonth() {
+      if(!this.selectedMonth) return;
       try {
         var response = await totals.getTotalPerDayForMonth(this.selectedYear, this.selectedMonth);
         this.totalsPerDayForMonth = response.data;
