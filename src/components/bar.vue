@@ -69,16 +69,14 @@ export default {
         }
         let incomes = {type: "Incomes"};
         let outgoings = {type: "Outgoings"};
-        let total = {type: "Total"};
+        let total = {type: "Total", Total: 0};
         response.data.forEach(element => {
-          total.Total = 0;
+          total.Total += element.amount;
           if(element.amount > 0){
-            incomes[element.description] = element.amount;
-            total.Total += element.amount;
+            incomes[element.description] += element.amount;  
           }
           if(element.amount < 0){
-            outgoings[element.description] = element.amount;
-            total.Total -= element.amount;
+            outgoings[element.description] += element.amount;
           }
         });
         this.data.push(incomes);
