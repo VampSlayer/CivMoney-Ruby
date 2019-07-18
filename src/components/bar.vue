@@ -73,12 +73,18 @@ export default {
         response.data.forEach(element => {
           total.Total += element.amount;
           if(element.amount > 0){
-            incomes[element.description] = 0;
-            incomes[element.description] += element.amount;  
+            if(element.description in incomes){
+              incomes[element.description] += element.amount;  
+            }else{  
+              incomes[element.description] = element.amount;
+            }
           }
           if(element.amount < 0){
-            outgoings[element.description] = 0;
-            outgoings[element.description] += element.amount;
+            if(element.description in outgoings){ 
+              outgoings[element.description] += element.amount;
+            }else{
+              outgoings[element.description] = element.amount;
+            }
           }
         });
         this.data.push(incomes);
