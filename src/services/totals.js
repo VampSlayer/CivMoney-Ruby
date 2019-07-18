@@ -9,5 +9,11 @@ export default {
     },
     async getTotalPerDayForMonth(year, month){
         return await axios.get(`/api/transactions/dailyTotalMonth?year=${year}&month=${month}`);
-    }
+    },
+    async getMonthGroupedToals(year, month){
+        return await axios.get(`/api/transactions/monthGroupedToals?year=${year}&month=${month}`);
+    },
+    async getTransactionsForDate(date){
+        return await axios.get(`/api/transactions/date?date=${date}`);
+    },
 }

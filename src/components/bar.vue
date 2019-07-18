@@ -12,25 +12,84 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import graphing from "../services/graphing";
+import totals from "../services/totals";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated.js";
 import am4themes_dark from "@amcharts/amcharts4/themes/dark.js";
+import moment from "moment";
 export default {
   name: "bar",
   props: {
-    data: Array
+    year: Number,
+    month: String,
+    date: String
   },
   data() {
     return {
-      id: `${this._uid}bar`
+      id: `${this._uid}bar`,
+      data: [],
+      title: ""
     };
   },
-  mounted: function() {
-    this.draw();
+    computed: {
+    ...mapState(["me"])
+  },
+  watch: {
+    year: function(){
+      if(!this.year || !this.month || this.month === "") return;
+      this.title = `${moment(this.month).format("MMM YYYY")}`;
+      this.getTransactions("month");
+    },
+    month: function(){
+      if(!this.month || this.month === "") return;
+      this.title = `${moment(this.month).format("MMM YYYY")}`;
+      this.getTransactions("month");
+    },
+    date: function(){
+      if(!this.date || this.date === "") return;
+      this.title = `${moment(this.date).format("LL")}`;
+      this.getTransactions("date");
+    }
   },
   methods: {
+    async getTransactions(type){
+      try{
+        this.data = [];
+        let response = {};
+        switch (type) {
+          case "month":
+            response = await totals.getMonthGroupedToals(this.year, moment(this.month).format("MM"));
+            break;
+          case "date":
+            response = await totals.getTransactionsForDate(this.date);
+            break;
+        }
+        let incomes = {type: "Incomes"};
+        let outgoings = {type: "Outgoings"};
+        let total = {type: "Total"};
+        response.data.forEach(element => {
+          total.Total = 0;
+          if(element.amount > 0){
+            incomes[element.description] = element.amount;
+            total.Total += element.amount;
+          }
+          if(element.amount < 0){
+            outgoings[element.description] = element.amount;
+            total.Total -= element.amount;
+          }
+        });
+        this.data.push(incomes);
+        this.data.push(outgoings);
+        this.data.push(total);
+        this.draw();
+      }
+      catch(error){
+        console.error(error);
+      }
+    },
     draw() {
       am4core.useTheme(am4themes_animated);
       am4core.useTheme(am4themes_dark);
@@ -40,7 +99,7 @@ export default {
       chart.data = this.data;
 
       var title = chart.titles.create();
-      title.text = "Jan 2019";
+      title.text = this.title;
       title.fontSize = 20;
       // Create axes
       let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
@@ -60,10 +119,11 @@ export default {
       );
 
       let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.title.text = `Total / ${this.me.currency}`;
       valueAxis.renderer.inside = true;
 
       // Create series
-      function createSeries(field) {
+      function createSeries(field, scope) {
         // Set up series
         let series = chart.series.push(new am4charts.ColumnSeries());
         series.name = field;
@@ -79,6 +139,13 @@ export default {
         series.columns.template.width = am4core.percent(60);
         series.columns.template.tooltipText =
           "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+        series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
+        series.columns.template.events.on(
+        "hit",
+        event => {
+          scope.createPieData(event.target.dataItem.dataContext.type);
+        },
+        scope);
 
         let labelBullet = series.bullets.push(new am4charts.LabelBullet());
         labelBullet.label.text = "{valueY}";
@@ -92,7 +159,7 @@ export default {
           return x != "type";
         });
         keys.forEach(x => {
-          createSeries(x);
+          createSeries(x, this);
         });
       });
     },
@@ -111,7 +178,7 @@ export default {
         datum["amount"] = Math.abs(data[x]);
         pieData.push(datum);
       });
-      let pieTitle = `Jan 2019 ${type}`;
+      let pieTitle = `${this.title} ${type}`;
       graphing.pie(this.id, pieData, pieTitle, this);
     }
   }

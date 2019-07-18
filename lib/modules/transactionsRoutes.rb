@@ -15,8 +15,8 @@ module Sinatra
       end
 
       #get transaction for date
-      #/transactions/date?[date]=2016.08.03
-      app.get '/transactions/date', :auth => [:user] do
+      #/api/transactions/date?[date]=2016.08.03
+      app.get '/api/transactions/date', :auth => [:user] do
       	content_type :json
       	@transactions = Transaction.where("date = ? AND user_id = ?", params[:date], session[:id])
       	return_message = {}

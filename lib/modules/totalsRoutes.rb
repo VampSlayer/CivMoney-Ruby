@@ -85,20 +85,35 @@ module Sinatra
       	FROM public.transactions
       	WHERE user_id = ?
        	GROUP BY Dateyear
-       	ORDER BY 1 ASC", session[:id]]
+       	ORDER BY Dateyear ASC", session[:id]]
       	return_message = {}
       	return_message = @transactions
       	return_message.to_json
       end
 
+	  #get grouped transactions sum for month
+	  #/transactions/monthGroupedToals?month=01&year=2019
+	  app.get '/api/transactions/monthGroupedToals', :auth => [:user] do 
+		content_type :json
+		@transactions = Transaction.find_by_sql ["SELECT
+		  	description,
+		  	ROUND(SUM(transactions.amount)::numeric,2) AS amount
+		FROM public.transactions
+		WHERE date_part('month', transactions.date) = ? AND date_part('year', transactions.date) = ? AND user_id = ?
+		GROUP BY description
+		ORDER BY 1 ASC", params[:month], params[:year], session[:id]]
+		return_message = {}
+		return_message = @transactions
+		return_message.to_json
+	  end
+
       #get monthly totals for year
       #/transactions/yearsMonthTotals?year=2019
       app.get '/api/transactions/yearsMonthTotals', :auth => [:user] do
-        puts(params[:year])
       	content_type :json
       	@transactions = Transaction.find_by_sql ["SELECT
         	date_part('month', transactions.date) AS Datemonth,
-        	SUM(transactions.amount) AS amount
+        	ROUND(SUM(transactions.amount)::numeric,2) AS amount
       	FROM public.transactions
       	WHERE date_part('year', transactions.date) = ? AND user_id = ?
        	GROUP BY Datemonth

@@ -6,7 +6,7 @@
 }
 #chartdiv {
   width: 100%;
-  height: 100%;
+  height: 109%;
 }
 #me {
   height: 80vh;
@@ -52,9 +52,9 @@
         @hide="show = false"
         :width="modalWidth"
         :height="modalHeight"
-        :duration="600"
+        :duration="500"
         :closeButton="false">
-        <bar :data="data"></bar>
+        <bar :year="selectedYear" :month="monthBar" :date="selectedDate"></bar>
       </vodal>
       <div id="chartdiv"></div>
     </div>
@@ -78,24 +78,13 @@ export default {
     return {
       modalHeight: 0,
       modalWidth: 0,
-      data: [
-        {
-          type: "Incomes",
-          Work: 600
-        },
-        {
-          type: "Outgoings",
-          Rent: -500,
-          Phone: -20
-        },
-        {
-          type: "Total",
-          Total: 480
-        }
-      ],
       show: false,
-      selectedYear: "",
+      selectedYear: 0,
       error: "",
+      selectedMonth: "",
+      selectedDate: "",
+      totalsPerDayForMonth: [],
+      monthBar: "",
       monthsMap: {
         Jan: "01",
         Feb: "02",
@@ -109,9 +98,7 @@ export default {
         Oct: "10",
         Nov: "11",
         Dec: "12"
-      },
-      selectedMonth: "",
-      totalsPerDayForMonth: []
+      }
     };
   },
   watch: {
@@ -182,6 +169,7 @@ export default {
         "hit",
         event => {
           this.show = true;
+          this.selectedDate = event.target.dataItem.dataContext.date;
         },
         this
       );
@@ -215,9 +203,7 @@ export default {
       dateAxis.renderer.labels.template.events.on(
         "hit",
         event => {
-          this.selectedMonth = this.monthsMap[
-            event.event.explicitOriginalTarget.data.split(" ")[0]
-          ];
+          this.selectedMonth = this.monthsMap[event.event.explicitOriginalTarget.data.split(" ")[0]]
         },
         this
       );
@@ -235,6 +221,7 @@ export default {
         "hit",
         event => {
           this.show = true;
+          this.monthBar = event.target.dataItem.dataContext.datemonth;
         },
         this
       );
