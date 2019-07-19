@@ -22,26 +22,36 @@ body{
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-text>{{me.firstName}}</b-nav-text>
-            <b-nav-item to="/profile"><i title="Your Profile" class="fas fa-cog"></i></b-nav-item>
+            <b-nav-item v-on:click="showProfile"><i title="Your Profile" class="fas fa-cog"></i></b-nav-item>
             <b-nav-item v-on:click="logout"><i title="Logout" class="fas fa-power-off"></i></b-nav-item>
           </b-navbar-nav>
         </b-collapse>
 
       </b-navbar>
     </header>
+    <slideout-panel></slideout-panel>
     <router-view class="container-fluid" />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import AddTransaction from "./components/addtransaction";
 export default {
   name: "app",
   computed: {
     ...mapState(['me'])
   },
   methods: {
-    ...mapActions(['logout'])
+    ...mapActions(['logout']),
+    showProfile(){
+      this.$showPanel({
+        component: AddTransaction,
+        height: ((window.innerHeight) / 100) * 20,
+        openOn: 'top',
+        cssClass: 'slideout-bg'
+     }); 
+    }
   }
 };
 </script>
