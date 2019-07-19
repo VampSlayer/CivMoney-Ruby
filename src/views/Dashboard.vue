@@ -58,7 +58,7 @@
           :height="modalHeight"
           :duration="500"
           :closeButton="false">
-          <bar :id="vodalBarId" :year="selectedYear" :month="monthBar" :date="selectedDate"></bar>
+          <bar :year="selectedYear" :month="monthBar" :date="selectedDate"></bar>
         </vodal>
         <div id="chartdiv"></div>
       </div>
@@ -79,7 +79,6 @@ export default {
   },
   data() {
     return {
-      vodalBarId: `${this._uid}bar`,
       modalHeight: 0,
       modalWidth: 0,
       show: false,
@@ -155,7 +154,6 @@ export default {
     },
     hideModal(){
       this.show = false;
-      document.getElementById(this.vodalBarId).innerHTML = '';
     },
     ...mapActions(["getYears"]),
     async getTotalPerDayForMonth() {

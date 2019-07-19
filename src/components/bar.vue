@@ -22,11 +22,11 @@ export default {
   props: {
     year: Number,
     month: String,
-    date: String,
-    id: String
+    date: String
   },
   data() {
     return {
+      id: `${this._uid}bar`,
       data: [],
       title: "",
       error: ""
@@ -55,6 +55,7 @@ export default {
   methods: {
     async getTransactions(type){
       try{
+        document.getElementById(this.id).innerHTML = '';
         this.data = [];
         let response = {};
         switch (type) {

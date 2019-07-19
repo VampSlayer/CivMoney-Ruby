@@ -14,6 +14,9 @@ border-radius: 0px !important;
 }
 .form-control{
     border-radius: 0px !important;
+    background: #153057 !important;
+    color: #fff !important;
+    border: 1px solid #00000073 !important;
 }
 .card{
     border-radius: 0px !important;
@@ -25,11 +28,11 @@ border-radius: 0px !important;
         <div class="row">
             <div class="col-2">
                 <b-card style="background-color: transparent;">
-                    <b-input :state="false" type="number" re class="mb-1" placeholder="Amount"></b-input>
+                    <b-input :state="false" type="text" re class="mb-1" placeholder="Amount"></b-input>
                     <b-input type="text" class="mb-1" placeholder="Description"></b-input>
                     <b-input type="date" class="mb-1" placeholder="Date"></b-input>
                     <div class="row">
-                        <b-form-radio style="color:green!important" class="ml-3" v-model="selected" name="some-radios" value="income">Income</b-form-radio>
+                        <b-form-radio style="color:darkgreen!important" class="ml-3" v-model="selected" name="some-radios" value="income">Income</b-form-radio>
                         <b-form-radio style="color:red!important" class="ml-2" v-model="selected" name="some-radios" value="expense">Expense</b-form-radio>
                     </div>
                 </b-card>
