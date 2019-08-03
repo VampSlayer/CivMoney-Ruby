@@ -3,8 +3,8 @@ module Sinatra
     def self.registered(app)
 
       #add new transaction
-      #/transaction?transaction[amount]=1&transaction[description]=hello&transaction[date]=2016.08.08
-      app.post '/transaction', :auth => [:user] do
+      #/api/transaction?transaction[amount]=1&transaction[description]=hello&transaction[date]=2016.08.08
+      app.post '/api/transaction', :auth => [:user] do
       	@transaction = Transaction.new(params[:transaction])
         @transaction.user_id = session[:id]
       	if @transaction.save
@@ -130,8 +130,8 @@ module Sinatra
       end
 
       #add monthly fixed Transaction
-      #/transactions/addMonthlyFixedTransaction?[amount]=500&[description]=monthly&[year]=2000&[month]=1
-      app.post '/transactions/addMonthlyFixedTransaction', :auth => [:user] do
+      #/api/transactions/addMonthlyFixedTransaction?[amount]=500&[description]=monthly&[year]=2000&[month]=1
+      app.post '/api/transactions/addMonthlyFixedTransaction', :auth => [:user] do
         @amount = params[:amount]
 	      @description = params[:description]
 	      @year = params[:year]

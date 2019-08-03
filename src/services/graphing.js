@@ -15,7 +15,7 @@ export default {
         chartTitle.cursorOverStyle = am4core.MouseCursorStyle.pointer;
         chartTitle.tooltipText = "Back"
         chartTitle.events.on("hit", () => {
-            vm.draw();
+            vm.drawVodalBar();
         }, vm)
         let pieSeries = chart.series.push(new am4charts.PieSeries());
         pieSeries.dataFields.value = "amount";

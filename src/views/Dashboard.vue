@@ -71,6 +71,7 @@ import { mapState, mapActions } from "vuex";
 import totals from "../services/totals";
 import Bar from "../components/bar";
 import AddTransaction from "../components/addtransaction";
+import MonthlyTransactions from "../components/monthlytransactions";
 import graphing from "../services/graphing";
 export default {
   name: "dashboard",
@@ -98,10 +99,15 @@ export default {
       graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
     },
     selectableYears: function() {
-      if (this.selectableYears.length > 0) {
+      const oldSelectedYear = this.selectedYear;
+      if (this.selectableYears && this.selectableYears.length > 0) {
         this.selectedYear = this.selectableYears[
           this.selectableYears.length - 1
         ];
+        const newSelectedYear = this.selectedYear;
+        if(oldSelectedYear === newSelectedYear){
+          graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
+        }
       }
     }
   },
@@ -138,7 +144,7 @@ export default {
     },
     showAddMonthlyTransactions(){
       this.$showPanel({
-        component: AddTransaction,
+        component: MonthlyTransactions,
         height: ((this.modalHeight * 2) / 100) * 80,
         openOn: 'top',
         cssClass: 'slideout-bg'

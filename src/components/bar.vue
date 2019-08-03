@@ -95,6 +95,9 @@ export default {
         this.error = error;
       }
     },
+    drawVodalBar: function(){
+      graphing.vodalBar(this.id, this.data, this.title, this);
+    },
     createPieData(type) {
       let data = this.data.find(x => {
         return x.type === type;
