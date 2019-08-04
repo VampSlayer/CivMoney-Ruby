@@ -53,7 +53,7 @@ configure do
   end
 
 before do
-    response.headers['Access-Control-Allow-Origin'] = 'http://civmoney.com'
+    response.headers['Access-Control-Allow-Origin'] = ENV['REACT_URL'] || 'http://localhost:5000'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
