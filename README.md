@@ -10,8 +10,8 @@ Install instructions on wiki page.
 
 Live websites:
 
-Html & Js, version 1 front end - 
+Html & Js, version 1 front end - https://civmoneyv1.herokuapp.com
 
-React, version 2 front end - 
+React, version 2 front end - https://civmoney-react.herokuapp.com
 
 Vue, version 3 front end - https://civmoney.herokuapp.com
