@@ -16,7 +16,7 @@ body{
   <div>
     <header v-if="me">
       <b-navbar toggleable="lg" type="dark" class="civ-nav-bg">
-        <b-navbar-brand to="/"><img width="6%"  class="d-inline-block align-top" src="https://i.imgur.com/NbzvbFe.png"/>
+        <b-navbar-brand to="/"><img width="34px"  class="d-inline-block align-top" src="https://i.imgur.com/JlQV6Co.png"/>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
