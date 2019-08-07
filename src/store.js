@@ -41,10 +41,10 @@ export default new Vuex.Store({
         await years.forEach(async (year) =>  {
           let response = await totals.getTotalPerMonthForYear(year.dateyear);
           let data = response.data;
+          let months = data.map(x => {return x.datemonth});
           data.forEach(x => {
             x.datemonth = moment(`${year.dateyear}-${x.datemonth}-01`).format()
           });
-          let months = data.map(x => {return x.datemonth});
           [1,2,3,4,5,6,7,8,9,10,11,12].forEach(x => {
             if(!months.includes(x)){
               data.push({
@@ -55,7 +55,9 @@ export default new Vuex.Store({
           });
           yearsMap[year.dateyear] = {};
           yearsMap[year.dateyear].amount = year.amount;
-          yearsMap[year.dateyear].months = data;
+          yearsMap[year.dateyear].months = data.sort(function(a,b){
+            return new Date(a.datemonth) - new Date(b.datemonth);
+          });
           selectableYears.push(year.dateyear);
         });
         commit("updateSelectableYears", selectableYears);

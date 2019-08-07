@@ -118,6 +118,14 @@ export default {
       series.columns.template.tooltipText = "[bold]{valueY}[/]";
       series.tensionX = 0.8;
       series.fillOpacity = 0.2;
+      
+      let lineSeries = chart.series.push(new am4charts.LineSeries());
+      lineSeries.dataFields.valueY = "amount";
+      lineSeries.dataFields.dateX = "date";
+      lineSeries.tensionX = 0.7;
+      lineSeries.stroke = am4core.color("#fff");
+      lineSeries.strokeWidth = 3;
+
       let range = valueAxis.createSeriesRange(series);
       range.value = 0;
       range.endValue = Number.MAX_SAFE_INTEGER;
@@ -161,8 +169,7 @@ export default {
       let series = chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.valueY = "amount";
       series.dataFields.dateX = "datemonth";
-      series.columns.template.cursorOverStyle =
-        am4core.MouseCursorStyle.pointer;
+      series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
       series.columns.template.events.on(
         "hit",
         event => {
@@ -174,6 +181,14 @@ export default {
       series.columns.template.tooltipText = "[bold]{valueY}[/]";
       series.tensionX = 0.8;
       series.fillOpacity = 0.2;
+
+      let lineSeries = chart.series.push(new am4charts.LineSeries());
+      lineSeries.dataFields.valueY = "amount";
+      lineSeries.dataFields.dateX = "datemonth";
+      lineSeries.tensionX = 0.7;
+      lineSeries.stroke = am4core.color("#fff");
+      lineSeries.strokeWidth = 3;
+
       let range = valueAxis.createSeriesRange(series);
       range.value = 0;
       range.endValue = Number.MAX_SAFE_INTEGER;

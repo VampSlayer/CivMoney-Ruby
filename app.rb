@@ -1,6 +1,5 @@
 #gems
 require 'sinatra'
-require 'sinatra/cross_origin'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
 require 'json'
@@ -50,14 +49,5 @@ end
 get '/' do
   File.read(File.join('public', 'index.html'))
 end
-
-configure do
-    enable :cross_origin
-  end
-
-before do
-    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
-  end
 
 end
