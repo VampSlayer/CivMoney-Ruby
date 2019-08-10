@@ -27,8 +27,8 @@ export default {
     async get() {
         return await axios.get('/api/user/getme');
     },
-    async login(data) {
-        return await axios.post('/api/login', data);
+    async login(id_token) {
+        return await axios.post(`/api/login?id_token=${id_token}`);
     },
     async logout() {
         return await axios.post('/api/logout');

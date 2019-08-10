@@ -63,13 +63,18 @@ export default new Vuex.Store({
         commit("updateSelectableYears", selectableYears);
         commit("updateYears", yearsMap);
       } catch (error) {
-        console.log(error);
+        // eslint-disable-next-line
+        console.error(error);
       }
     },
-    async login({ commit }, loginData) {
+    loginFaliure({commit}, error){
+      commit("loginStop", error.response);
+      commit("updateMe", null);
+    },
+    async login({ commit }, id_token) {
       commit("loginStart");
       try {
-        await user.login(loginData);
+        await user.login(id_token);
         router.push('/');
       } catch (error) {
         commit("loginStop", error.response);
@@ -77,6 +82,9 @@ export default new Vuex.Store({
       }
     },
     async logout() {
+      // eslint-disable-next-line
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut();
       await user.logout();
       user.remove();
       router.push('/login');

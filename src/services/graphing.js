@@ -76,7 +76,7 @@ export default {
             return am4core.color("#00FF7F");
           }
           else {
-            return am4core.color("#ff8000");;
+            return am4core.color("#ff8000");
           }
         });
         series.columns.template.adapter.add("fill", function (fill, target) {
@@ -87,7 +87,7 @@ export default {
             return am4core.color("#00FF7F");
           }
           else {
-            return am4core.color("#ff8000");;
+            return am4core.color("#ff8000");
           }
         });
       }
@@ -139,7 +139,7 @@ export default {
         return am4core.color("#00FF7F");
       }
       else {
-        return am4core.color("#ff8000");;
+        return am4core.color("#ff8000");
       }
     });
     series.columns.template.adapter.add("fill", function (fill, target) {
@@ -150,7 +150,7 @@ export default {
         return am4core.color("#00FF7F");
       }
       else {
-        return am4core.color("#ff8000");;
+        return am4core.color("#ff8000");
       }
     });
     series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
@@ -206,7 +206,7 @@ export default {
       hoverState.properties.scale = 1.7;
 
       return trend;
-    };
+    }
 
     const sumOfData = data.map(x => { return x.amount }).reduce((a, b) => a + b, 0);
     createTrendLine([
@@ -259,7 +259,7 @@ export default {
         return am4core.color("#00FF7F");
       }
       else {
-        return am4core.color("#ff8000");;
+        return am4core.color("#ff8000");
       }
     });
     series.columns.template.adapter.add("fill", function (fill, target) {
@@ -326,7 +326,7 @@ export default {
       hoverState.properties.scale = 1.7;
 
       return trend;
-    };
+    }
 
     const sumOfData = data.map(x => { return x.amount }).reduce((a, b) => a + b, 0);
     createTrendLine([

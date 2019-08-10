@@ -9,6 +9,7 @@ require 'dm-aggregates'
 require 'sinatra/base'
 require 'sprockets'
 require 'time'
+require 'google-id-token'
 #enviroments
 require './config/environments'
 #models
@@ -37,6 +38,7 @@ register Sinatra::AdminRoutes
 use Rack::Session::Cookie, :session_secret => "supersecret", :secret => "supersecret"
 set :session_secret, "supersecret"
 set :environment, Sprockets::Environment.new
+set :client_id, ENV['GOOGLE_CLIENT_ID']
 
 after do
   ActiveRecord::Base.connection.close

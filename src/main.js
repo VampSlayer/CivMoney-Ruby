@@ -11,10 +11,7 @@ import Vodal from 'vodal';
 Vue.component(Vodal.name, Vodal);
 
 import 'vodal/common.css';
-import 'vodal/slide-up.css'
 import 'vodal/slide-down.css'
-import 'vodal/slide-right.css'
-import 'vodal/slide-left.css'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";

@@ -22,7 +22,7 @@ body{
 
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
-            <b-nav-text>{{me.firstName}}</b-nav-text>
+            <b-nav-text>{{me.username}}</b-nav-text>
             <b-nav-item v-on:click="showProfile"><i title="Your Profile" class="fas fa-cog"></i></b-nav-item>
             <b-nav-item v-on:click="logout"><i title="Logout" class="fas fa-power-off"></i></b-nav-item>
           </b-navbar-nav>

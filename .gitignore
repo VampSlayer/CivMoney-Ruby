@@ -4,6 +4,7 @@ node_modules
 
 # local env files
 .env.local
+.env.production
 .env.*.local
 
 # Log files
@@ -19,3 +20,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+/src/config/dev.js
