@@ -29,6 +29,7 @@ module Sinatra
         if User.exists?(:email => payload['email'])
           @user = User.where(email: payload['email'])
           session[:id] = @user.first.id
+          session.options[:expire_after] = 2592000 #30days
           return 204
         else
           @user = User.new()
@@ -38,6 +39,7 @@ module Sinatra
             if @user.save
               @newSavedUser = User.where(email: payload['email'])
               session[:id] = @newSavedUser.first.id
+              session.options[:expire_after] = 2592000 #30days
               return 204
             else
               return 500

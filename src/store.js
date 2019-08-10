@@ -71,9 +71,10 @@ export default new Vuex.Store({
       commit("loginStop", error.response);
       commit("updateMe", null);
     },
-    async login({ commit }, id_token) {
+    async login({commit}, googleUser) {
       commit("loginStart");
       try {
+        var id_token = googleUser.getAuthResponse().id_token;
         await user.login(id_token);
         router.push('/');
       } catch (error) {
@@ -82,9 +83,6 @@ export default new Vuex.Store({
       }
     },
     async logout() {
-      // eslint-disable-next-line
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut();
       await user.logout();
       user.remove();
       router.push('/login');
