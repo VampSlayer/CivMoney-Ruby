@@ -1,6 +1,7 @@
 <style scoped>
 .login-right {
   background: #248df0;
+  height: 100% !important;
 }
 .img-div {
   width: 100%;
