@@ -21,6 +21,10 @@ html, body{
 .google-logout:hover{
   color: rgba(255, 255, 255, 0.75);
 }
+
+.h-container{
+  height: calc(100% - 120px) !important;
+}
 </style>
 
 <template>
@@ -46,7 +50,7 @@ html, body{
       </b-navbar>
     </header>
     <slideout-panel></slideout-panel>
-    <router-view class="container-fluid" />
+    <router-view class="container-fluid h-container" />
   </div>
 </template>
 
@@ -54,7 +58,8 @@ html, body{
 import { mapState, mapActions } from 'vuex';
 import AddTransaction from "./components/addtransaction";
 import keys from '@/config/keys';
-import GoogleLogin from 'vue-google-login'
+import GoogleLogin from 'vue-google-login';
+import Profile from '@/components/profile';
 export default {
   name: "app",
   components: {
@@ -74,8 +79,8 @@ export default {
     ...mapActions(['logout', 'loginFaliure']),
     showProfile(){
       this.$showPanel({
-        component: AddTransaction,
-        height: ((window.innerHeight) / 100) * 20,
+        component: Profile,
+        height: ((window.innerHeight) / 100) * 25,
         openOn: 'top',
         cssClass: 'slideout-bg'
      });

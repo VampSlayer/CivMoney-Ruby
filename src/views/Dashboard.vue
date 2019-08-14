@@ -6,10 +6,7 @@
 }
 #chartdiv {
   width: 100%;
-  height: 109%;
-}
-#me {
-  height: 80vh;
+  height: 100%;
 }
 .nav-item .active {
   color: white !important;
@@ -22,7 +19,7 @@
 <template>
   <div>
     <slideout-panel></slideout-panel>
-    <div class="mt-4">
+    <div class="mt-2 h-100">
       <div class="row">
         <div class="col-4">
           <b-nav align="left">
@@ -49,7 +46,7 @@
           </b-nav>
         </div>
       </div>
-      <div id="me" class="row">
+      <div class="row h-100">
         <vodal
           :show="show"
           animation="slideUp"
@@ -137,7 +134,7 @@ export default {
     showAddTransaction(){
      this.$showPanel({
         component: AddTransaction,
-        height: ((this.modalHeight * 2) / 100) * 23,
+        height: ((this.modalHeight * 2) / 100) * 25,
         openOn: 'top',
         cssClass: 'slideout-bg'
      }); 
@@ -145,7 +142,7 @@ export default {
     showAddMonthlyTransactions(){
       this.$showPanel({
         component: MonthlyTransactions,
-        height: ((this.modalHeight * 2) / 100) * 80,
+        height: ((this.modalHeight * 2) / 100) * 75,
         openOn: 'top',
         cssClass: 'slideout-bg'
      }); 
@@ -153,7 +150,7 @@ export default {
     showSearchTransactions(){
       this.$showPanel({
         component: AddTransaction,
-        height: ((this.modalHeight * 2) / 100) * 80,
+        height: ((this.modalHeight * 2) / 100) * 75,
         openOn: 'top',
         cssClass: 'slideout-bg'
      }); 

@@ -58,6 +58,8 @@ export default {
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = `${scope.me.currency}`;
     valueAxis.renderer.inside = true;
+    valueAxis.title.rotation = 0;
+    valueAxis.title.fontWeight = 'bolder';
     function createSeries(field, scope) {
       let series = chart.series.push(new am4charts.ColumnSeries());
       series.name = field;
@@ -93,7 +95,7 @@ export default {
       }
       series.columns.template.width = am4core.percent(60);
       series.columns.template.tooltipText =
-        "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY} {currency}";
+        "[bold]{name}[/]\n[font-size:14px]{currency}{valueY}";
       series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
       series.columns.template.events.on(
         "hit",
@@ -127,6 +129,8 @@ export default {
     dateAxis.renderer.labels.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = `${scope.me.currency}`;
+    valueAxis.title.fontWeight = 'bolder';
+    valueAxis.title.rotation = 0;
     let series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueY = "amount";
     series.dataFields.dateX = "date";
@@ -162,7 +166,7 @@ export default {
       },
       scope
     );
-    series.columns.template.tooltipText = "[bold]{valueY} {currency}[/]";
+    series.columns.template.tooltipText = "[bold]{currency}{valueY}[/]";
     series.fillOpacity = 0.5;
 
     let lineSeries = chart.series.push(new am4charts.LineSeries());
@@ -196,11 +200,12 @@ export default {
       }
       trend.data = data;
 
-      var bullet = trend.bullets.push(new am4charts.CircleBullet());
-      bullet.tooltipText = "{valueY} {currency}[/]";
+      var bullet = trend.bullets.push(new am4charts.CircleBullet());{currency}
+      bullet.tooltipText = "{currency}{valueY}[/]";
       bullet.strokeWidth = 2;
       bullet.stroke = trend.stroke;
       bullet.circle.fill = trend.stroke;
+      bullet.circle.cursorOverStyle = am4core.MouseCursorStyle.pointer;
     
       var hoverState = bullet.states.create("hover");
       hoverState.properties.scale = 1.7;
@@ -223,8 +228,7 @@ export default {
     dateAxis.renderer.minGridDistance = 50;
     dateAxis.renderer.grid.template.location = 0.5;
     dateAxis.dateFormats.setKey("datemonth", "MMMM");
-    dateAxis.renderer.labels.template.cursorOverStyle =
-      am4core.MouseCursorStyle.pointer;
+    dateAxis.renderer.labels.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
     dateAxis.renderer.labels.template.events.on(
       "hit",
       event => {
@@ -247,6 +251,8 @@ export default {
     );
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = `${scope.me.currency}`;
+    valueAxis.title.fontWeight = 'bolder';
+    valueAxis.title.rotation = 0;
     let series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueY = "amount";
     series.dataFields.dateX = "datemonth";
@@ -282,7 +288,7 @@ export default {
       },
       scope
     );
-    series.columns.template.tooltipText = "[bold]{valueY} {currency}[/]";
+    series.columns.template.tooltipText = "[bold]{currency}{valueY}[/]";
     series.fillOpacity = 0.5;
 
     let lineSeries = chart.series.push(new am4charts.LineSeries());
@@ -317,10 +323,11 @@ export default {
       trend.data = data;
 
       var bullet = trend.bullets.push(new am4charts.CircleBullet());
-      bullet.tooltipText = "[bold]{year}[/] {valueY} {currency}[/]";
+      bullet.tooltipText = "[bold]{year}[/]: {currency}{valueY}[/]";
       bullet.strokeWidth = 2;
       bullet.stroke = trend.stroke;
       bullet.circle.fill = trend.stroke;
+      bullet.circle.cursorOverStyle = am4core.MouseCursorStyle.pointer;
     
       var hoverState = bullet.states.create("hover");
       hoverState.properties.scale = 1.7;

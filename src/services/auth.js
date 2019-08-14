@@ -32,5 +32,8 @@ export default {
     },
     async logout() {
         return await axios.post('/api/logout');
+    },
+    async updateme(currency){
+        return await axios.post(`/api/user/updateme?currency=${currency}`);
     }
 }
