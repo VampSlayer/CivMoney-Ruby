@@ -21,7 +21,9 @@ html, body{
 .google-logout:hover{
   color: rgba(255, 255, 255, 0.75);
 }
+</style>
 
+<style scoped>
 .h-container{
   height: calc(100% - 120px) !important;
 }
