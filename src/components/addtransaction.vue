@@ -53,8 +53,8 @@ border-radius: 0px !important;
             </div>
             <div class="col-2">
                 <b-card style="background-color: transparent;">
-                    <b-input :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                     <b-input :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1" placeholder="Amount"></b-input>
+                    <b-input :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                     <b-input :state="dateState" v-model="date" type="date" class="mb-1" placeholder="Date"></b-input>
                     <div class="row">
                         <b-form-radio class="ml-3" v-model="selected" name="some-radios" value="income">Income</b-form-radio>
@@ -75,13 +75,14 @@ border-radius: 0px !important;
 <script>
 import transactions from '../services/transactions';
 import { mapActions } from "vuex";
+import moment from 'moment'
 export default {
     name: "AddTransaction",
     data() {
         return {
             amount: 0,
             description: '',
-            date: '',
+            date: moment(),
             selected: "income",
             error: '',
             shake: false

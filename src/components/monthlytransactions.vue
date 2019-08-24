@@ -60,8 +60,8 @@ border-radius: 0px !important;
                                 <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-left cursor"><i class="fa fa-minus"></i></a>
                                 <a v-on:click="addTransactionToView" title="Add another" class="float-right cursor"><i class="fa fa-plus"></i></a>
                             </div>
-                            <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                             <b-input min=0 step="0.01" v-model="transaction.amount" type="number" class="mb-1" placeholder="Amount"></b-input>
+                            <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                             <div class="row">
                                 <b-form-radio class="ml-3" v-model="transaction.type" :name="'some-radios' + index" value="income">Income</b-form-radio>
                                 <b-form-radio class="ml-2" v-model="transaction.type" :name="'some-radios' + index" value="expense">Expense</b-form-radio>
@@ -71,11 +71,7 @@ border-radius: 0px !important;
                     <div class="col-2 mt-1" :class="{'btn-shake' : shake === true}">
                         <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                         <b-card  title="Add Monthly Transactions" style="color: #248df0a1 ;background-color: #00000073" class="text-center">
-                            <multiselect v-model="month" 
-                            :options="[{name: 'January', value: '01'}, {name: 'Febuary', value: '02'}, {name: 'March', value: '03'}, {name: 'April', value: '04'}, {name: 'May', value: '05'},
-                                       {name: 'June', value: '06'}, {name: 'July', value: '07'}, {name: 'August', value: '08'}, {name: 'September', value: '09'}, {name: 'October', value: '10'},
-                                       {name: 'November', value: '11'}, {name: 'December', value: '12'}]" 
-                            placeholder="Select Month" label="name" track-by="value"></multiselect>
+                            <multiselect v-model="month" :options="months" placeholder="Select Month" label="name" track-by="value"></multiselect>
                             <a title="Add Monthly Transactions" v-on:click="addMonthlyTransactions" style="cursor:pointer;font-size:4.5em;"><i class="fa fa-plus"></i></a>
                         </b-card>
                     </div>
@@ -87,19 +83,28 @@ border-radius: 0px !important;
 import transactionsService from '../services/transactions';
 import { mapActions } from "vuex";
 import Multiselect from 'vue-multiselect';
+import moment from 'moment';
 export default {
     name: 'monthlyTransactions',
     components: { Multiselect },
     data() {
         return {
+            months: [{name: 'January', value: '01'}, {name: 'Febuary', value: '02'}, {name: 'March', value: '03'}, {name: 'April', value: '04'}, {name: 'May', value: '05'},
+                    {name: 'June', value: '06'}, {name: 'July', value: '07'}, {name: 'August', value: '08'}, {name: 'September', value: '09'}, {name: 'October', value: '10'},
+                    {name: 'November', value: '11'}, {name: 'December', value: '12'}],
             transactions: [],
             selected: "income",
             error: '',
             shake: false,
-            month: ""
+            month: ''
         };
     },
     created: function(){
+        this.month = this.months.find(month => {
+            if(month.name === moment().format('MMMM')){
+                return month;
+            }
+        }); 
         this.transactions.push({
             amount: 0,
             description: '',
@@ -129,12 +134,12 @@ export default {
                     let amount = transaction.amount;
                     if(transaction.type === "expense") amount = -amount;
                     await transactionsService.addMonthlyTransaction(amount, transaction.description, new Date().getFullYear(), this.month.value);
+                    await this.getYears();
+                    this.$emit('closePanel', {});
                 } catch (error) {
-                    console.log(error);
+                    this.error = "Cannot add monthly transactions"
                 }
             });
-            await this.getYears();
-            this.$emit('closePanel', {});
         }
     }
 }

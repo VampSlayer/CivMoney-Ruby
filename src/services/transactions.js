@@ -7,4 +7,10 @@ export default {
     async addMonthlyTransaction(amount, description, year, month){
         return await axios.post(`/api/transactions/addMonthlyFixedTransaction?amount=${amount}&description=${description}&year=${year}&month=${month}`);
     },
+    async getTransactionsForRange(dateStart, dateEnd){
+        return await axios.get(`/api/transactions/rangeAll?dateStart=${dateStart}&dateEnd=${dateEnd}`);
+    },
+    async deleteTransction(id){
+        return await axios.delete(`/api/transactions/delete?id=${id}`);
+    }
 }

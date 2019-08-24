@@ -54,17 +54,11 @@ module Sinatra
       end
 
       #get transactions for range
-      #/transactions/rangeAll?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
-      app.get '/transactions/rangeAll', :auth => [:user] do
+      #/api/transactions/rangeAll?dateStart=2019.01.01&dateEnd=2019.01.02
+      app.get '/api/transactions/rangeAll', :auth => [:user] do
       	content_type :json
-      	@year0 = params[:year0]
-      	@month0 = params[:month0]
-      	@day0 = params[:day0]
-      	@date0 = Date.new(@year0.to_i, @month0.to_i, @day0.to_i)
-      	@year1 = params[:year1]
-      	@month1 = params[:month1]
-      	@day1 = params[:day1]
-      	@date1 = Date.new(@year1.to_i, @month1.to_i, @day1.to_i)
+      	@date0 = Date.parse(params[:dateStart])
+      	@date1 = Date.parse(params[:dateEnd])
       	@transactions = Transaction.where("date IN (?) AND user_id = ?", (@date0)..@date1, session[:id]).order("date ASC")
       	return_message = {}
       	return_message = @transactions
@@ -108,11 +102,11 @@ module Sinatra
       end
 
       #delete transaction
-      #/transactions/delete?[id]=1
-      app.delete '/transactions/delete', :auth => [:user] do
+      #/api/transactions/delete?[id]=1
+      app.delete '/api/transactions/delete', :auth => [:user] do
       	@transaction = Transaction.find(params[:id]).destroy
       	if @transaction.save
-      		return 200
+      		return 204
       	else
       		return 500
       	end
@@ -123,7 +117,7 @@ module Sinatra
       app.post '/transactions/delete', :auth => [:user] do
       	@transaction = Transaction.find(params[:id]).destroy
       	if @transaction.save
-      		return 200
+      		return 204
       	else
       		return 500
       	end

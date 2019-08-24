@@ -69,6 +69,7 @@ import totals from "../services/totals";
 import Bar from "../components/bar";
 import AddTransaction from "../components/addtransaction";
 import MonthlyTransactions from "../components/monthlytransactions";
+import SearchTransactions from '../components/serachtransactions';
 import graphing from "../services/graphing";
 export default {
   name: "dashboard",
@@ -149,7 +150,7 @@ export default {
     },
     showSearchTransactions(){
       this.$showPanel({
-        component: AddTransaction,
+        component: SearchTransactions,
         height: ((this.modalHeight * 2) / 100) * 75,
         openOn: 'top',
         cssClass: 'slideout-bg'

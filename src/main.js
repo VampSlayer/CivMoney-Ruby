@@ -10,6 +10,11 @@ Vue.use(VueSlideoutPanel);
 import Vodal from 'vodal';
 Vue.component(Vodal.name, Vodal);
 
+import VCalendar from 'v-calendar';
+Vue.use(VCalendar, {
+  firstDayOfWeek: 2
+});
+
 import 'vodal/common.css';
 import 'vodal/slide-down.css'
 
