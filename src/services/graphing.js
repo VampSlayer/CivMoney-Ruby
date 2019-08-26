@@ -1,7 +1,8 @@
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated.js";
-import am4themes_dark from "@amcharts/amcharts4/themes/dark.js"
+import am4themes_dark from "@amcharts/amcharts4/themes/dark.js";
+import moment from 'moment';
 
 export default {
   vodalPie(id, data, title, vm) {
@@ -127,6 +128,14 @@ export default {
     dateAxis.renderer.grid.template.location = 0.5;
     dateAxis.dateFormats.setKey("datemonth", "DD");
     dateAxis.renderer.labels.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
+    dateAxis.renderer.labels.template.events.on(
+      "hit",
+      event => {
+        scope.show = true;
+        scope.selectedDate = moment(event.target.dataItem.dates.date).format('YYYY-MM-DD');
+      },
+      scope
+    );
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = `${scope.me.currency}`;
     valueAxis.title.fontWeight = 'bolder';
@@ -232,6 +241,7 @@ export default {
     dateAxis.renderer.labels.template.events.on(
       "hit",
       event => {
+        const month = [event.event.explicitOriginalTarget.data.split(" ")[0]];
         scope.selectedMonth = {
           Jan: "01",
           Feb: "02",
@@ -245,7 +255,8 @@ export default {
           Oct: "10",
           Nov: "11",
           Dec: "12"
-        }[event.event.explicitOriginalTarget.data.split(" ")[0]]
+        }[month];
+        scope.$router.push({name: 'home', hash: `#${scope.selectedMonth}` });
       },
       scope
     );

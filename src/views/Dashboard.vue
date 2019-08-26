@@ -54,7 +54,8 @@
           :width="modalWidth"
           :height="modalHeight"
           :duration="500"
-          :closeButton="false">
+          :closeButton="false"
+          :closeOnEsc="true">
           <bar :year="selectedYear" :month="monthBar" :date="selectedDate"></bar>
         </vodal>
         <div id="chartdiv"></div>
@@ -89,6 +90,9 @@ export default {
     };
   },
   watch: {
+    '$route.hash': function(val){
+          if(!val) this.selectedMonth = '';
+    },
     selectedMonth: function(newVal) {
       if (newVal === "") graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
       this.getTotalPerDayForMonth();
@@ -102,6 +106,7 @@ export default {
         this.selectedYear = this.selectableYears[
           this.selectableYears.length - 1
         ];
+        if(this.$route.hash) this.selectedMonth = this.$route.hash.split("#")[1];
         const newSelectedYear = this.selectedYear;
         if(oldSelectedYear === newSelectedYear){
           graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
