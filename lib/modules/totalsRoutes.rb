@@ -85,7 +85,7 @@ module Sinatra
       	FROM public.transactions
       	WHERE user_id = ?
        	GROUP BY Dateyear
-       	ORDER BY Dateyear ASC", session[:id]]
+       	ORDER BY Dateyear DESC", session[:id]]
       	return_message = {}
       	return_message = @transactions
       	return_message.to_json

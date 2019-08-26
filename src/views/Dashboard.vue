@@ -38,9 +38,9 @@
           <b-nav align="right">
             <b-nav-item
               active-class="year-active"
-              v-for="(year, index) in selectableYears"
+              v-for="(year, index) in sortedYears"
               :key="index"
-              :active="year === selectedYear"
+              :active="year == selectedYear"
               v-on:click="selectedYear = year; selectedMonth = ''"
             >{{ year }}</b-nav-item>
           </b-nav>
@@ -147,7 +147,10 @@ export default {
     this.getYears();
   },
   computed: {
-    ...mapState(["years", "me", "selectableYears"])
+    ...mapState(["years", "me", "selectableYears"]),
+    sortedYears: function(){
+      return this.selectableYears.sort((a, b) => {return a - b});
+    }
   },
   methods: {
     showAddTransaction(){
