@@ -82,7 +82,7 @@ export default {
     showProfile(){
       this.$showPanel({
         component: Profile,
-        height: ((window.innerHeight) / 100) * 25,
+        height: ((window.innerHeight) / 100) * 27.5,
         openOn: 'top',
         cssClass: 'slideout-bg'
      });

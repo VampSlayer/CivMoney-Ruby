@@ -91,22 +91,35 @@ export default {
   },
   watch: {
     '$route.hash': function(val){
-          if(!val) this.selectedMonth = '';
+          if(val){
+            const hashRouteSplit = val.split("#")[1].split("/");
+            if(hashRouteSplit[0]) this.selectedYear = parseInt(hashRouteSplit[0]);
+            if(hashRouteSplit[1]) this.selectedMonth = hashRouteSplit[1];
+            if(!hashRouteSplit[1]) this.selectedMonth = ""
+          }
     },
     selectedMonth: function(newVal) {
-      if (newVal === "") graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
-      this.getTotalPerDayForMonth();
+      if(this.selectedYear){
+        this.$router.push({name: 'home', hash: `#${this.selectedYear}/${this.selectedMonth}`});
+        if (newVal === "") graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
+        this.getTotalPerDayForMonth();
+      }
     },
     selectedYear: function() {
-      graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
+      this.$router.push({name: 'home', hash: `#${this.selectedYear}/${this.selectedMonth}`});
+      if(this.years[this.selectedYear]){
+        graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
+      }
     },
     selectableYears: function() {
       const oldSelectedYear = this.selectedYear;
       if (this.selectableYears && this.selectableYears.length > 0) {
-        this.selectedYear = this.selectableYears[
-          this.selectableYears.length - 1
-        ];
-        if(this.$route.hash) this.selectedMonth = this.$route.hash.split("#")[1];
+        this.selectedYear = Math.max(this.selectableYears);
+        if(this.$route.hash){
+          const hashRouteSplit = this.$route.hash.split("#")[1].split("/");
+          if(hashRouteSplit[0]) this.selectedYear = parseInt(hashRouteSplit[0]);
+          if(hashRouteSplit[1]) this.selectedMonth = hashRouteSplit[1];
+        } 
         const newSelectedYear = this.selectedYear;
         if(oldSelectedYear === newSelectedYear){
           graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
@@ -140,7 +153,7 @@ export default {
     showAddTransaction(){
      this.$showPanel({
         component: AddTransaction,
-        height: ((this.modalHeight * 2) / 100) * 25,
+        height: ((this.modalHeight * 2) / 100) * 27.5,
         openOn: 'top',
         cssClass: 'slideout-bg'
      }); 

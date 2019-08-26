@@ -49,12 +49,12 @@ border-radius: 0px !important;
 <template>
     <div class="container-fluid mt-2" >
         <div class="row">
-                    <div class="col-2">
+                    <div class="col-4 col-md-4 col-lg-4 col-xl-2">
                         <b-card style="background-color: transparent;">
                             <b-card-body><strong>Monthly Transactions.</strong> Here you can add transactions for a month. This will allow you to see your breakdowns on the dashboard graphs.</b-card-body>
                         </b-card>
                     </div>
-                    <div v-for="(transaction, index) in transactions" :key="index" class="col-2 mt-1">
+                    <div v-for="(transaction, index) in transactions" :key="index" class="col-4 col-md-4 col-lg-4 col-xl-2 mt-1">
                         <b-card style="background-color: transparent;">
                             <div class="m0">
                                 <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-left cursor"><i class="fa fa-minus"></i></a>
@@ -68,7 +68,7 @@ border-radius: 0px !important;
                             </div>
                         </b-card>
                     </div>
-                    <div class="col-2 mt-1" :class="{'btn-shake' : shake === true}">
+                    <div class="col-4 col-md-4 col-lg-4 col-xl-2 mt-1" :class="{'btn-shake' : shake === true}">
                         <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                         <b-card  title="Add Monthly Transactions" style="color: #248df0a1 ;background-color: #00000073" class="text-center">
                             <multiselect v-model="month" :options="months" placeholder="Select Month" label="name" track-by="value"></multiselect>

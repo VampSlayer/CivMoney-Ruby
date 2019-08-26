@@ -256,7 +256,6 @@ export default {
           Nov: "11",
           Dec: "12"
         }[month];
-        scope.$router.push({name: 'home', hash: `#${scope.selectedMonth}` });
       },
       scope
     );

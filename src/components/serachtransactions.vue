@@ -15,7 +15,7 @@
 <template>
     <div class="container-fluid mt-2">
         <div class="row">
-            <div class="col-6 col-sm-6 col-md-4 col-lg-2">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                 <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                 <b-card style="background-color: transparent;">
                     <b-card-body>
@@ -27,13 +27,13 @@
                         readonly: true}'/>
                         </div>
                         <div class="mt-2" v-if="transactions.length > 0">
-                            <b-form-input v-model="filter" type="search" placeholder="Type to Filter"></b-form-input>
+                            <b-form-input v-model="filter" type="search" placeholder="Type to filter Transactions"></b-form-input>
                             <b-button title="Clear Filter" class="mt-2" :disabled="!filter" @click="filter = ''"><i class="fa fa-times"></i></b-button>
                         </div>
                     </b-card-body>
                 </b-card>
             </div>
-            <div class="col-6 col-sm-6 col-md-8 col-lg-10" v-if="transactions.length > 0">
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-9" v-if="transactions.length > 0">
                  <b-table class="white-text" :items="transactions" head-variant="light" :fields="fields" :filter="filter" :filterIncludedFields="filterOn">
                      <template slot="amount" slot-scope="data">
                         <span :class="getAmountClass(data.value)">{{data.value}}</span>
