@@ -72,6 +72,7 @@ import AddTransaction from "../components/addtransaction";
 import MonthlyTransactions from "../components/monthlytransactions";
 import SearchTransactions from '../components/serachtransactions';
 import graphing from "../services/graphing";
+import { isNaN } from '@amcharts/amcharts4/core';
 export default {
   name: "dashboard",
   components: {
@@ -93,7 +94,10 @@ export default {
     '$route.hash': function(val){
           if(val){
             const hashRouteSplit = val.split("#")[1].split("/");
-            if(hashRouteSplit[0]) this.selectedYear = parseInt(hashRouteSplit[0]);
+            if(hashRouteSplit[0]){
+              this.selectedYear = parseInt(hashRouteSplit[0]);
+              if(isNaN(this.selectedYear)) this.selectedYear = ""
+            } 
             if(hashRouteSplit[1]) this.selectedMonth = hashRouteSplit[1];
             if(!hashRouteSplit[1]) this.selectedMonth = ""
           }
@@ -117,7 +121,10 @@ export default {
         this.selectedYear = Math.max(this.selectableYears);
         if(this.$route.hash){
           const hashRouteSplit = this.$route.hash.split("#")[1].split("/");
-          if(hashRouteSplit[0]) this.selectedYear = parseInt(hashRouteSplit[0]);
+          if(hashRouteSplit[0]){
+            this.selectedYear = parseInt(hashRouteSplit[0]);
+            if(isNaN(this.selectedYear)) this.selectedYear = ""
+          }
           if(hashRouteSplit[1]) this.selectedMonth = hashRouteSplit[1];
         } 
         const newSelectedYear = this.selectedYear;

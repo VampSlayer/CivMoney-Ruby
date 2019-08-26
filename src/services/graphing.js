@@ -21,9 +21,11 @@ export default {
     let pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = "amount";
     pieSeries.dataFields.category = "description";
+    pieSeries.currency = vm.me.currency;
     pieSeries.slices.template.fillOpacity = 0.2;
     pieSeries.slices.template.strokeWidth = 1;
     pieSeries.slices.template.strokeOpacity = 1;
+    pieSeries.slices.template.tooltipText = "{category}: {value.percent.formatNumber('#.#')}% [bold]{currency}{value.value}[/]";
     pieSeries.labels.template.text = "";
     pieSeries.slices.template
       .cursorOverStyle = [
