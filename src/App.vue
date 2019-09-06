@@ -58,7 +58,6 @@ html, body{
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import AddTransaction from "./components/addtransaction";
 import keys from '@/config/keys';
 import GoogleLogin from 'vue-google-login';
 import Profile from '@/components/profile';

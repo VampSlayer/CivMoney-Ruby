@@ -14,6 +14,16 @@
 .slideout-bg{
   background-color: #248df0 !important;
 }
+.introjs-tooltiptext{
+  color: black !important;
+}
+.introjs-hint-dot{
+border: 10px solid rgba(255, 255, 255, 0.5) !important;
+}
+.introjs-hint-pulse{
+border: 5px solid rgba(255, 255, 255, 0.7) !important;
+background-color: rgba(255, 255, 255, 0.7) !important;
+}
 </style>
 
 <template>
@@ -26,7 +36,7 @@
             <b-nav-item v-on:click="showAddTransaction">
               <i title="Add a Transaction" class="fa fa-plus"></i>
             </b-nav-item>
-            <b-nav-item v-on:click="showAddMonthlyTransactions">
+            <b-nav-item v-on:click="showAddMonthlyTransactions" data-hint='Welcome to CivMoney. To get started add this months Incomes and Expense here. Once added the visuals begin!'>
               <i title="Add Monthly Transactions" class="fa fa-calendar"></i>
             </b-nav-item>
             <b-nav-item v-on:click="showSearchTransactions">
@@ -73,6 +83,7 @@ import MonthlyTransactions from "../components/monthlytransactions";
 import SearchTransactions from '../components/serachtransactions';
 import graphing from "../services/graphing";
 import { isNaN } from '@amcharts/amcharts4/core';
+import introJs from 'intro.js';
 export default {
   name: "dashboard",
   components: {
@@ -149,6 +160,9 @@ export default {
       }
       this.modalHeight = window.innerHeight / 2;
     };
+    if(localStorage.getItem('intro-seen') !== 'seen'){
+      introJs.introJs().addHints().onhintclose(function() { localStorage.setItem('intro-seen', 'seen') });
+    }
   },
   created: function() {
     this.getYears();
