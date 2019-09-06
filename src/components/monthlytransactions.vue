@@ -51,7 +51,7 @@ border-radius: 0px !important;
         <div class="row">
                     <div class="col-4 col-md-4 col-lg-4 col-xl-2">
                         <b-card style="background-color: transparent;">
-                            <b-card-body><strong>Monthly Transactions.</strong> Here you can add transactions for a month. This will allow you to see your breakdowns on the dashboard graphs.</b-card-body>
+                            <b-card-body><strong>Monthly Income & Expenses.</strong> Here you can add Incomes and Expenses for any month this year. This will then been shown as breakdown visualizations on the dashboard.</b-card-body>
                         </b-card>
                     </div>
                     <div v-for="(transaction, index) in transactions" :key="index" class="col-4 col-md-4 col-lg-4 col-xl-2 mt-1">
@@ -70,9 +70,9 @@ border-radius: 0px !important;
                     </div>
                     <div class="col-4 col-md-4 col-lg-4 col-xl-2 mt-1" :class="{'btn-shake' : shake === true}">
                         <b-alert variant="danger" v-if="error">{{error}}</b-alert>
-                        <b-card  title="Add Monthly Transactions" style="color: #248df0a1 ;background-color: #00000073" class="text-center">
+                        <b-card title="Add Monthly Income & Expenses" style="color: #248df0a1 ;background-color: #00000073" class="text-center">
                             <multiselect v-model="month" :options="months" placeholder="Select Month" label="name" track-by="value"></multiselect>
-                            <a title="Add Monthly Transactions" v-on:click="addMonthlyTransactions" style="cursor:pointer;font-size:4.5em;"><i class="fa fa-plus"></i></a>
+                            <a title="Add Monthly Income & Expenses" v-on:click="addMonthlyTransactions" style="cursor:pointer;font-size:4.5em;"><i class="fa fa-plus"></i></a>
                         </b-card>
                     </div>
             </div>

@@ -37,7 +37,7 @@ background-color: rgba(255, 255, 255, 0.7) !important;
               <i title="Add a Transaction" class="fa fa-plus"></i>
             </b-nav-item>
             <b-nav-item v-on:click="showAddMonthlyTransactions" data-hint='Welcome to CivMoney. To get started add this months Incomes and Expense here. Once added the visuals begin!'>
-              <i title="Add Monthly Transactions" class="fa fa-calendar"></i>
+              <i title="Monthly Income & Expenses" class="fa fa-calendar"></i>
             </b-nav-item>
             <b-nav-item v-on:click="showSearchTransactions">
               <i title="Search Transactions" class="fa fa-search"></i>

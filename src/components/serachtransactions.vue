@@ -26,6 +26,7 @@
                         placeholder: "Please enter dates",
                         readonly: true}'/>
                         </div>
+                        <span class="red" v-if="noTransactions">No Transactions in that range.</span>
                         <div class="mt-2" v-if="transactions.length > 0">
                             <b-form-input v-model="filter" type="search" placeholder="Type to filter Transactions"></b-form-input>
                             <b-button title="Clear Filter" class="mt-2" :disabled="!filter" @click="filter = ''"><i class="fa fa-times"></i></b-button>
@@ -63,6 +64,7 @@ export default {
             transactions: [],
             filter: null,
             filterOn: [],
+            noTransactions: false
         }
     },
     watch: {
@@ -86,11 +88,13 @@ export default {
             }
         },
         getTransactionsForRange: async function(){
+            this.noTransactions = false;
             if(!this.range || !this.range.start || !this.range.end) return;
             try {
                 const startFormated = moment(this.range.start).format("YYYY-MM-DD");
                 const endFormated = moment(this.range.end).format("YYYY-MM-DD");
                 const resp = await transactions.getTransactionsForRange(startFormated, endFormated);
+                if(resp.data.length === 0) this.noTransactions = true;
                 this.transactions = resp.data.map(x => ({
                     delete: x.id,
                     amount: x.amount,
