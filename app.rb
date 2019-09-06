@@ -23,9 +23,6 @@ require './lib/modules/totalsRoutes'
 require './lib/modules/adminRoutes'
 
 class CivMoney < Sinatra::Base
-configure :development do
-  register Sinatra::Reloader
-end
 
 include BCrypt
 
@@ -35,8 +32,8 @@ register Sinatra::TrasnsactionsRoutes
 register Sinatra::TotalsRoutes
 register Sinatra::AdminRoutes
 
-use Rack::Session::Cookie, :session_secret => "supersecret", :secret => "supersecret"
-set :session_secret, "supersecret"
+use Rack::Session::Cookie, :session_secret => ENV['SESSION_SECRET'], :secret => ENV['SESSION_SECRET']
+set :session_secret, ENV['SESSION_SECRET']
 set :environment, Sprockets::Environment.new
 set :client_id, ENV['GOOGLE_CLIENT_ID']
 

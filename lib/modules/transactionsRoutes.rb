@@ -24,35 +24,6 @@ module Sinatra
       	return_message.to_json
       end
 
-      #get expenses for date
-      #/transactions/expenses?[year]=2016&[month]=08&[day]=06
-      app.get '/transactions/expenses', :auth => [:user] do
-      	content_type :json
-      	@year = params[:year]
-      	@month = params[:month]
-      	@day = params[:day]
-      	@today = Date.new(@year.to_i, @month.to_i, @day.to_i)
-      	@transactions = Transaction.select("date, amount").where('amount < 0').where("date = ? AND user_id = ?", @today, session[:id])
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
-
-      #get incomes for date
-      #/transactions/incomes?[year]=2016&[month]=08&[day]=06
-      app.get '/transactions/incomes', :auth => [:user] do
-      	content_type :json
-      	@year = params[:year]
-      	@month = params[:month]
-      	@day = params[:day]
-      	@today = Date.new(@year.to_i, @month.to_i, @day.to_i)
-      	@transactions = Transaction.select("date, amount").where('amount > 0').where("date = ? AND user_id = ?", @today, session[:id])
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
       #get transactions for range
       #/api/transactions/rangeAll?dateStart=2019.01.01&dateEnd=2019.01.02
       app.get '/api/transactions/rangeAll', :auth => [:user] do
@@ -65,56 +36,9 @@ module Sinatra
       	return_message.to_json
       end
 
-      #get expenses for range
-      #/transactions/rangeExpenses?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
-      app.get '/transactions/rangeExpenses', :auth => [:user] do
-      	content_type :json
-      	@year0 = params[:year0]
-      	@month0 = params[:month0]
-      	@day0 = params[:day0]
-      	@date0 = Date.new(@year0.to_i, @month0.to_i, @day0.to_i)
-      	@year1 = params[:year1]
-      	@month1 = params[:month1]
-      	@day1 = params[:day1]
-      	@date1 = Date.new(@year1.to_i, @month1.to_i, @day1.to_i)
-      	@transactions = Transaction.where("date IN (?) AND amount < 0 AND user_id = ?", (@date0)..@date1, session[:id]).order("date ASC")
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
-      #get incomes for range
-      #/transactions/rangeIncomes?[year0]=2016&[month0]=07&[day0]=06&[year1]=2016&[month1]=08&[day1]=06
-      app.get '/transactions/rangeIncomes', :auth => [:user] do
-      	content_type :json
-      	@year0 = params[:year0]
-      	@month0 = params[:month0]
-      	@day0 = params[:day0]
-      	@date0 = Date.new(@year0.to_i, @month0.to_i, @day0.to_i)
-      	@year1 = params[:year1]
-      	@month1 = params[:month1]
-      	@day1 = params[:day1]
-      	@date1 = Date.new(@year1.to_i, @month1.to_i, @day1.to_i)
-      	@transactions = Transaction.where("date IN (?) AND amount > 0 AND user_id = ?", (@date0)..@date1, session[:id]).order("date ASC")
-      	return_message = {}
-      	return_message = @transactions
-      	return_message.to_json
-      end
-
       #delete transaction
       #/api/transactions/delete?[id]=1
       app.delete '/api/transactions/delete', :auth => [:user] do
-      	@transaction = Transaction.find(params[:id]).destroy
-      	if @transaction.save
-      		return 204
-      	else
-      		return 500
-      	end
-      end
-
-      #delete transaction
-      #/transactions/delete?[id]=1
-      app.post '/transactions/delete', :auth => [:user] do
       	@transaction = Transaction.find(params[:id]).destroy
       	if @transaction.save
       		return 204

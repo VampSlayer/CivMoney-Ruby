@@ -4,7 +4,7 @@ module Sinatra
 	
 	 #get total number of users
 	 #/user/totalNumberOfUsers
-     app.get '/user/totalNumberOfUsers' do
+     app.get '/api/user/totalNumberOfUsers' do
         @userCount = User.count
         return_message = {}
         return_message = @userCount
@@ -13,7 +13,7 @@ module Sinatra
 
 	 #get array of all users
 	 #/user/getUsers
-     app.get '/user/getUsers' do
+     app.get '/api/user/getUsers' do
         @userNames = User.select("id, username")
         return_message = {}
         return_message = @userNames
