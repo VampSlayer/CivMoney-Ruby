@@ -42,6 +42,9 @@ background-color: rgba(255, 255, 255, 0.7) !important;
             <b-nav-item v-on:click="showSearchTransactions">
               <i title="Search Transactions" class="fa fa-search"></i>
             </b-nav-item>
+            <b-nav-item to="/stats">
+              <i title="Statistics" class="fa fa-percent"></i>
+            </b-nav-item>
           </b-nav>
         </div>
         <div class="col-8">
@@ -162,7 +165,7 @@ export default {
     };
     if(localStorage.getItem('intro-seen') !== 'seen'){
       introJs.introJs().addHints().onhintclose(function() { localStorage.setItem('intro-seen', 'seen') });
-    }
+    }chart
   },
   created: function() {
     this.getYears();

@@ -17,6 +17,12 @@ export default new Router({
       name: "home",
       component: () => import(/* webpackChunkName: "dashboard" */ "./views/Dashboard.vue"),
       beforeEnter: Guard.auth
+    },
+    {
+      path: "/stats",
+      name: "stats",
+      component: () => import(/* webpackChunkName: "dashboard" */ "./views/Stats.vue"),
+      beforeEnter: Guard.auth
     }
   ]
 });
