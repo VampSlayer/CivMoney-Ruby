@@ -43,7 +43,7 @@ export default {
     },
     month: function(){
       if(!this.month || this.month === "") return;
-      this.title = `${moment(this.month).format("LL")}`;
+      this.title = `${moment(this.month).format("MMMM, YYYY")}`;
       this.getTransactions("month");
     },
     date: function(){

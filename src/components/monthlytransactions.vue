@@ -51,29 +51,40 @@ border-radius: 0px !important;
         <div class="row">
                     <div class="col-4 col-md-4 col-lg-4 col-xl-2">
                         <b-card style="background-color: transparent;">
-                            <b-card-body><strong>Monthly Income & Expenses.</strong> Here you can add Incomes and Expenses for any month this year. This will then been shown as breakdown visualizations on the dashboard.</b-card-body>
+                            <b-card-body>
+                                <strong>Monthly Income & Expenses.</strong> 
+                                Here you can add Incomes and Expenses for any month this year.
+                                Simply add something like 'Wages' as an Income and 'Rent' as an Expense.
+                                This will then been shown as breakdown visualizations on the dashboard.
+                                </b-card-body>
                         </b-card>
+                        <div class="mt-2" :class="{'btn-shake' : shake === true}">
+                         <b-alert variant="danger" v-if="error">{{error}}</b-alert>
+                            <b-card title="Add Monthly Income & Expenses" style="color: #248df0a1 ;background-color: #00000073" class="text-center">
+                                <multiselect v-model="month" :options="months" placeholder="Select Month" label="name" track-by="value"></multiselect>
+                                <a title="Add Monthly Income & Expenses" v-on:click="addMonthlyTransactions" style="cursor:pointer;font-size:4.5em;"><i class="fa fa-plus"></i></a>
+                        </b-card>
+                        </div>
                     </div>
-                    <div v-for="(transaction, index) in transactions" :key="index" class="col-4 col-md-4 col-lg-4 col-xl-2 mt-1">
-                        <b-card style="background-color: transparent;">
-                            <div class="m0">
-                                <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-left cursor"><i class="fa fa-minus"></i></a>
+                    <div class="col-8 col-md-8 col-lg-8 col-xl-10">
+                        <div class="row">
+                            <div v-for="(transaction, index) in transactions" :key="index" class="col-4 col-md-4 col-lg-4 col-xl-2 mt-2">
+                                <b-card style="background-color: transparent;">
+                                    <b-input min=0 step="0.01" v-model="transaction.amount" type="number" class="mb-1" placeholder="Amount"></b-input>
+                                    <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
+                                    <div class="row">
+                                        <b-form-radio class="ml-3" v-model="transaction.type" :name="'some-radios' + index" value="income">Income</b-form-radio>
+                                        <b-form-radio class="ml-2" v-model="transaction.type" :name="'some-radios' + index" value="expense">Expense</b-form-radio>
+                                    </div>
+                                    <div class="m0">
+                                        <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-right cursor"><i class="fa fa-minus"></i></a>
+                                    </div>
+                                </b-card>
+                            </div>
+                            <div>
                                 <a v-on:click="addTransactionToView" title="Add another" class="float-right cursor"><i class="fa fa-plus"></i></a>
                             </div>
-                            <b-input min=0 step="0.01" v-model="transaction.amount" type="number" class="mb-1" placeholder="Amount"></b-input>
-                            <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
-                            <div class="row">
-                                <b-form-radio class="ml-3" v-model="transaction.type" :name="'some-radios' + index" value="income">Income</b-form-radio>
-                                <b-form-radio class="ml-2" v-model="transaction.type" :name="'some-radios' + index" value="expense">Expense</b-form-radio>
-                            </div>
-                        </b-card>
-                    </div>
-                    <div class="col-4 col-md-4 col-lg-4 col-xl-2 mt-1" :class="{'btn-shake' : shake === true}">
-                        <b-alert variant="danger" v-if="error">{{error}}</b-alert>
-                        <b-card title="Add Monthly Income & Expenses" style="color: #248df0a1 ;background-color: #00000073" class="text-center">
-                            <multiselect v-model="month" :options="months" placeholder="Select Month" label="name" track-by="value"></multiselect>
-                            <a title="Add Monthly Income & Expenses" v-on:click="addMonthlyTransactions" style="cursor:pointer;font-size:4.5em;"><i class="fa fa-plus"></i></a>
-                        </b-card>
+                        </div>
                     </div>
             </div>
     </div>

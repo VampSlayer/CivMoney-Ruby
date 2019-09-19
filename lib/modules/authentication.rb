@@ -35,7 +35,7 @@ module Sinatra
           @user = User.new()
           @user.username = payload['name']
           @user.email = payload['email']
-          @user.currency = "USD"
+          @user.currency = "$"
             if @user.save
               @newSavedUser = User.where(email: payload['email'])
               session[:id] = @newSavedUser.first.id

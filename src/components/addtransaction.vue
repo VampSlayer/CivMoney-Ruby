@@ -41,6 +41,11 @@ border-radius: 0px !important;
     transform: translate3d(4px, 0, 0);
   }
 }
+.add-st-btn{
+    background: none !important;
+    color: white !important;
+    border: none !important;
+}
 </style>
 
 <template>
@@ -48,10 +53,14 @@ border-radius: 0px !important;
         <div class="row">
             <div class="col-4 col-md-4 col-lg-4 col-xl-2">
                 <b-card style="background-color: transparent;">
-                    <b-card-body><strong>Transaction.</strong> Here you can add a single transaction with a date, either an income or expense.</b-card-body>
+                    <b-card-body>
+                        <strong>Transaction.</strong>
+                        Here you can add a single transaction with a date, either an income or expense. Fill in the details of the transaction then click the <strong>+</strong> button to add.
+                    </b-card-body>
                 </b-card>
             </div>
-            <div class="col-4 col-md-4 col-lg-4 col-xl-2">
+            <div class="col-4 col-md-4 col-lg-4 col-xl-2" :class="{'btn-shake' : shake === true}">
+                <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                 <b-card style="background-color: transparent;">
                     <b-input :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1" placeholder="Amount"></b-input>
                     <b-input :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
@@ -60,12 +69,7 @@ border-radius: 0px !important;
                         <b-form-radio class="ml-3" v-model="selected" name="some-radios" value="income">Income</b-form-radio>
                         <b-form-radio class="ml-2" v-model="selected" name="some-radios" value="expense">Expense</b-form-radio>
                     </div>
-                </b-card>
-            </div>
-            <div class="col-4 col-md-4 col-lg-4 col-xl-2" :class="{'btn-shake' : shake === true}">
-                <b-alert variant="danger" v-if="error">{{error}}</b-alert>
-                <b-card title="Add Transaction" v-on:click="addTransaction" style="color: #248df0a1 ;background-color: #00000073;font-size:4.5em;cursor:pointer" class="text-center">
-                    <i class="fa fa-plus"></i>
+                    <button class="float-right add-st-btn" title="Add Transaction" v-on:click="addTransaction" > <i class="fa fa-plus"></i></button>
                 </b-card>
             </div>
         </div>

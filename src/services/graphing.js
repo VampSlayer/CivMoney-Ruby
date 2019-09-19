@@ -54,7 +54,11 @@ export default {
     categoryAxis.renderer.labels.template.events.on(
       "hit",
       event => {
-        scope.createPieData(event.event.explicitOriginalTarget.data);
+        if(event.event.explicitOriginalTarget){
+          scope.createPieData(event.event.explicitOriginalTarget.data);
+        }else{
+          scope.createPieData(event.event.target.innerHTML);
+        }
       },
       scope
     );
@@ -243,7 +247,12 @@ export default {
     dateAxis.renderer.labels.template.events.on(
       "hit",
       event => {
-        const month = [event.event.explicitOriginalTarget.data.split(" ")[0]];
+        let month = '';
+        if(event.event.explicitOriginalTarget){
+          month = [event.event.explicitOriginalTarget.data.split(" ")[0]];
+        }else{
+          month = event.event.target.innerHTML;
+        }
         scope.selectedMonth = {
           Jan: "01",
           Feb: "02",
