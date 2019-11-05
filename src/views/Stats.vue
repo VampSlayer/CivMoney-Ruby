@@ -21,7 +21,7 @@
               active-class="year-active"
               v-for="(year, index) in sortedYears"
               :key="index"
-              :active="year == selectedYear"
+              :active="year === selectedYear"
               v-on:click="selectedYear = year;"
             >{{ year }}</b-nav-item>
           </b-nav>
@@ -81,23 +81,26 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import pictorialbar from '../components/pictoralbar';
+import statsX from '../services/stats';
 export default {
     name: 'Stats',
     data() {
         return {
-            selectedYear: ''
+            selectedYear: '',
+            yearlyStats: {}
         }
     },
     components: { pictorialbar },
     created: function() {
         this.getYears();
+        this.getYearlyStats();
     },
     watch: {
         selectableYears: function() {
             if (this.selectableYears && this.selectableYears.length > 0) {
                 this.selectedYear = Math.max(this.selectableYears);
             }
-        }
+        },
     },
     computed: {
         ...mapState(["years", "me", "selectableYears"]),
@@ -106,7 +109,16 @@ export default {
         },
     },
     methods: {
-        ...mapActions(["getYears"])
+        ...mapActions(["getYears"]),
+        async getYearlyStats(){
+            try {
+                const response = await statsX.years();
+                debugger
+                this.yearlyStats = response.data;
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
 }
 </script>
