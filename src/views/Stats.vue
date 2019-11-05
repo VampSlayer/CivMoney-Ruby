@@ -31,46 +31,46 @@
         <div class="row border-btm" style="height:79%">
             <div class="col-md-6 offset-md-3 h-100">
                 <div class="text-center h-100">
-                    <pictorialbar :alignLabels="true"></pictorialbar>
+                    <pictorialbar :alignLabels="true" :data="selectedYearsStats"></pictorialbar>
                 </div>
             </div>
         </div>
         <div class="row h-20">
             <div class="col">
-                <pictorialbar title="January" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="January" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="Febuary" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="Febuary" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="March" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="March" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="April" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="April" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="May" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="May" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="June" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="June" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="July" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="July" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="August" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="August" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="September" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="September" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="October" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="October" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="November" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="November" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
             <div class="col">
-                <pictorialbar title="December" :alignLabels="false"></pictorialbar>
+                <pictorialbar title="December" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
             </div>
         </div>
       </div>
@@ -87,7 +87,8 @@ export default {
     data() {
         return {
             selectedYear: '',
-            yearlyStats: {}
+            yearlyStats: null,
+            montlyStatsForYear: null
         }
     },
     components: { pictorialbar },
@@ -101,19 +102,31 @@ export default {
                 this.selectedYear = Math.max(this.selectableYears);
             }
         },
+        selectedYear: function(){
+            try {
+                this.montlyStatsForYear = statsX.getMonthStatsForYear(this.selectedYear);
+            } catch (error) {
+                console.log(error)
+            }
+        }
     },
     computed: {
         ...mapState(["years", "me", "selectableYears"]),
         sortedYears: function(){
             return this.selectableYears.sort((a, b) => {return a - b});
         },
+        selectedYearsStats: function(){
+            if(this.yearlyStats){
+                return this.yearlyStats.find(x => { return x.dateyear === this.selectedYear});
+            }
+            return {};
+        }
     },
     methods: {
         ...mapActions(["getYears"]),
         async getYearlyStats(){
             try {
                 const response = await statsX.years();
-                debugger
                 this.yearlyStats = response.data;
             } catch (error) {
                 console.log(error)

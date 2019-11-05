@@ -54,9 +54,9 @@ module Sinatra
 		content_type :json
 		@transactions = Transaction.find_by_sql ["SELECT
 		date_part('year', transactions.date) AS Dateyear,
-		SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END) AS spent,
-		SUM(CASE WHEN transactions.amount > 0 THEN transactions.amount ELSE 0 END)
-		- SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END) AS saved
+		ROUND(SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END)::numeric,2) AS spent,
+		ROUND((SUM(CASE WHEN transactions.amount > 0 THEN transactions.amount ELSE 0 END)
+		- SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END))::numeric,2) AS saved
 	  	FROM public.transactions
 	  	WHERE user_id = 1
 	   	GROUP BY Dateyear
@@ -64,7 +64,25 @@ module Sinatra
 		return_message = {}
 		return_message = @transactions
 		return_message.to_json
-	end	  
+	  end
+
+	  #get grouped transactions stats for month
+	  #/transactions/yearMonthsStats?month=01&year=2019
+	  app.get '/api/transactions/yearMonthStats', :auth => [:user] do 
+		content_type :json
+		@transactions = Transaction.find_by_sql ["SELECT
+			date_part('month', transactions.date) AS Datemonth,	  	
+		ROUND(SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END)::numeric,2) AS spent,
+		ROUND((SUM(CASE WHEN transactions.amount > 0 THEN transactions.amount ELSE 0 END)
+		- SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END))::numeric,2) AS saved
+		FROM public.transactions
+		WHERE date_part('year', transactions.date) = ? AND user_id = ?
+		GROUP BY Datemonth
+		ORDER BY 1 ASC", params[:year], session[:id]]
+		return_message = {}
+		return_message = @transactions
+		return_message.to_json
+	  end
 
 	  #get grouped transactions sum for month
 	  #/transactions/monthGroupedToals?month=01&year=2019
