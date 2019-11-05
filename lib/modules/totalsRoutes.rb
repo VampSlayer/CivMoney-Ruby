@@ -58,7 +58,7 @@ module Sinatra
 		ROUND((SUM(CASE WHEN transactions.amount > 0 THEN transactions.amount ELSE 0 END)
 		- SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END))::numeric,2) AS saved
 	  	FROM public.transactions
-	  	WHERE user_id = 1
+	  	WHERE user_id = ?
 	   	GROUP BY Dateyear
 	   	ORDER BY Dateyear DESC", session[:id]]
 		return_message = {}
