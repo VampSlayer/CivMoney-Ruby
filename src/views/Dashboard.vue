@@ -165,7 +165,7 @@ export default {
     };
     if(localStorage.getItem('intro-seen') !== 'seen'){
       introJs.introJs().addHints().onhintclose(function() { localStorage.setItem('intro-seen', 'seen') });
-    }chart
+    }
   },
   created: function() {
     this.getYears();

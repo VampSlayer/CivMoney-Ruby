@@ -35,12 +35,18 @@
                 </b-card>
             </div>
             <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-9" v-if="transactions.length > 0">
-                 <b-table class="white-text" :items="transactions" head-variant="light" :fields="fields" :filter="filter" :filterIncludedFields="filterOn">
-                     <template slot="amount" slot-scope="data">
+                 <b-table class="white-text" :items="transactions" head-variant="light" :fields="fields" :filter="filter" :filterIncludedFields="filterOn"
+                    v-on:filtered="setFilteredItems($event)">
+                     <template v-slot:cell(amount)="data">
                         <span :class="getAmountClass(data.value)">{{data.value}}</span>
                     </template>
-                     <template slot="delete" slot-scope="data">
-                        <button title="Delete Transaction" class="btn btn-danger" v-on:click="deleteTransaction(data.value)"><i class="fa fa-times"></i></button>
+                    <!-- <template v-slot:head(delete)="data">
+                        <button title="Delete All Transations" class="btn btn-danger" v-on:click="deleteAllTransaction">Delete All</button>
+                    </template> -->
+                     <template v-slot:cell(delete)="data">
+                        <button title="Delete Transaction" class="btn btn-danger" v-on:click="deleteTransaction(data.value)">
+                            <i class="fa fa-times"></i>
+                        </button>
                     </template>
                  </b-table>
             </div>
@@ -64,7 +70,8 @@ export default {
             transactions: [],
             filter: null,
             filterOn: [],
-            noTransactions: false
+            noTransactions: false,
+            filteredItems: []
         }
     },
     watch: {
@@ -87,6 +94,10 @@ export default {
                  this.error = "Transaction could not be deleted"; 
             }
         },
+        deleteAllTransaction: async function(){
+            var transactionsToDelete = this.filteredItems.length > 0 ? this.filteredItems : this.transactions;
+            console.log(transactionsToDelete)
+        },
         getTransactionsForRange: async function(){
             this.noTransactions = false;
             if(!this.range || !this.range.start || !this.range.end) return;
@@ -104,6 +115,9 @@ export default {
             } catch (error) {
                 this.error = error;  
             }
+        },
+        setFilteredItems: function(event){
+            this.filteredItems = event.filteredItems;
         }
     }
 }
