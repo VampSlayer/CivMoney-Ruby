@@ -2,6 +2,7 @@ development:
   adapter: postgresql
   database: development
   username: postgres
+  passsword: password
   host: localhost
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
 
@@ -9,6 +10,7 @@ test:
   adapter: postgresql
   database: test
   username: postgres
+  password: password
   host: localhost
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
 

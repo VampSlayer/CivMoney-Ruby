@@ -6,5 +6,8 @@ export default {
     },
     async getMonthStatsForYear(year) {
         return await axios.get(`/api/transactions/yearMonthStats?year=${year}`);
+    },
+    async getMonthAvgsForYear(year) {
+        return await axios.get(`/api/transactions/yearMonthAvgs?year=${year}`);
     }
 }

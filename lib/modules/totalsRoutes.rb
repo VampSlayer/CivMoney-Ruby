@@ -66,8 +66,8 @@ module Sinatra
 		return_message.to_json
 	  end
 
-	  #get grouped transactions stats for month
-	  #/transactions/yearMonthsStats?month=01&year=2019
+	  #get month transactions stats for year
+	  #/transactions/yearMonthsStats?year=2019
 	  app.get '/api/transactions/yearMonthStats', :auth => [:user] do 
 		content_type :json
 		@transactions = Transaction.find_by_sql ["SELECT
@@ -79,6 +79,29 @@ module Sinatra
 		WHERE date_part('year', transactions.date) = ? AND user_id = ?
 		GROUP BY Datemonth
 		ORDER BY 1 ASC", params[:year], session[:id]]
+		return_message = {}
+		return_message = @transactions
+		return_message.to_json
+	  end
+
+	  #get month transactions averages for year
+	  #/transactions/yearMonthsStats?year=2019
+	  app.get '/api/transactions/yearMonthAvgs', :auth => [:user] do 
+		content_type :json
+		@transactions = Transaction.find_by_sql ["SELECT
+			date_part('month', transactions.date) AS Datemonth,
+			SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END)::numeric AS spent,
+			(SUM(CASE WHEN transactions.amount > 0 THEN transactions.amount ELSE 0 END)
+			- SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END))::numeric AS saved
+		FROM public.transactions
+		WHERE date_part('year', transactions.date) = ? AND user_id = ?
+		GROUP BY Datemonth
+		ORDER BY 1 ASC", params[:year], session[:id]]
+		@transactions.each do | transaction |
+			numberOfDaysInMonth = Time.days_in_month(transaction[:datemonth].to_i, params[:year].to_i)
+			transaction[:spent] = (transaction[:spent] / numberOfDaysInMonth).to_f.round(2)
+			transaction[:saved] = (transaction[:saved] / numberOfDaysInMonth).to_f.round(2)
+		end
 		return_message = {}
 		return_message = @transactions
 		return_message.to_json

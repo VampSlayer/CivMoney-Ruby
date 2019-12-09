@@ -21,7 +21,13 @@ export default new Router({
     {
       path: "/stats",
       name: "stats",
-      component: () => import(/* webpackChunkName: "dashboard" */ "./views/Stats.vue"),
+      component: () => import(/* webpackChunkName: "stats" */ "./views/Stats.vue"),
+      beforeEnter: Guard.auth
+    },
+    {
+      path: "/averages",
+      name: "averages",
+      component: () => import(/* webpackChunkName: "averages" */ "./views/Averages.vue"),
       beforeEnter: Guard.auth
     }
   ]

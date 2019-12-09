@@ -13,6 +13,9 @@
             <b-nav-item to="/">
               <i title="Dashboard" class="fas fa-chart-bar"></i>
             </b-nav-item>
+            <b-nav-item to="/averages">
+              <i title="Averages" class="fas fa-thermometer-empty"></i>
+            </b-nav-item>
           </b-nav>
         </div>
         <div class="col-8">
@@ -36,41 +39,8 @@
             </div>
         </div>
         <div class="row h-20">
-            <div class="col">
-                <pictorialbar title="January" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="Febuary" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="March" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="April" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="May" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="June" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="July" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="August" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="September" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="October" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="November" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
-            </div>
-            <div class="col">
-                <pictorialbar title="December" :alignLabels="false" :data="{spent:50, saved:50}"></pictorialbar>
+            <div class="col" v-for="month in monthlyStatsForYear" :key="month.id">
+                <pictorialbar :title="month.datemonth" :alignLabels="false" :data="{spent:month.spent, saved:month.saved}"></pictorialbar>
             </div>
         </div>
       </div>
@@ -82,13 +52,15 @@
 import { mapState, mapActions } from "vuex";
 import pictorialbar from '../components/pictoralbar';
 import statsX from '../services/stats';
+import moment from 'moment';
+
 export default {
     name: 'Stats',
     data() {
         return {
             selectedYear: '',
-            yearlyStats: null,
-            montlyStatsForYear: null
+            yearlyStats: [],
+            monthlyStatsForYear: []
         }
     },
     components: { pictorialbar },
@@ -102,9 +74,14 @@ export default {
                 this.selectedYear = Math.max(this.selectableYears);
             }
         },
-        selectedYear: function(){
+        selectedYear: async function(){
             try {
-                this.montlyStatsForYear = statsX.getMonthStatsForYear(this.selectedYear);
+                const result = await statsX.getMonthStatsForYear(this.selectedYear);
+                this.monthlyStatsForYear = result.data;
+                this.monthlyStatsForYear.forEach(x => {
+                    x.id = x.datemonth;
+                    x.datemonth = moment().month(x.datemonth - 1).format('MMMM');
+                });
             } catch (error) {
                 console.log(error)
             }
