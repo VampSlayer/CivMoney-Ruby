@@ -46,7 +46,6 @@ export default {
       if(!this.data) return;
       am4core.useTheme(am4themes_animated);
       am4core.useTheme(am4themes_dark);
-      var iconPath = this.iconPath;
       var chart = am4core.create(this.id, am4charts.XYChart);
       chart.colors.step = 2;
 
@@ -80,8 +79,7 @@ export default {
 
       // Add a bullet
       var bullet = lineSeries.bullets.push(new am4charts.Bullet());
-
-      var bullet = bullet.createChild(am4core.Circle);
+      bullet.createChild(am4core.Circle);
       bullet.horizontalCenter = "middle";
       bullet.verticalCenter = "middle";
       bullet.strokeWidth = 0;
@@ -93,7 +91,7 @@ export default {
       bullet.tooltipText = "Spent: {currency}[bold]{valueY}[/]";
 
       var bullet2 = lineSeries2.bullets.push(new am4charts.Bullet());
-      var bullet2 = bullet2.createChild(am4core.Circle);
+      bullet2.createChild(am4core.Circle);
       bullet2.horizontalCenter = "middle";
       bullet2.verticalCenter = "middle";
       bullet2.strokeWidth = 0;

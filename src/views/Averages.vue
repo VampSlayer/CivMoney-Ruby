@@ -43,7 +43,6 @@
 import { mapState, mapActions } from "vuex";
 import multiLine from '../components/multiLine';
 import statsX from '../services/stats';
-import moment from 'moment';
 
 export default {
     name: 'Averages',

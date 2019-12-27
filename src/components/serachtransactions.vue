@@ -40,9 +40,6 @@
                      <template v-slot:cell(amount)="data">
                         <span :class="getAmountClass(data.value)">{{data.value}}</span>
                     </template>
-                    <!-- <template v-slot:head(delete)="data">
-                        <button title="Delete All Transations" class="btn btn-danger" v-on:click="deleteAllTransaction">Delete All</button>
-                    </template> -->
                      <template v-slot:cell(delete)="data">
                         <button title="Delete Transaction" class="btn btn-danger" v-on:click="deleteTransaction(data.value)">
                             <i class="fa fa-times"></i>
@@ -93,10 +90,6 @@ export default {
             } catch (error) {
                  this.error = "Transaction could not be deleted"; 
             }
-        },
-        deleteAllTransaction: async function(){
-            var transactionsToDelete = this.filteredItems.length > 0 ? this.filteredItems : this.transactions;
-            console.log(transactionsToDelete)
         },
         getTransactionsForRange: async function(){
             this.noTransactions = false;
