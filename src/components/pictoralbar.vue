@@ -83,6 +83,7 @@ export default {
       series.dataFields.category = "name";
       series.alignLabels = this.alignLabels;
       series.currency = this.me.currency;
+      series.fillOpacity = 0.9;
 
       series.slices.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
       series.slices.template.tooltipText = "{category}: {value.percent.formatNumber('#.#')}% ({currency}{value.value})";

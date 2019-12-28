@@ -68,6 +68,8 @@ export default {
       lineSeries.dataFields.valueY = "spent";
       lineSeries.dataFields.dateX = "datemonth";
       lineSeries.stroke = "#ff3333"
+      lineSeries.strokeWidth = 3;
+      lineSeries.strokeOpacity = 0.75;
       lineSeries.currency = this.me.currency;
 
       var lineSeries2 = chart.series.push(new am4charts.LineSeries());
@@ -75,32 +77,34 @@ export default {
       lineSeries2.dataFields.valueY = "saved";
       lineSeries2.dataFields.dateX = "datemonth";
       lineSeries2.stroke = "#00FF7F"
+      lineSeries2.strokeWidth = 3;
+      lineSeries2.strokeOpacity = 0.75;
       lineSeries2.currency = this.me.currency;
 
       // Add a bullet
       var bullet = lineSeries.bullets.push(new am4charts.Bullet());
-      bullet.createChild(am4core.Circle);
-      bullet.horizontalCenter = "middle";
-      bullet.verticalCenter = "middle";
-      bullet.strokeWidth = 0;
-      bullet.fill = "#ff3333"
-      bullet.direction = "top";
-      bullet.width = 12;
-      bullet.height = 12;
-      bullet.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-      bullet.tooltipText = "Spent: {currency}[bold]{valueY}[/]";
+      var circle = bullet.createChild(am4core.Circle);
+      circle.horizontalCenter = "middle";
+      circle.verticalCenter = "middle";
+      circle.strokeWidth = 0;
+      circle.fill = "#ff3333"
+      circle.direction = "top";
+      circle.width = 12;
+      circle.height = 12;
+      circle.cursorOverStyle = am4core.MouseCursorStyle.pointer;
+      circle.tooltipText = "Spent: {currency}[bold]{valueY}[/]";
 
       var bullet2 = lineSeries2.bullets.push(new am4charts.Bullet());
-      bullet2.createChild(am4core.Circle);
-      bullet2.horizontalCenter = "middle";
-      bullet2.verticalCenter = "middle";
-      bullet2.strokeWidth = 0;
-      bullet2.fill = "#00FF7F"
-      bullet2.direction = "top";
-      bullet2.width = 12;
-      bullet2.height = 12;
-      bullet2.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-      bullet2.tooltipText = "Saved: {currency}[bold]{valueY}[/]";
+      var circle2 = bullet2.createChild(am4core.Circle);
+      circle2.horizontalCenter = "middle";
+      circle2.verticalCenter = "middle";
+      circle2.strokeWidth = 0;
+      circle2.fill = "#00FF7F"
+      circle2.direction = "top";
+      circle2.width = 12;
+      circle2.height = 12;
+      circle2.cursorOverStyle = am4core.MouseCursorStyle.pointer;
+      circle2.tooltipText = "Saved: {currency}[bold]{valueY}[/]";
 
       chart.legend = new am4charts.Legend();
     }

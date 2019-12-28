@@ -12,5 +12,8 @@ export default {
     },
     async deleteTransction(id){
         return await axios.delete(`/api/transactions/delete?id=${id}`);
+    },
+    async seedData(){
+        return await axios.get('api/seed');
     }
 }

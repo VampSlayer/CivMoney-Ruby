@@ -56,6 +56,8 @@ border-radius: 0px !important;
                                 Here you can add Incomes and Expenses for any month this year.
                                 Simply add something like 'Wages' as an Income and 'Rent' as an Expense.
                                 This will then been shown as breakdown visualizations on the dashboard.
+                                <strong>Or<b-button :disabled="loading" variant="light" v-on:click="CreateSampleData">Create Sample Transactions</b-button></strong>
+                                <div class="text-center mt-2" v-if="loading"><b-spinner label="Spinning"></b-spinner></div>
                                 </b-card-body>
                         </b-card>
                         <div class="mt-2" :class="{'btn-shake' : shake === true}">
@@ -107,7 +109,8 @@ export default {
             selected: "income",
             error: '',
             shake: false,
-            month: ''
+            month: '',
+            loading: false
         };
     },
     created: function(){
@@ -151,6 +154,19 @@ export default {
                     this.error = "Cannot add monthly transactions"
                 }
             });
+        },
+        async CreateSampleData(){
+            this.loading = false;
+            try {
+                this.loading = true;
+                await transactionsService.seedData();
+                await this.getYears();
+                this.$emit('closePanel', {})
+            } catch (error) {
+                this.error = "Cannot add sample data"
+            } finally{
+                this.loading = false
+            }
         }
     }
 }
