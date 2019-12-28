@@ -18,17 +18,7 @@
             </b-nav-item>
           </b-nav>
         </div>
-        <div class="col-8">
-          <b-nav align="right">
-            <b-nav-item
-              active-class="year-active"
-              v-for="(year, index) in sortedYears"
-              :key="index"
-              :active="year === selectedYear"
-              v-on:click="selectedYear = year;"
-            >{{ year }}</b-nav-item>
-          </b-nav>
-        </div>
+        <year-select></year-select>
       </div>
       <div class="h-100">
         <div class="row border-btm" style="height:79%">
@@ -51,6 +41,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import pictorialbar from '../components/pictoralbar';
+import YearSelect from '../components/yearselect';
 import statsX from '../services/stats';
 import moment from 'moment';
 
@@ -58,40 +49,23 @@ export default {
     name: 'Stats',
     data() {
         return {
-            selectedYear: '',
             yearlyStats: [],
-            monthlyStatsForYear: []
+            monthlyStatsForYear: [], 
+            error: null
         }
     },
-    components: { pictorialbar },
+    components: { pictorialbar, YearSelect },
     created: function() {
         this.getYears();
         this.getYearlyStats();
     },
     watch: {
-        selectableYears: function() {
-            if (this.selectableYears && this.selectableYears.length > 0) {
-                this.selectedYear = Math.max(this.selectableYears);
-            }
-        },
         selectedYear: async function(){
-            try {
-                const result = await statsX.getMonthStatsForYear(this.selectedYear);
-                this.monthlyStatsForYear = result.data;
-                this.monthlyStatsForYear.forEach(x => {
-                    x.id = x.datemonth;
-                    x.datemonth = moment().month(x.datemonth - 1).format('MMMM');
-                });
-            } catch (error) {
-                console.log(error)
-            }
+            this.getMonthStatsForYear();
         }
     },
     computed: {
-        ...mapState(["years", "me", "selectableYears"]),
-        sortedYears: function(){
-            return this.selectableYears.sort((a, b) => {return a - b});
-        },
+        ...mapState(["years", "me", "selectedYear"]),
         selectedYearsStats: function(){
             if(this.yearlyStats){
                 return this.yearlyStats.find(x => { return x.dateyear === this.selectedYear});
@@ -106,7 +80,20 @@ export default {
                 const response = await statsX.years();
                 this.yearlyStats = response.data;
             } catch (error) {
-                console.log(error)
+                this.error = error
+            }
+        },
+        async getMonthStatsForYear(){
+            this.$router.push({name: 'stats', hash: `/#${this.selectedYear}`});
+            try {
+                const result = await statsX.getMonthStatsForYear(this.selectedYear);
+                this.monthlyStatsForYear = result.data;
+                this.monthlyStatsForYear.forEach(x => {
+                    x.id = x.datemonth;
+                    x.datemonth = moment().month(x.datemonth - 1).format('MMMM');
+                });
+            } catch (error) {
+                this.error = error
             }
         }
     }

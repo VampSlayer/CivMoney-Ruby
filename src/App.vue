@@ -21,6 +21,9 @@ html, body{
 .google-logout:hover{
   color: rgba(255, 255, 255, 0.75);
 }
+.nav-item .active {
+  color: white !important;
+}
 </style>
 
 <style scoped>

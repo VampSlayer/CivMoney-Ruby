@@ -8,9 +8,6 @@
   width: 100%;
   height: 100%;
 }
-.nav-item .active {
-  color: white !important;
-}
 .slideout-bg{
   background-color: #248df0 !important;
 }
@@ -47,17 +44,7 @@ background-color: rgba(255, 255, 255, 0.7) !important;
             </b-nav-item>
           </b-nav>
         </div>
-        <div class="col-8">
-          <b-nav align="right">
-            <b-nav-item
-              active-class="year-active"
-              v-for="(year, index) in sortedYears"
-              :key="index"
-              :active="year == selectedYear"
-              v-on:click="selectedYear = year; selectedMonth = ''"
-            >{{ year }}</b-nav-item>
-          </b-nav>
-        </div>
+        <year-select></year-select>
       </div>
       <div class="row h-100">
         <vodal
@@ -84,37 +71,36 @@ import Bar from "../components/bar";
 import AddTransaction from "../components/addtransaction";
 import MonthlyTransactions from "../components/monthlytransactions";
 import SearchTransactions from '../components/serachtransactions';
+import YearSelect from '../components/yearselect';
 import graphing from "../services/graphing";
-import { isNaN } from '@amcharts/amcharts4/core';
 import introJs from 'intro.js';
 export default {
   name: "dashboard",
   components: {
-    Bar
+    Bar,
+    YearSelect
   },
   data() {
     return {
       modalHeight: 0,
       modalWidth: 0,
       show: false,
-      selectedYear: 0,
       error: "",
-      selectedMonth: "",
       selectedDate: "",
+      selectedMonth: "",
       monthBar: "",
     };
   },
   watch: {
-    '$route.hash': function(val){
-          if(val){
+     '$route.hash': function(val){
+        if(val){
             const hashRouteSplit = val.split("#")[1].split("/");
-            if(hashRouteSplit[0]){
-              this.selectedYear = parseInt(hashRouteSplit[0]);
-              if(isNaN(this.selectedYear)) this.selectedYear = ""
-            } 
-            if(hashRouteSplit[1]) this.selectedMonth = hashRouteSplit[1];
-            if(!hashRouteSplit[1]) this.selectedMonth = ""
-          }
+            if(hashRouteSplit[1]){
+              this.selectedMonth = hashRouteSplit[1];
+            } else if (!hashRouteSplit[1] && this.years[this.selectedYear]) {
+              graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
+            }
+        }
     },
     selectedMonth: function(newVal) {
       if(this.selectedYear){
@@ -124,27 +110,14 @@ export default {
       }
     },
     selectedYear: function() {
-      this.$router.push({name: 'home', hash: `#${this.selectedYear}/${this.selectedMonth}`});
+      this.$router.push({name: 'home', hash: `#${this.selectedYear}`});
       if(this.years[this.selectedYear]){
         graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
       }
     },
     selectableYears: function() {
-      const oldSelectedYear = this.selectedYear;
-      if (this.selectableYears && this.selectableYears.length > 0) {
-        this.selectedYear = Math.max(this.selectableYears);
-        if(this.$route.hash){
-          const hashRouteSplit = this.$route.hash.split("#")[1].split("/");
-          if(hashRouteSplit[0]){
-            this.selectedYear = parseInt(hashRouteSplit[0]);
-            if(isNaN(this.selectedYear)) this.selectedYear = ""
-          }
-          if(hashRouteSplit[1]) this.selectedMonth = hashRouteSplit[1];
-        } 
-        const newSelectedYear = this.selectedYear;
-        if(oldSelectedYear === newSelectedYear){
-          graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
-        }
+      if(this.years[this.selectedYear]){
+        graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
       }
     }
   },
@@ -171,10 +144,7 @@ export default {
     this.getYears();
   },
   computed: {
-    ...mapState(["years", "me", "selectableYears"]),
-    sortedYears: function(){
-      return this.selectableYears.sort((a, b) => {return a - b});
-    }
+    ...mapState(["years", "me", "selectedYear", "selectableYears"]),
   },
   methods: {
     showAddTransaction(){

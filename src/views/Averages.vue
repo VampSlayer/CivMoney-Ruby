@@ -18,17 +18,7 @@
             </b-nav-item>
           </b-nav>
         </div>
-        <div class="col-8">
-          <b-nav align="right">
-            <b-nav-item
-              active-class="year-active"
-              v-for="(year, index) in sortedYears"
-              :key="index"
-              :active="year === selectedYear"
-              v-on:click="selectedYear = year;"
-            >{{ year }}</b-nav-item>
-          </b-nav>
-        </div>
+        <year-select></year-select>
       </div>
       <div class="h-100">
             <div class="text-center h-100">
@@ -42,28 +32,25 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import multiLine from '../components/multiLine';
+import YearSelect from '../components/yearselect';
 import statsX from '../services/stats';
 
 export default {
     name: 'Averages',
     data() {
         return {
-            selectedYear: '',
             yearlyStats: [],
-            monthlyAvgsForYear: []
+            monthlyAvgsForYear: [],
+            error: null
         }
     },
-    components: { multiLine },
+    components: { multiLine, YearSelect },
     created: function() {
         this.getYears();
     },
     watch: {
-        selectableYears: function() {
-            if (this.selectableYears && this.selectableYears.length > 0) {
-                this.selectedYear = Math.max(this.selectableYears);
-            }
-        },
         selectedYear: async function(){
+            this.$router.push({name: 'averages', hash: `/#${this.selectedYear}`});
             try {
                 const result = await statsX.getMonthAvgsForYear(this.selectedYear);
                 this.monthlyAvgsForYear = result.data;
@@ -72,15 +59,12 @@ export default {
                     x.datemonth = `${this.selectedYear}-${x.datemonth}-01`
                 });
             } catch (error) {
-                console.log(error)
+                this.error = error;
             }
         }
     },
     computed: {
-        ...mapState(["years", "me", "selectableYears"]),
-        sortedYears: function(){
-            return this.selectableYears.sort((a, b) => {return a - b});
-        },
+        ...mapState(["years", "me", "selectedYear"]),
         selectedYearsStats: function(){
             if(this.yearlyStats){
                 return this.yearlyStats.find(x => { return x.dateyear === this.selectedYear});

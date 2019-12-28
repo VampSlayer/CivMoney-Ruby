@@ -12,6 +12,7 @@ export default new Vuex.Store({
     me: null,
     years: {},
     selectableYears: [],
+    selectedYear: null,
     loggingIn: false,
     loginError: null
   },
@@ -28,7 +29,11 @@ export default new Vuex.Store({
       state.years = years;
     },
     updateSelectableYears: (state, years) => {
+      years = years.sort((a, b) => { return a - b; });
       state.selectableYears = years;
+    },
+    updateSelectedYear: (state, year) => {
+      state.selectedYear = year;
     }
   },
   actions: {
@@ -59,8 +64,13 @@ export default new Vuex.Store({
             return new Date(a.datemonth) - new Date(b.datemonth);
           });
           selectableYears.push(year.dateyear);
+          commit("updateSelectableYears", selectableYears);
+          if(router.app.$route.hash && router.app.$route.hash.split("#")[1].split("/")[0]){
+            commit("updateSelectedYear", router.app.$route.hash.split("#")[1].split("/")[0])
+          } else {
+            commit("updateSelectedYear", selectableYears[selectableYears.length - 1])
+          }
         });
-        commit("updateSelectableYears", selectableYears);
         commit("updateYears", yearsMap);
       } catch (error) {
         // eslint-disable-next-line

@@ -20,7 +20,7 @@ import moment from "moment";
 export default {
   name: "bar",
   props: {
-    year: Number,
+    year: Number || String,
     month: String,
     date: String
   },

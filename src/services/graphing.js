@@ -267,6 +267,7 @@ export default {
           Nov: "11",
           Dec: "12"
         }[month];
+        if(!scope.selectedMonth) scope.selectedMonth = "01";
       },
       scope
     );
