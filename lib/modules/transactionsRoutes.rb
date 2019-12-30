@@ -61,7 +61,7 @@ module Sinatra
           transaction.amount = dailyAmount
           transaction.date = Date.new(year.to_i, month.to_i, i)
           transaction.user_id = session[:id]
-          transaction.description = @description
+          transaction.description = description
           transaction.save
         end
         return 200
