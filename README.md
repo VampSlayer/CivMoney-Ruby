@@ -14,4 +14,4 @@ Html & Js, version 1 front end - https://civmoneyv1.herokuapp.com
 
 React, version 2 front end - https://civmoney-react.herokuapp.com
 
-Vue, version 3 front end - https://civmoney.herokuapp.com
+Vue, version 3 front end - https://civmoney.com
