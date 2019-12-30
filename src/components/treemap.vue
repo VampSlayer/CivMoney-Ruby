@@ -60,7 +60,6 @@ export default {
       chart.dataFields.children = "children";
       chart.currency = this.me.currency;
 
-      chart.zoomable = false;
 
       var level0SeriesTemplate = chart.seriesTemplates.create("0");
       var level0ColumnTemplate = level0SeriesTemplate.columns.template;
