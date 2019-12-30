@@ -29,6 +29,12 @@ export default new Router({
       name: "averages",
       component: () => import(/* webpackChunkName: "averages" */ "./views/Averages.vue"),
       beforeEnter: Guard.auth
+    },
+    {
+      path: "/year",
+      name: "year",
+      component: () => import(/* webpackChunkName: "year" */ "./views/YearGrouping.vue"),
+      beforeEnter: Guard.auth
     }
   ]
 });

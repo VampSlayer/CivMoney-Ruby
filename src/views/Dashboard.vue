@@ -42,6 +42,12 @@ background-color: rgba(255, 255, 255, 0.7) !important;
             <b-nav-item to="/stats">
               <i title="Statistics" class="fa fa-percent"></i>
             </b-nav-item>
+            <b-nav-item to="/averages">
+              <i title="Averages" class="fas fa-thermometer-empty"></i>
+            </b-nav-item>
+            <b-nav-item to="/year">
+              <i title="Year" class="fas fa-signal"></i>
+            </b-nav-item>
           </b-nav>
         </div>
         <year-select></year-select>

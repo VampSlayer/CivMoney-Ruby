@@ -19,8 +19,18 @@ module Sinatra
               dailyAmounts.push((Random.new.rand(-1000..0).to_f / numberOfDaysInMonth).round(2))
             end
 
+            incomes = ["Wages", "Bonus", "Commision", "Tax Rebate", "Refund", "eBay Selling", "Birthday", "Christmas", "Tournament"]
+            expenses = ["Rent", "Phone", "Gym", "Utilities", "Avg/Day", "Food", "Clothes", "Flights", "Holidays", "Credit Card", "Savings"]
+
             dailyAmounts.each do |dailyAmount|
-              description = (0..10).map { ("a".."z").to_a[rand(26)] }.join
+              description = ""
+              if dailyAmount > 0
+                incomesLength = incomes.length - 1
+                description = incomes[Random.new.rand(0..incomesLength)]
+              else
+                expensesLength = expenses.length - 1
+                description = expenses[Random.new.rand(0..expensesLength)]
+              end
               for i in 1..numberOfDaysInMonth
                 @transaction = Transaction.new()
                 @transaction.amount = dailyAmount

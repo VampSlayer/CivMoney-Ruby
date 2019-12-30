@@ -50,19 +50,19 @@ module Sinatra
       #add monthly fixed Transaction
       #/api/transactions/addMonthlyFixedTransaction?[amount]=500&[description]=monthly&[year]=2000&[month]=1
       app.post "/api/transactions/addMonthlyFixedTransaction", :auth => [:user] do
-        @amount = params[:amount]
-        @description = params[:description]
-        @year = params[:year]
-        @month = params[:month]
-        @numberOfDaysInMonth = Time.days_in_month(@month.to_i, @year.to_i)
-        @dailyAmount = (@amount.to_f / numberOfDaysInMonth).round(2)
+        amount = params[:amount]
+        description = params[:description]
+        year = params[:year]
+        month = params[:month]
+        numberOfDaysInMonth = Time.days_in_month(month.to_i, year.to_i)
+        dailyAmount = (amount.to_f / numberOfDaysInMonth).round(2)
         for i in 1..numberOfDaysInMonth
-          @transaction = Transaction.new()
-          @transaction.amount = @dailyAmount
-          @transaction.date = Date.new(@year.to_i, @month.to_i, i)
-          @transaction.user_id = session[:id]
-          @transaction.description = @description
-          @transaction.save
+          transaction = Transaction.new()
+          transaction.amount = dailyAmount
+          transaction.date = Date.new(year.to_i, month.to_i, i)
+          transaction.user_id = session[:id]
+          transaction.description = @description
+          transaction.save
         end
         return 200
       end

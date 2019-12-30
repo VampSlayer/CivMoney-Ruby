@@ -16,6 +16,9 @@
             <b-nav-item to="/averages">
               <i title="Averages" class="fas fa-thermometer-empty"></i>
             </b-nav-item>
+            <b-nav-item to="/year">
+              <i title="Year" class="fas fa-signal"></i>
+            </b-nav-item>
           </b-nav>
         </div>
         <year-select></year-select>

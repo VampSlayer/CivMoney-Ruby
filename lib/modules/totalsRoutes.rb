@@ -123,6 +123,22 @@ module Sinatra
         return_message.to_json
       end
 
+      #get grouped transactions sum for year
+      #/transactions/yearGroupedToals?&year=2019
+      app.get "/api/transactions/yearGroupedToals", :auth => [:user] do
+        content_type :json
+        @transactions = Transaction.find_by_sql ["SELECT
+		  	description,
+		  	ROUND(SUM(transactions.amount)::numeric,2) AS amount
+		FROM public.transactions
+		WHERE date_part('year', transactions.date) = ? AND user_id = ?
+		GROUP BY description
+		ORDER BY 1 ASC", params[:year], session[:id]]
+        return_message = {}
+        return_message = @transactions
+        return_message.to_json
+      end
+
       #get monthly totals for year
       #/transactions/yearsMonthTotals?year=2019
       app.get "/api/transactions/yearsMonthTotals", :auth => [:user] do

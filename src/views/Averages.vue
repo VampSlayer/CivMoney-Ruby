@@ -16,6 +16,9 @@
             <b-nav-item to="/stats">
               <i title="Statistics" class="fa fa-percent"></i>
             </b-nav-item>
+            <b-nav-item to="/year">
+              <i title="Year" class="fas fa-signal"></i>
+            </b-nav-item>
           </b-nav>
         </div>
         <year-select></year-select>
@@ -39,7 +42,6 @@ export default {
     name: 'Averages',
     data() {
         return {
-            yearlyStats: [],
             monthlyAvgsForYear: [],
             error: null
         }
@@ -65,12 +67,6 @@ export default {
     },
     computed: {
         ...mapState(["years", "me", "selectedYear"]),
-        selectedYearsStats: function(){
-            if(this.yearlyStats){
-                return this.yearlyStats.find(x => { return x.dateyear === this.selectedYear});
-            }
-            return {};
-        }
     },
     methods: {
         ...mapActions(["getYears"])
