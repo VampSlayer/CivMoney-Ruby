@@ -10,6 +10,7 @@ require "sinatra/base"
 require "sprockets"
 require "time"
 require "google-id-token"
+require "rack/ssl-enforcer"
 #enviroments
 require "./config/environments"
 #models
@@ -32,6 +33,7 @@ class CivMoney < Sinatra::Base
   register Sinatra::TotalsRoutes
   register Sinatra::AdminRoutes
 
+  use Rack::SslEnforcer if production?
   use Rack::Session::Cookie, :session_secret => ENV["SESSION_SECRET"], :secret => ENV["SESSION_SECRET"]
   set :session_secret, ENV["SESSION_SECRET"]
   set :environment, Sprockets::Environment.new

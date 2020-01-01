@@ -59,6 +59,7 @@ GEM
     rack (1.6.12)
     rack-protection (1.5.3)
       rack
+    rack-ssl-enforcer (0.2.9)
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (12.3.1)
@@ -109,6 +110,7 @@ DEPENDENCIES
   json
   pg
   puma (= 3.12.2)
+  rack-ssl-enforcer
   rack-test
   rake
   rspec
