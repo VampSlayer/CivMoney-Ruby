@@ -51,15 +51,15 @@ border-radius: 0px !important;
 <template>
     <div class="container-fluid mt-2">
         <div class="row">
-            <div class="col-4 col-md-4 col-lg-4 col-xl-2">
+            <div class="col-4 col-md-4 col-lg-4 col-xl-3">
                 <b-card style="background-color: transparent;">
                     <b-card-body>
-                        <strong>Transaction.</strong>
+                        <h4>Transaction</h4>
                         Here you can add a single transaction with a date, either an income or expense. Fill in the details of the transaction then click the <strong>+</strong> button to add.
                     </b-card-body>
                 </b-card>
             </div>
-            <div class="col-4 col-md-4 col-lg-4 col-xl-2" :class="{'btn-shake' : shake === true}">
+            <div class="col-4 col-md-4 col-lg-4 col-xl-3" :class="{'btn-shake' : shake === true}">
                 <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                 <b-card style="background-color: transparent;">
                     <b-input :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1" placeholder="Amount"></b-input>

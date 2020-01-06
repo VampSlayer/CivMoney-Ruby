@@ -1,5 +1,3 @@
-require "sinatra"
-
 module Sinatra
   module Authentication
     def self.registered(app)

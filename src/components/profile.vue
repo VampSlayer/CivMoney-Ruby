@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-4 col-md-4 col-lg-4 col-xl-2">
                 <b-card style="background-color: transparent;">
-                    <b-card-body><strong>{{me.username}}</strong><p> Here you can view details about your profile and change your currency.</p></b-card-body>
+                    <b-card-body><h4>{{me.username}}</h4><p> Here you can view details about your profile and change your currency.</p></b-card-body>
                 </b-card>
             </div>
             <div class="col-4 col-md-4 col-lg-4 col-xl-2">

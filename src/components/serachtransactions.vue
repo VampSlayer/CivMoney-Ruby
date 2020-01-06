@@ -10,6 +10,9 @@
   color: #00ff7f;
   font-weight: bolder;
 }
+.w-100 {
+    width: 100%;
+}
 </style>
 
 <template>
@@ -19,28 +22,27 @@
                 <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                 <b-card style="background-color: transparent;">
                     <b-card-body>
-                        <strong>Search.</strong> Here you can search and manage your transactions, you can delete, filter and sort.
+                        <h4>Search</h4> Here you can search and manage your transactions, you can delete, filter and sort.
                         <div class="mt-2">
                             <v-date-picker  v-model="range" mode='range' :input-props='{
-                        class: "w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 hover:border-blue-5",
+                        class: "w-full w-100 shadow appearance-none border rounded py-2 px-3 text-gray-700 hover:border-blue-5",
                         placeholder: "Please enter dates",
                         readonly: true}'/>
                         </div>
                         <span class="red" v-if="noTransactions">No Transactions in that range.</span>
                         <div class="mt-2" v-if="transactions.length > 0">
                             <b-form-input v-model="filter" type="search" placeholder="Type to filter Transactions"></b-form-input>
-                            <b-button title="Clear Filter" class="mt-2" :disabled="!filter" @click="filter = ''"><i class="fa fa-times"></i></b-button>
+                            <b-button v-if="filteredTransactions.length > 0" title="Delete All Transactions" class="mt-2" variant="danger" v-on:click="deleteTransactions">Delete All Transactions</b-button>
                         </div>
                     </b-card-body>
                 </b-card>
             </div>
             <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-9" v-if="transactions.length > 0">
-                 <b-table class="white-text" :items="transactions" head-variant="light" :fields="fields" :filter="filter" :filterIncludedFields="filterOn"
-                    v-on:filtered="setFilteredItems($event)">
-                     <template v-slot:cell(amount)="data">
+                 <b-table class="white-text" :items="transactions" head-variant="light" :fields="fields" :filter="filter" :filterIncludedFields="[]" v-on:filtered="setFilteredTransactions">
+                     <template slot="amount" slot-scope="data">
                         <span :class="getAmountClass(data.value)">{{data.value}}</span>
                     </template>
-                     <template v-slot:cell(delete)="data">
+                     <template slot="delete" slot-scope="data">
                         <button title="Delete Transaction" class="btn btn-danger" v-on:click="deleteTransaction(data.value)">
                             <i class="fa fa-times"></i>
                         </button>
@@ -54,6 +56,7 @@
 <script>
 import moment from 'moment';
 import transactions from "../services/transactions";
+import { mapActions } from "vuex";
 export default {
     name: "SearchTransactions",
     data() {
@@ -66,9 +69,16 @@ export default {
             },
             transactions: [],
             filter: null,
-            filterOn: [],
             noTransactions: false,
-            filteredItems: []
+            filteredTransactions: [],
+            deletionOccured: false
+        }
+    },
+    destroyed: async function(){
+        let getYearsCalled = false
+        if(this.deletionOccured && !getYearsCalled){
+            getYearsCalled = true
+            await this.getYears()
         }
     },
     watch: {
@@ -77,6 +87,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(["getYears"]),
         getAmountClass(value){
             return value > 0 ? 'green' : 'red'
         },
@@ -87,9 +98,15 @@ export default {
                 const transactionToBeDelete = this.transactions.find(x => x.delete === id);
                 const indexOfTranasctionToBeDelete = this.transactions.indexOf(transactionToBeDelete)
                 this.transactions.splice(indexOfTranasctionToBeDelete, 1);
+                this.deletionOccured = true;
             } catch (error) {
                  this.error = "Transaction could not be deleted"; 
             }
+        },
+        deleteTransactions: async function() {
+            this.filteredTransactions.forEach(async (transaction) => {
+                await this.deleteTransaction(transaction.delete)
+            });
         },
         getTransactionsForRange: async function(){
             this.noTransactions = false;
@@ -109,8 +126,8 @@ export default {
                 this.error = error;  
             }
         },
-        setFilteredItems: function(event){
-            this.filteredItems = event.filteredItems;
+        setFilteredTransactions: function(transactions){
+            this.filteredTransactions = transactions;
         }
     }
 }

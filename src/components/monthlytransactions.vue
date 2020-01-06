@@ -49,16 +49,17 @@ border-radius: 0px !important;
 <template>
     <div class="container-fluid mt-2" >
         <div class="row">
-                    <div class="col-4 col-md-4 col-lg-4 col-xl-2">
+                    <div class="col-4 col-md-4 col-lg-4 col-xl-3">
                         <b-card style="background-color: transparent;">
                             <b-card-body>
-                                <strong>Monthly Income & Expenses.</strong> 
+                                <h4>Monthly Income & Expenses</h4> 
                                 Here you can add Incomes and Expenses for any month this year.
                                 Simply add something like 'Wages' as an Income and 'Rent' as an Expense.
+                                Or
+                                <a class="cursor font-weight-bold" :disabled="loading" variant="light" v-on:click="CreateSampleData">click here to create sample Transactions.</a>
                                 This will then been shown as breakdown visualizations on the dashboard.
-                                <strong>Or<b-button :disabled="loading" variant="light" v-on:click="CreateSampleData">Create Sample Transactions</b-button></strong>
                                 <div class="text-center mt-2" v-if="loading"><b-spinner label="Spinning"></b-spinner></div>
-                                </b-card-body>
+                            </b-card-body>
                         </b-card>
                         <div class="mt-2" :class="{'btn-shake' : shake === true}">
                          <b-alert variant="danger" v-if="error">{{error}}</b-alert>
@@ -68,7 +69,7 @@ border-radius: 0px !important;
                         </b-card>
                         </div>
                     </div>
-                    <div class="col-8 col-md-8 col-lg-8 col-xl-10">
+                    <div class="col-8 col-md-8 col-lg-8 col-xl-9">
                         <div class="row">
                             <div v-for="(transaction, index) in transactions" :key="index" class="col-4 col-md-4 col-lg-4 col-xl-2 mt-2">
                                 <b-card style="background-color: transparent;">
@@ -156,6 +157,7 @@ export default {
             });
         },
         async CreateSampleData(){
+            if(this.loading === true) return;
             this.loading = false;
             try {
                 this.loading = true;

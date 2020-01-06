@@ -1,5 +1,5 @@
 module Sinatra
-  module TrasnsactionsRoutes
+  module TransactionsRoutes
     def self.registered(app)
 
       #add new transaction

@@ -4,7 +4,6 @@ require "sinatra/activerecord"
 require "sinatra/reloader"
 require "json"
 require "date"
-require "bcrypt"
 require "dm-aggregates"
 require "sinatra/base"
 require "sprockets"
@@ -25,14 +24,15 @@ require "./lib/modules/adminRoutes"
 require "./lib/modules/seedRoutes"
 
 class CivMoney < Sinatra::Base
-  include BCrypt
-
   register Sinatra::Authentication
   register Sinatra::UserRoutes
-  register Sinatra::TrasnsactionsRoutes
+  register Sinatra::TransactionsRoutes
   register Sinatra::TotalsRoutes
   register Sinatra::AdminRoutes
+  register Sinatra::SeedRoutes
 
+  use Rack::Deflater
+  use Rack::MethodOverride
   use Rack::SslEnforcer if production?
   use Rack::Session::Cookie, :session_secret => ENV["SESSION_SECRET"], :secret => ENV["SESSION_SECRET"]
   set :session_secret, ENV["SESSION_SECRET"]

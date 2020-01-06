@@ -1,5 +1,5 @@
 module Sinatra
-  module AdminRoutes
+  module SeedRoutes
     def self.registered(app)
 
       # seed some data for user a few years
@@ -7,10 +7,14 @@ module Sinatra
       app.get "/api/seed", :auth => [:user] do
         transactions = Transaction.where(user_id: session[:id]).delete_all
 
-        years = [Time.new.year - 2, Time.new.year - 1, Time.new.year]
+        current = Time.new
+
+        years = [Time.new.year - 1, Time.new.year]
         months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
         years.each do |year|
           months.each do |month|
+            break if year == current.year && month > current.month
             numberOfDaysInMonth = Time.days_in_month(month.to_i, year.to_i)
             dailyAmounts = []
 
