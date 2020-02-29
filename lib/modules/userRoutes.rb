@@ -10,6 +10,7 @@ module Sinatra
         return_message["id"] = @user.first.id
         return_message["username"] = @user.first.username
         return_message["currency"] = @user.first.currency
+        return_message["theme"] = @user.first.theme
         return_message.to_json
       end
 
@@ -22,6 +23,7 @@ module Sinatra
           return_message["id"] = @user.first.id
           return_message["username"] = @user.first.username
           return_message["currency"] = @user.first.currency
+          return_message["theme"] = @user.first.theme
           return_message.to_json
         else
           return 500

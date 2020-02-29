@@ -117,8 +117,8 @@ export default {
       }
       this.modalHeight = window.innerHeight / 2;
     };
-    if(localStorage.getItem('intro-seen') !== 'seen'){
-      introJs.introJs().addHints().onhintclose(function() { localStorage.setItem('intro-seen', 'seen') });
+    if(localStorage.getItem('cm--intro-seen') !== 'seen'){
+      introJs.introJs().addHints().onhintclose(function() { localStorage.setItem('cm--intro-seen', 'seen') });
     }
   },
   created: function() {

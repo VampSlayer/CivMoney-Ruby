@@ -62,7 +62,7 @@ export default {
     draw() {
       if(!this.data) return;
       am4core.useTheme(am4themes_animated);
-      am4core.useTheme(am4themes_dark);
+      if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
       var iconPath = this.iconPath;
       var chart = am4core.create(this.id, am4charts.SlicedChart);
       chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect

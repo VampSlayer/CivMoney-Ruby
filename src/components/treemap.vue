@@ -44,7 +44,7 @@ export default {
   methods: {
     draw: function() {
       am4core.useTheme(am4themes_animated);
-      am4core.useTheme(am4themes_dark);
+      if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
       var chart = am4core.create(this.id, am4charts.TreeMap);
       chart.hiddenState.properties.opacity = 0; 
       chart.data = this.data;
@@ -52,7 +52,6 @@ export default {
       chart.colors.step = 2;
       let chartTitle = chart.titles.create();
       chartTitle.text = this.title;
-      chartTitle.fill = "white"
       chartTitle.fontSize = 20;
 
       chart.dataFields.value = "value";
@@ -60,14 +59,13 @@ export default {
       chart.dataFields.children = "children";
       chart.currency = this.me.currency;
 
-
       var level0SeriesTemplate = chart.seriesTemplates.create("0");
       var level0ColumnTemplate = level0SeriesTemplate.columns.template;
 
       level0ColumnTemplate.column.cornerRadius(10, 10, 10, 10);
       level0ColumnTemplate.fillOpacity = 0;
       level0ColumnTemplate.strokeWidth = 4;
-      level0ColumnTemplate.stroke = "#153057";
+      level0ColumnTemplate.stroke = am4core.color(window.civmoney.background);
       level0ColumnTemplate.strokeOpacity = 0;
 
       var level1SeriesTemplate = chart.seriesTemplates.create("1");
@@ -79,7 +77,7 @@ export default {
       level1ColumnTemplate.column.cornerRadius(10, 10, 10, 10);
       level1ColumnTemplate.fillOpacity = 0.9;
       level1ColumnTemplate.strokeWidth = 4;
-      level1ColumnTemplate.stroke = "#153057";
+      level1ColumnTemplate.stroke = am4core.color(window.civmoney.background);
       level1ColumnTemplate.tooltipText = "{name}: {currency}[bold]{value}[/]";
 
       var bullet1 = level1SeriesTemplate.bullets.push(
@@ -88,7 +86,7 @@ export default {
       bullet1.locationY = 0.5;
       bullet1.locationX = 0.5;
       bullet1.label.text = "{name}";
-      bullet1.label.fill = am4core.color("#ffffff");
+      bullet1.label.fill = am4core.color("white");
 
       chart.maxLevels = 2;
     }

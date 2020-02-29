@@ -1,5 +1,6 @@
 import store from '@/store';
-import axios from 'axios'
+import axios from 'axios';
+import theme from './theme';
 
 export default {
     user() {
@@ -17,11 +18,13 @@ export default {
     store(me) {
         if(!me) return;
         sessionStorage.setItem('me', JSON.stringify(me));
+        theme.setTheme(me.theme);
         store.commit('updateMe', me);
         return store.state.me;
     },
     remove() {
         sessionStorage.removeItem('me');
+        theme.resetTheme();
         store.commit('updateMe', null);
     },
     async get() {
@@ -33,7 +36,7 @@ export default {
     async logout() {
         return await axios.post('/api/logout');
     },
-    async updateme(currency) {
-        return await axios.post(`/api/user/updateme?currency=${currency}`);
+    async updateme(me) {
+        return await axios.post(`/api/user/updateme?currency=${me.currency}&theme=${me.theme}`);
     }
 }

@@ -16,8 +16,7 @@
                     <b-input :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                     <b-input :state="dateState" v-model="date" type="date" class="mb-1" placeholder="Date"></b-input>
                     <div class="row">
-                        <b-form-radio class="ml-3" v-model="selected" name="some-radios" value="income">Income</b-form-radio>
-                        <b-form-radio class="ml-2" v-model="selected" name="some-radios" value="expense">Expense</b-form-radio>
+                        <switches class="col" v-model="income" text-enabled="Income" text-disabled="Expense" color="blue" theme="custom"></switches>
                     </div>
                     <button class="float-right add-st-btn" title="Add Transaction" v-on:click="addTransaction" > <i class="fa fa-plus"></i></button>
                 </b-card>
@@ -30,14 +29,16 @@
 import transactions from '../services/transactions';
 import { mapActions } from "vuex";
 import moment from 'moment'
+import Switches from 'vue-switches';
 export default {
     name: "AddTransaction",
+    components: { Switches },
     data() {
         return {
             amount: 0,
             description: '',
             date: moment(),
-            selected: "income",
+            income: true,
             error: '',
             shake: false
         };
@@ -66,7 +67,7 @@ export default {
             }
             try {
                 let amount = this.amount;
-                if(this.selected === "expense") amount = -amount;
+                if(this.income === false) amount = -amount;
                 await transactions.addTransaction(amount, this.description, this.date);
                 await this.getYears();
                 this.close();
