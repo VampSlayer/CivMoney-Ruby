@@ -66,7 +66,7 @@ export default {
     },
     onFailure(error){
       this.loginFaliure(error);
-    },
+    }
   }
 };
 </script>

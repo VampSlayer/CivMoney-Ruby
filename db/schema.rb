@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20161118234158) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "currency",      default: "CHF", null: false
+    t.string   "theme",         default: "Dark"
   end
 
 end

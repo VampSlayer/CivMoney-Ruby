@@ -1,12 +1,16 @@
-$background-color: #153057;
+$background-color: var(--cm-background);
 
-$text-color: white;
-$green: #00ff7f;
-$red: #ff3333;
+$text-color: var(--cm-text-color);
+$input-text-color: var(--cm-input-text-color);
+$year-active-color: var(--cm-year-active-color);
 
-$nav-color: #248df0;
-$nav-color-contrast: rgba(255, 255, 255, 0.5);
-$nav-color-contrast-dark: rgba(255, 255, 255, 0.8);
+$green: var(--cm-green);
+$red: var(--cm-red);
+$orange: var(--cm-orange);
+
+$nav-color: var(--cm-nav-color);
+$nav-color-contrast: var(--cm-nav-color-contrast);
+$nav-color-contrast-dark: var(--cm-nav-contrast-dark);
 
 .civ-nav-bg {
     background-color: $nav-color;
@@ -24,6 +28,10 @@ a {
     color: $nav-color;
 }
 
+a:hover {
+    color: $nav-color;
+}
+
 .google-logout {
     background: transparent;
     border: none;
@@ -36,7 +44,8 @@ a {
 }
 
 .nav-item .active {
-    color: $text-color !important;
+    color: $year-active-color !important;
+    font-weight: bold;
 }
 
 .vodal-dialog {
@@ -99,7 +108,7 @@ a {
 .form-control {
     border-radius: 0px !important;
     background: $background-color !important;
-    color: $text-color !important;
+    color: $input-text-color !important;
     border: 1px solid $background-color !important;
 }
 
@@ -187,5 +196,36 @@ a {
 
 .add-montly-income-card {
     color: rgba($nav-color, 0.6);
-    background-color: rgba(0, 0, 0, 0.5)
+}
+
+.vue-switcher__label {
+    font-size: 1em !important;
+}
+
+.mb-minus-15{
+    margin-bottom: -15px;
+}
+
+.vue-switcher-theme--custom {
+    &.vue-switcher-color--blue {
+        div {
+            background-color: $nav-color-contrast;
+
+            &:after {
+                // for the circle on the switch
+                background-color: $year-active-color;
+                border: $text-color solid 2px;
+            }
+        }
+
+        &.vue-switcher--unchecked {
+            div {
+                background-color: $nav-color-contrast;
+
+                &:after {
+                    background-color: $background-color;
+                }
+            }
+        }
+    }
 }

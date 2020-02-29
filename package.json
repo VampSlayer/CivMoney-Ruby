@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "concurrently --kill-others \"npm run serve:back\" \"npm run serve:front\"",
+    "serve:front": "vue-cli-service serve --open",
+    "serve:back": "./run-dev-ruby-server.sh",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -21,6 +23,7 @@
     "vue-google-login": "^2.0.2",
     "vue-multiselect": "^2.1.6",
     "vue-router": "^3.0.3",
+    "vue-switches": "^2.0.1",
     "vue2-slideout-panel": "^2.2.3",
     "vuex": "^3.0.1"
   },
@@ -29,6 +32,7 @@
     "@vue/cli-plugin-eslint": "^3.9.0",
     "@vue/cli-service": "^4.2.3",
     "babel-eslint": "^10.0.1",
+    "concurrently": "^5.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.13.1",

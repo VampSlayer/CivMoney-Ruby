@@ -72,6 +72,7 @@ export default {
     methods: {
         ...mapActions(["getYears"]),
         getAmountClass(value){
+            if (value === 0 || value === 0.00) return 'orange'
             return value > 0 ? 'green' : 'red'
         },
         deleteTransaction: async function(id){

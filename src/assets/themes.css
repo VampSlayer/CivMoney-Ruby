@@ -1,0 +1,54 @@
+html {
+    --cm-background:#153057;
+
+    --cm-text-color:white;
+    --cm-input-text-color: white;
+    --cm-year-active-color:white;
+
+    --cm-green:#00ff7f;
+    --cm-red:#ff3333;
+    --cm-orange:#ff8000;
+    --cm-year-line-color:white;
+
+    --cm-nav-color:#248df0;
+    --cm-nav-color-contrast:rgba(255, 255, 255, 0.5);
+    --cm-nav-color-contrast-dark:rgba(255, 255, 255, 0.8);
+    --cm-luminosity:0;
+    --cm-themes: ["Dark", "Light", "Matrix"]
+}
+
+html[data-theme='Light'] {
+    --cm-background:white;
+
+    --cm-text-color:white;
+    --cm-input-text-color: #0084ff;
+    --cm-year-active-color:#2e9aff;
+
+    --cm-green:#00ff7f;
+    --cm-red:#ff3333;
+    --cm-orange:#ff8000;
+    --cm-year-line-color:black;
+
+    --cm-nav-color:#2e9aff;
+    --cm-nav-color-contrast:rgba(255, 255, 255, 0.5);
+    --cm-nav-color-contrast-dark:rgba(255, 255, 255, 0.8);
+    --cm-luminosity:1;
+}
+
+html[data-theme='Matrix'] {
+    --cm-background:#0D0208;
+
+    --cm-text-color:black;
+    --cm-input-text-color: white;
+    --cm-year-active-color:white;
+
+    --cm-green:#00FF41;
+    --cm-red:#ff3333;
+    --cm-orange:#ff8000;
+    --cm-year-line-color:white;
+
+    --cm-nav-color:#00FF41;
+    --cm-nav-color-contrast:rgba(255, 255, 255, 0.5);
+    --cm-nav-color-contrast-dark:rgba(255, 255, 255, 0.8);
+    --cm-luminosity:0;
+}

@@ -7,7 +7,7 @@ import moment from 'moment';
 export default {
   vodalPie(id, data, title, vm) {
     am4core.useTheme(am4themes_animated);
-    am4core.useTheme(am4themes_dark);
+    if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
     let chart = am4core.create(id, am4charts.PieChart);
     chart.data = data;
     let chartTitle = chart.titles.create();
@@ -40,7 +40,7 @@ export default {
   },
   vodalBar(id, data, title, scope) {
     am4core.useTheme(am4themes_animated);
-    am4core.useTheme(am4themes_dark);
+    if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
     let chart = am4core.create(id, am4charts.XYChart);
     chart.data = data;
     var chartTitle = chart.titles.create();
@@ -79,24 +79,24 @@ export default {
       if (field === "Total") {
         series.columns.template.adapter.add("stroke", function (fill, target) {
           if (target.dataItem && (target.dataItem.valueY < 0)) {
-            return am4core.color("#ff3333");
+            return am4core.color(window.civmoney.red);
           }
           else if (target.dataItem && (target.dataItem.valueY > 0)) {
-            return am4core.color("#00FF7F");
+            return am4core.color(window.civmoney.green);
           }
           else {
-            return am4core.color("#ff8000");
+            return am4core.color(window.civmoney.orange);
           }
         });
         series.columns.template.adapter.add("fill", function (fill, target) {
           if (target.dataItem && (target.dataItem.valueY < 0)) {
-            return am4core.color("#ff3333");
+            return am4core.color(window.civmoney.red);
           }
           else if (target.dataItem && (target.dataItem.valueY > 0)) {
-            return am4core.color("#00FF7F");
+            return am4core.color(window.civmoney.green);
           }
           else {
-            return am4core.color("#ff8000");
+            return am4core.color(window.civmoney.orange);
           }
         });
       }
@@ -125,7 +125,7 @@ export default {
     });
   },
   graphMonth(id, data, scope) {
-    am4core.useTheme(am4themes_dark);
+    if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
     am4core.useTheme(am4themes_animated);
     let chart = am4core.create(id, am4charts.XYChart);
     chart.data = data;
@@ -152,24 +152,24 @@ export default {
     series.currency = scope.me.currency;
     series.columns.template.adapter.add("stroke", function (fill, target) {
       if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color("#ff3333");
+        return am4core.color(window.civmoney.red);
       }
       else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color("#00FF7F");
+        return am4core.color(window.civmoney.green);
       }
       else {
-        return am4core.color("#ff8000");
+        return am4core.color(window.civmoney.orange);
       }
     });
     series.columns.template.adapter.add("fill", function (fill, target) {
       if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color("#ff3333");
+        return am4core.color(window.civmoney.red);
       }
       else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color("#00FF7F");
+        return am4core.color(window.civmoney.green);
       }
       else {
-        return am4core.color("#ff8000");
+        return am4core.color(window.civmoney.orange);
       }
     });
     series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
@@ -188,7 +188,7 @@ export default {
     lineSeries.dataFields.valueY = "amount";
     lineSeries.dataFields.dateX = "date";
     lineSeries.tensionX = 0.7;
-    lineSeries.stroke = am4core.color("#fff");
+    lineSeries.stroke = am4core.color(window.civmoney.text);
     lineSeries.strokeWidth = 3;
     lineSeries.strokeOpacity = 0.75;
 
@@ -205,13 +205,13 @@ export default {
       trend.strokeWidth = 3;
       trend.strokeDasharray = 4;
       if (trendAverageValue < 0) {
-        trend.stroke = trend.fill = am4core.color("#ff3333");
+        trend.stroke = trend.fill = am4core.color(window.civmoney.red);
       }
       else if (trendAverageValue > 0) {
-        trend.stroke = trend.fill = am4core.color("#00FF7F");
+        trend.stroke = trend.fill = am4core.color(window.civmoney.green);
       }
       else {
-        trend.stroke = trend.fill = am4core.color("#ff8000");
+        trend.stroke = trend.fill = am4core.color(window.civmoney.orange);
       }
       trend.data = data;
 
@@ -235,7 +235,11 @@ export default {
     ], sumOfData, scope.me.currency);
   },
   graphYear(id, data, scope) {
-    am4core.useTheme(am4themes_dark);
+    if (window.civmoney.luminosity < 0.5) {
+      am4core.useTheme(am4themes_dark)
+    } else {
+      am4core.unuseAllThemes()
+    }
     am4core.useTheme(am4themes_animated);
     let chart = am4core.create(id, am4charts.XYChart);
     chart.data = data;
@@ -281,24 +285,24 @@ export default {
     series.currency = scope.me.currency;
     series.columns.template.adapter.add("stroke", function (fill, target) {
       if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color("#ff3333");
+        return am4core.color(window.civmoney.red);
       }
       else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color("#00FF7F");
+        return am4core.color(window.civmoney.green);
       }
       else {
-        return am4core.color("#ff8000");
+        return am4core.color(window.civmoney.orange);
       }
     });
     series.columns.template.adapter.add("fill", function (fill, target) {
       if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color("#ff3333");
+        return am4core.color(window.civmoney.red);
       }
       else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color("#00FF7F");
+        return am4core.color(window.civmoney.green);
       }
       else {
-        return am4core.color("#ff8000");
+        return am4core.color(window.civmoney.orange);
       }
     });
     series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
@@ -311,13 +315,13 @@ export default {
       scope
     );
     series.columns.template.tooltipText = "[bold]{currency}{valueY}[/]";
-    series.fillOpacity = 0.5;
+    series.fillOpacity = window.civmoney.luminosity > 0.5 ? 0.8 : 0.5;
 
     let lineSeries = chart.series.push(new am4charts.LineSeries());
     lineSeries.dataFields.valueY = "amount";
     lineSeries.dataFields.dateX = "datemonth";
     lineSeries.tensionX = 0.7;
-    lineSeries.stroke = am4core.color("#FFF");
+    lineSeries.stroke = am4core.color(window.civmoney.yearLine);
     lineSeries.strokeWidth = 3;
     lineSeries.strokeOpacity = 0.75;
 
@@ -334,13 +338,13 @@ export default {
       trend.strokeWidth = 3;
       trend.strokeDasharray = 4;
       if (trendAverageValue < 0) {
-        trend.stroke = trend.fill = am4core.color("#ff3333");
+        trend.stroke = trend.fill = am4core.color(window.civmoney.red);
       }
       else if (trendAverageValue > 0) {
-        trend.stroke = trend.fill = am4core.color("#00FF7F");
+        trend.stroke = trend.fill = am4core.color(window.civmoney.green);
       }
       else {
-        trend.stroke = trend.fill = am4core.color("#ff8000");
+        trend.stroke = trend.fill = am4core.color(window.civmoney.orange);
       }
       trend.data = data;
 

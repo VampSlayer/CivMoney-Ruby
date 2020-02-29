@@ -34,12 +34,9 @@
                                     <b-input min=0 step="0.01" v-model="transaction.amount" type="number" class="mb-1" placeholder="Amount"></b-input>
                                     <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                                     <div class="row">
-                                        <b-form-radio class="ml-3" v-model="transaction.type" :name="'some-radios' + index" value="income">Income</b-form-radio>
-                                        <b-form-radio class="ml-2" v-model="transaction.type" :name="'some-radios' + index" value="expense">Expense</b-form-radio>
+                                        <switches class="col" v-model="transaction.income" text-enabled="Income" text-disabled="Expense" color="blue" theme="custom"></switches>
                                     </div>
-                                    <div class="m0">
-                                        <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-right cursor"><i class="fa fa-minus"></i></a>
-                                    </div>
+                                    <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-right cursor mb-minus-15"><i class="fa fa-minus"></i></a>
                                 </b-card>
                             </div>
                             <div>
@@ -56,9 +53,10 @@ import transactionsService from '../services/transactions';
 import { mapActions } from "vuex";
 import Multiselect from 'vue-multiselect';
 import moment from 'moment';
+import Switches from 'vue-switches';
 export default {
     name: 'monthlyTransactions',
-    components: { Multiselect },
+    components: { Multiselect, Switches },
     data() {
         return {
             months: [{name: 'January', value: '01'}, {name: 'Febuary', value: '02'}, {name: 'March', value: '03'}, {name: 'April', value: '04'}, {name: 'May', value: '05'},
@@ -78,11 +76,7 @@ export default {
                 return month;
             }
         }); 
-        this.transactions.push({
-            amount: 0,
-            description: '',
-            type: 'income'
-        })
+        this.addTransactionToView()
     },
     methods: {
         ...mapActions(["getYears"]),
@@ -94,7 +88,7 @@ export default {
             this.transactions.push({
                 amount: 0,
                 description: '',
-                type: 'income'
+                income: true
             })
         },
         async addMonthlyTransactions(){
@@ -105,7 +99,7 @@ export default {
                 }
                 try {
                     let amount = transaction.amount;
-                    if(transaction.type === "expense") amount = -amount;
+                    if(transaction.income === false) amount = -amount;
                     await transactionsService.addMonthlyTransaction(amount, transaction.description, new Date().getFullYear(), this.month.value);
                     await this.getYears();
                     this.$emit('closePanel', {});

@@ -45,7 +45,7 @@ export default {
     draw() {
       if(!this.data) return;
       am4core.useTheme(am4themes_animated);
-      am4core.useTheme(am4themes_dark);
+      if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
       var chart = am4core.create(this.id, am4charts.XYChart);
       chart.colors.step = 2;
 
@@ -67,7 +67,7 @@ export default {
       lineSeries.name = `Average ${this.me.currency} Spent Per Day`
       lineSeries.dataFields.valueY = "spent";
       lineSeries.dataFields.dateX = "datemonth";
-      lineSeries.stroke = "#ff3333"
+      lineSeries.stroke = am4core.color(window.civmoney.red)
       lineSeries.strokeWidth = 3;
       lineSeries.strokeOpacity = 0.75;
       lineSeries.currency = this.me.currency;
@@ -76,7 +76,7 @@ export default {
       lineSeries2.name = `Average ${this.me.currency} Saved Per Day`
       lineSeries2.dataFields.valueY = "saved";
       lineSeries2.dataFields.dateX = "datemonth";
-      lineSeries2.stroke = "#00FF7F"
+      lineSeries2.stroke = am4core.color(window.civmoney.green)
       lineSeries2.strokeWidth = 3;
       lineSeries2.strokeOpacity = 0.75;
       lineSeries2.currency = this.me.currency;
@@ -87,7 +87,7 @@ export default {
       circle.horizontalCenter = "middle";
       circle.verticalCenter = "middle";
       circle.strokeWidth = 0;
-      circle.fill = "#ff3333"
+      circle.fill = am4core.color(window.civmoney.red)
       circle.direction = "top";
       circle.width = 12;
       circle.height = 12;
@@ -99,7 +99,7 @@ export default {
       circle2.horizontalCenter = "middle";
       circle2.verticalCenter = "middle";
       circle2.strokeWidth = 0;
-      circle2.fill = "#00FF7F"
+      circle2.fill = am4core.color(window.civmoney.green)
       circle2.direction = "top";
       circle2.width = 12;
       circle2.height = 12;
