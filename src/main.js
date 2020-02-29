@@ -25,6 +25,8 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 
 import "intro.js/minified/introjs.min.css";
 
+import "./assets/style.scss"
+
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 

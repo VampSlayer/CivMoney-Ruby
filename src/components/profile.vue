@@ -2,12 +2,12 @@
     <div class="container-fluid mt-2">
         <div class="row">
             <div class="col-4 col-md-4 col-lg-4 col-xl-2">
-                <b-card style="background-color: transparent;">
+                <b-card>
                     <b-card-body><h4>{{me.username}}</h4><p> Here you can view details about your profile and change your currency.</p></b-card-body>
                 </b-card>
             </div>
             <div class="col-4 col-md-4 col-lg-4 col-xl-2">
-                <b-card style="background-color: transparent;">
+                <b-card>
                     <b-card-body>
                         <multiselect @input="updateme" :allowEmpty="false" v-model="me.currency" :options="currencies" placeholder="Change Your Currency"></multiselect>
                     </b-card-body>

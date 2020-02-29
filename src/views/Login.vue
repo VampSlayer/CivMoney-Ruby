@@ -34,14 +34,6 @@
 p {
   font-size: 1.1em;
 }
-.red {
-  color: #ff3333;
-  font-weight: bolder;
-}
-.green {
-  color: #00ff7f;
-  font-weight: bolder;
-}
 .p-button {
   padding-top: 2em;
 }
@@ -54,9 +46,6 @@ p {
   height: 40px;
   width: auto;
 }
-.cursor {
-  cursor: pointer;
-}
 .p-copyright {
   padding-left: 5em;
   position: absolute;
@@ -64,6 +53,13 @@ p {
 }
 h1 {
   font-weight: bolder;
+}
+.text-size-year {
+  font-size:0.6em
+}
+.civ-link {
+  font-weight: bolder;
+  color:white
 }
 </style>
 
@@ -85,11 +81,9 @@ h1 {
           <p>
             CivMoney was born out of the game
             <a
-              class="cursor"
+              class="cursor civ-link"
               href="https://civilization.com/"
-              target="_blank"
-              style="font-weight: bolder;color:white"
-            >Civilization</a>.
+              target="_blank">Civilization</a>.
             In Civilization you must be careful that your expenses for your empire are lower than
             your income. If you spend more than you earn you
             go into the
@@ -133,7 +127,7 @@ h1 {
         </div>
         <div class="row ml-0 mr-0 p-copyright">
           <div class="col d-flex">
-            <p style="font-size:0.6em">
+            <p class="text-size-year">
               © {{new Date().getFullYear()}}
               <strong>Sayam Hussain</strong>
             </p>

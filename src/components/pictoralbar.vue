@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div style="height:inherit">
+  <div class="h-inherit">
     <div class="pictoral-chart" :id="id"></div>
   </div>
 </template>

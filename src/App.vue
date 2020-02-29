@@ -1,31 +1,3 @@
-<style>
-.civ-nav-bg{
-  background-color: #248df0;
-}
-html, body{
-  background-color: #153057 !important;
-  color: white !important;
-  height: 100%;
-  font-family: 'Roboto', sans-serif !important;
-}
-.page-footer{
-  font-size:0.75em;
-  color:#77778f;
-}
-.google-logout{
-  background: transparent;
-  border: none;
-  padding-left: 0 !important;
-  color: rgba(255, 255, 255, 0.5);
-}
-.google-logout:hover{
-  color: rgba(255, 255, 255, 0.75);
-}
-.nav-item .active {
-  color: white !important;
-}
-</style>
-
 <style scoped>
 .h-container{
   height: calc(100% - 120px) !important;

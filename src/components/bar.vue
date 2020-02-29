@@ -1,12 +1,12 @@
-<style>
-.bar-chart {
-  width: 100%;
-  height: 95%;
-}
+<style scoped>
+  .bar-chart {
+    width: 100%;
+    height: 95%;
+  }
 </style>
 
 <template>
-  <div style="height:inherit">
+  <div class="h-inherit">
     <b-alert v-if="error" show variant="danger" dismissible>{{error}}</b-alert>
     <div class="bar-chart" :id="id"></div>
   </div>

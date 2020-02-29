@@ -1,26 +1,9 @@
-<style>
-.white-text{
-    color: white;
-}
-.red {
-  color: #ff3333;
-  font-weight: bolder;
-}
-.green {
-  color: #00ff7f;
-  font-weight: bolder;
-}
-.w-100 {
-    width: 100%;
-}
-</style>
-
 <template>
     <div class="container-fluid mt-2">
         <div class="row">
             <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                 <b-alert variant="danger" v-if="error">{{error}}</b-alert>
-                <b-card style="background-color: transparent;">
+                <b-card>
                     <b-card-body>
                         <h4>Search</h4> Here you can search and manage your transactions, you can delete, filter and sort.
                         <div class="mt-2">
@@ -38,7 +21,7 @@
                 </b-card>
             </div>
             <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-9" v-if="transactions.length > 0">
-                 <b-table class="white-text" :items="transactions" head-variant="light" :fields="fields" :filter="filter" :filterIncludedFields="[]" v-on:filtered="setFilteredTransactions">
+                 <b-table class="search-result-text" :items="transactions" head-variant="light" :fields="fields" :filter="filter" :filterIncludedFields="[]" v-on:filtered="setFilteredTransactions">
                      <template slot="amount" slot-scope="data">
                         <span :class="getAmountClass(data.value)">{{data.value}}</span>
                     </template>

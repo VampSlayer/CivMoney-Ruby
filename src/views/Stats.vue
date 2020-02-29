@@ -1,9 +1,3 @@
-<style scoped>
-.border-btm {
-    border-bottom: 1px solid rgba(204, 204, 204, 0.933);
-}
-</style>
-
 <template>
     <div>
     <div class="mt-2 h-100">
@@ -24,7 +18,7 @@
         <year-select></year-select>
       </div>
       <div class="h-100">
-        <div class="row border-btm" style="height:79%">
+        <div class="row stats-border-btm">
             <div class="col-md-6 offset-md-3 h-100">
                 <div class="text-center h-100">
                     <pictorialbar :alignLabels="true" :data="selectedYearsStats"></pictorialbar>

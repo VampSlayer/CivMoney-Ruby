@@ -1,48 +1,6 @@
-<style>
-.btn-transaction-type{
-border: 1px solid #153057 !important;
-border-radius: 0px !important;
-}
-.active{
-border: 1px solid #153057 !important;
-border-radius: 0px !important;
-}
-.custom-control-input:checked ~ .custom-control-label::before {
-    color: #fff;
-    border-color: #153057 !important;
-    background-color: #153057 !important;
-}
-.form-control{
-    border-radius: 0px !important;
-    background: #153057 !important;
-    color: #fff !important;
-    border: 1px solid #00000073 !important;
-}
-.card{
-    border-radius: 0px !important;
-}
-.btn-shake {
-  animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
-}
-@keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
-  }
-}
-.cursor{
-    cursor: pointer;
+<style lang="scss" scoped>
+.add-text {
+    font-size:4.5em
 }
 </style>
 
@@ -50,7 +8,7 @@ border-radius: 0px !important;
     <div class="container-fluid mt-2" >
         <div class="row">
                     <div class="col-4 col-md-4 col-lg-4 col-xl-3">
-                        <b-card style="background-color: transparent;">
+                        <b-card>
                             <b-card-body>
                                 <h4>Monthly Income & Expenses</h4> 
                                 Here you can add Incomes and Expenses for any month this year.
@@ -63,16 +21,16 @@ border-radius: 0px !important;
                         </b-card>
                         <div class="mt-2" :class="{'btn-shake' : shake === true}">
                          <b-alert variant="danger" v-if="error">{{error}}</b-alert>
-                            <b-card title="Add Monthly Income & Expenses" style="color: #248df0a1 ;background-color: #00000073" class="text-center">
+                            <b-card title="Add Monthly Income & Expenses" class="text-center add-montly-income-card">
                                 <multiselect v-model="month" :options="months" placeholder="Select Month" label="name" track-by="value"></multiselect>
-                                <a title="Add Monthly Income & Expenses" v-on:click="addMonthlyTransactions" style="cursor:pointer;font-size:4.5em;"><i class="fa fa-plus"></i></a>
+                                <a class="cursor add-text" title="Add Monthly Income & Expenses" v-on:click="addMonthlyTransactions"><i class="fa fa-plus"></i></a>
                         </b-card>
                         </div>
                     </div>
                     <div class="col-8 col-md-8 col-lg-8 col-xl-9">
                         <div class="row">
                             <div v-for="(transaction, index) in transactions" :key="index" class="col-4 col-md-4 col-lg-4 col-xl-2 mt-2">
-                                <b-card style="background-color: transparent;">
+                                <b-card>
                                     <b-input min=0 step="0.01" v-model="transaction.amount" type="number" class="mb-1" placeholder="Amount"></b-input>
                                     <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                                     <div class="row">

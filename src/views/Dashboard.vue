@@ -1,28 +1,3 @@
-<style>
-.vodal-dialog{ 
-  border: 1px solid #248df0 !important;
-  background-color: #153057 !important;
-  border-radius: 0px !important;
-}
-#chartdiv {
-  width: 100%;
-  height: 100%;
-}
-.slideout-bg{
-  background-color: #248df0 !important;
-}
-.introjs-tooltiptext{
-  color: black !important;
-}
-.introjs-hint-dot{
-border: 10px solid rgba(255, 255, 255, 0.5) !important;
-}
-.introjs-hint-pulse{
-border: 5px solid rgba(255, 255, 255, 0.7) !important;
-background-color: rgba(255, 255, 255, 0.7) !important;
-}
-</style>
-
 <template>
   <div>
     <slideout-panel></slideout-panel>
