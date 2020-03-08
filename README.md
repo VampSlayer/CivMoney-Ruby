@@ -1,6 +1,6 @@
 # Money Management Web App by Sayam Hussain.
 
-## https://www.civmoney.com
+## [Live Now!](https://www.civmoney.com)
 
 CivMoney was born out of the game Civilization. In Civilization you must be careful that your expenses for your empire are lower than your income. If you spend more than you earn you go into the red.
 
@@ -13,8 +13,8 @@ Install instructions on wiki page.
 
 Live websites:
 
-Html & Js, version 1 front end - https://civmoneyv1.herokuapp.com
+[Vanilla JS & JQuery, V1 front end](https://civmoneyv1.herokuapp.com)
 
-React, version 2 front end - https://civmoney-react.herokuapp.com
+[React, V2 front end](https://civmoney-react.herokuapp.com)
 
-Vue, version 3 front end - https://www.civmoney.com
+[Vue, V3 front end](https://www.civmoney.com)
