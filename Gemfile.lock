@@ -48,6 +48,8 @@ GEM
       dm-core (~> 1.2.0)
     google-id-token (1.4.2)
       jwt (>= 1)
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
     i18n (0.7.0)
     json (2.0.2)
     jwt (2.2.1)
@@ -105,6 +107,7 @@ DEPENDENCIES
   activerecord
   data_mapper
   google-id-token
+  heroku-deflater
   json
   pg
   puma (= 3.12.2)

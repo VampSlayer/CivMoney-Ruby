@@ -15,3 +15,4 @@ gem "sinatra-cross_origin"
 gem "rake"
 gem "google-id-token"
 gem "rack-ssl-enforcer"
+gem "heroku-deflater", :group => :production
