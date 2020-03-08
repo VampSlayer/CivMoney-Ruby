@@ -31,6 +31,7 @@ class CivMoney < Sinatra::Base
   register Sinatra::AdminRoutes
   register Sinatra::SeedRoutes
 
+  use Rack::Deflater
   use Rack::MethodOverride
   use Rack::SslEnforcer if production?
   use Rack::Session::Cookie, :session_secret => ENV["SESSION_SECRET"], :secret => ENV["SESSION_SECRET"]
