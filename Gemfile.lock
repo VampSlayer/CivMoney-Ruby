@@ -56,7 +56,7 @@ GEM
     minitest (5.9.0)
     multi_json (1.13.1)
     pg (0.18.4)
-    puma (3.12.2)
+    puma (3.12.4)
     rack (1.6.12)
     rack-protection (1.5.3)
       rack
@@ -110,7 +110,7 @@ DEPENDENCIES
   heroku-deflater
   json
   pg
-  puma (= 3.12.2)
+  puma (= 3.12.4)
   rack-ssl-enforcer
   rack-test
   rake
