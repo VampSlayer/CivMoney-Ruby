@@ -4,7 +4,7 @@ ruby "2.6.3"
 
 gem "sinatra"
 gem "sinatra-contrib"
-gem "activerecord"
+gem "activerecord", "5.0.0"
 gem "sinatra-activerecord"
 gem "pg"
 gem "json"

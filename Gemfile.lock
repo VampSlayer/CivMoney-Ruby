@@ -1,19 +1,20 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (6.0.2.2)
-      activesupport (= 6.0.2.2)
-    activerecord (6.0.2.2)
-      activemodel (= 6.0.2.2)
-      activesupport (= 6.0.2.2)
-    activesupport (6.0.2.2)
+    activemodel (5.0.0)
+      activesupport (= 5.0.0)
+    activerecord (5.0.0)
+      activemodel (= 5.0.0)
+      activesupport (= 5.0.0)
+      arel (~> 7.0)
+    activesupport (5.0.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 0.7, < 2)
+      i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-      zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    arel (7.1.4)
     backports (3.17.0)
     concurrent-ruby (1.1.6)
     data_mapper (1.0.2)
@@ -57,7 +58,7 @@ GEM
     fastercsv (1.5.5)
     google-id-token (1.4.2)
       jwt (>= 1)
-    i18n (1.8.2)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     json (2.3.0)
     json_pure (1.8.6)
@@ -117,13 +118,12 @@ GEM
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
     uuidtools (2.1.5)
-    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord
+  activerecord (= 5.0.0)
   data_mapper
   google-id-token
   json
