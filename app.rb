@@ -6,7 +6,6 @@ require "json"
 require "date"
 require "dm-aggregates"
 require "sinatra/base"
-require "sprockets"
 require "time"
 require "google-id-token"
 require "rack/ssl-enforcer"
@@ -36,7 +35,6 @@ class CivMoney < Sinatra::Base
   use Rack::SslEnforcer if production?
   use Rack::Session::Cookie, :session_secret => ENV["SESSION_SECRET"], :secret => ENV["SESSION_SECRET"]
   set :session_secret, ENV["SESSION_SECRET"]
-  set :environment, Sprockets::Environment.new
   set :client_id, ENV["GOOGLE_CLIENT_ID"]
 
   after do
