@@ -13,9 +13,9 @@
 <script>
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated.js";
-import am4themes_dark from "@amcharts/amcharts4/themes/dark.js";
+import graphing from '../services/graphing';
 import { mapState } from "vuex";
+
 export default {
   name: "treeMap",
   props: {
@@ -39,12 +39,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(["me"])
+    ...mapState(["me","theme"])
   },
   methods: {
     draw: function() {
-      am4core.useTheme(am4themes_animated);
-      if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
+      graphing.useThemeExternal(am4core);
       var chart = am4core.create(this.id, am4charts.TreeMap);
       chart.hiddenState.properties.opacity = 0; 
       chart.data = this.data;
@@ -65,7 +64,7 @@ export default {
       level0ColumnTemplate.column.cornerRadius(10, 10, 10, 10);
       level0ColumnTemplate.fillOpacity = 0;
       level0ColumnTemplate.strokeWidth = 4;
-      level0ColumnTemplate.stroke = am4core.color(window.civmoney.background);
+      level0ColumnTemplate.stroke = am4core.color(this.theme.background);
       level0ColumnTemplate.strokeOpacity = 0;
 
       var level1SeriesTemplate = chart.seriesTemplates.create("1");
@@ -77,7 +76,7 @@ export default {
       level1ColumnTemplate.column.cornerRadius(10, 10, 10, 10);
       level1ColumnTemplate.fillOpacity = 0.9;
       level1ColumnTemplate.strokeWidth = 4;
-      level1ColumnTemplate.stroke = am4core.color(window.civmoney.background);
+      level1ColumnTemplate.stroke = am4core.color(this.theme.background);
       level1ColumnTemplate.tooltipText = "{name}: {currency}[bold]{value}[/]";
 
       var bullet1 = level1SeriesTemplate.bullets.push(

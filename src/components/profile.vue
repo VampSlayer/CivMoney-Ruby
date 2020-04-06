@@ -22,7 +22,7 @@
                         <h6>Change Your Theme</h6>
                     </b-card-title>
                      <b-card-body>
-                        <multiselect @input="updateme" :allowEmpty="false" v-model="me.theme" :options="themes" placeholder="Change Your Theme"></multiselect>
+                        <multiselect @input="updateme" :allowEmpty="false" v-model="me.theme" :options="theme.themes" placeholder="Change Your Theme"></multiselect>
                     </b-card-body>
                 </b-card>
             </div>
@@ -39,12 +39,11 @@ export default {
     components: { Multiselect },
     data() {
         return {
-            currencies: ["$", "£", "€"],
-            themes: window.civmoney.themes
+            currencies: ["$", "£", "€"]
         }
     },
     computed: {
-        ...mapState(["me"])
+        ...mapState(["me","theme"])
     },
     methods: {
         ...mapActions(["getYears"]),

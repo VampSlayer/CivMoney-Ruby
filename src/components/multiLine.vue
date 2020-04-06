@@ -13,9 +13,8 @@
 <script>
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated.js";
-import am4themes_dark from "@amcharts/amcharts4/themes/dark.js";
 import { mapState } from "vuex";
+import graphing from '../services/graphing';
 
 export default {
   name: "multiLine",
@@ -39,13 +38,12 @@ export default {
     this.draw();
   },
   computed: {
-      ...mapState(["me"])
+      ...mapState(["me","theme"])
   },
   methods: {
     draw() {
       if(!this.data) return;
-      am4core.useTheme(am4themes_animated);
-      if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
+      graphing.useThemeExternal(am4core)
       var chart = am4core.create(this.id, am4charts.XYChart);
       chart.colors.step = 2;
 
@@ -67,7 +65,7 @@ export default {
       lineSeries.name = `Average ${this.me.currency} Spent Per Day`
       lineSeries.dataFields.valueY = "spent";
       lineSeries.dataFields.dateX = "datemonth";
-      lineSeries.stroke = am4core.color(window.civmoney.red)
+      lineSeries.stroke = am4core.color(this.theme.red)
       lineSeries.strokeWidth = 3;
       lineSeries.strokeOpacity = 0.75;
       lineSeries.currency = this.me.currency;
@@ -76,7 +74,7 @@ export default {
       lineSeries2.name = `Average ${this.me.currency} Saved Per Day`
       lineSeries2.dataFields.valueY = "saved";
       lineSeries2.dataFields.dateX = "datemonth";
-      lineSeries2.stroke = am4core.color(window.civmoney.green)
+      lineSeries2.stroke = am4core.color(this.theme.green)
       lineSeries2.strokeWidth = 3;
       lineSeries2.strokeOpacity = 0.75;
       lineSeries2.currency = this.me.currency;
@@ -87,7 +85,7 @@ export default {
       circle.horizontalCenter = "middle";
       circle.verticalCenter = "middle";
       circle.strokeWidth = 0;
-      circle.fill = am4core.color(window.civmoney.red)
+      circle.fill = am4core.color(this.theme.red)
       circle.direction = "top";
       circle.width = 12;
       circle.height = 12;
@@ -99,7 +97,7 @@ export default {
       circle2.horizontalCenter = "middle";
       circle2.verticalCenter = "middle";
       circle2.strokeWidth = 0;
-      circle2.fill = am4core.color(window.civmoney.green)
+      circle2.fill = am4core.color(this.theme.green)
       circle2.direction = "top";
       circle2.width = 12;
       circle2.height = 12;

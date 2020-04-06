@@ -14,7 +14,8 @@ export default new Vuex.Store({
     selectableYears: [],
     selectedYear: null,
     loggingIn: false,
-    loginError: null
+    loginError: null,
+    theme: {}
   },
   mutations: {
     loginStart: state => (state.loggingIn = true),
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     updateSelectedYear: (state, year) => {
       state.selectedYear = year;
+    },
+    updateTheme: (state, theme) => {
+      state.theme = theme;
     }
   },
   actions: {

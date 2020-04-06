@@ -9,11 +9,17 @@ $red: var(--cm-red);
 $orange: var(--cm-orange);
 
 $nav-color: var(--cm-nav-color);
-$nav-color-contrast: var(--cm-nav-color-contrast);
-$nav-color-contrast-dark: var(--cm-nav-contrast-dark);
+$nav-text-color: var(--cm-nav-text-color);
 
 .civ-nav-bg {
     background-color: $nav-color;
+}
+
+.navbar-dark .navbar-text {
+    color: $nav-text-color;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: $nav-text-color;
 }
 
 html,
@@ -36,11 +42,11 @@ a:hover {
     background: transparent;
     border: none;
     padding-left: 0 !important;
-    color: $nav-color-contrast;
+    color: $nav-text-color;
 }
 
 .google-logout:hover {
-    color: $nav-color-contrast-dark;
+    color: rgba($nav-text-color, 0.8)
 }
 
 .nav-item .active {
@@ -71,22 +77,21 @@ a:hover {
 .introjs-tooltiptext {
     color: $text-color !important;
     background-color: $nav-color;
-    ;
 }
 
 .introjs-button {
     background: $background-color;
     text-shadow: none;
-    border: none;
+    color: $input-text-color !important;
 }
 
 .introjs-hint-dot {
-    border: 10px solid $nav-color-contrast !important;
+    border: 10px solid $input-text-color !important;
 }
 
 .introjs-hint-pulse {
-    border: 5px solid $nav-color-contrast-dark !important;
-    background-color: $nav-color-contrast-dark !important;
+    border: 5px solid $input-text-color !important;
+    background-color: $nav-color !important;
 }
 
 .btn-transaction-type {
@@ -174,7 +179,7 @@ a:hover {
 }
 
 .stats-border-btm {
-    border-bottom: 1px solid $nav-color-contrast-dark;
+    border-bottom: 1px solid $nav-color;
     height: 79%;
 }
 
@@ -209,21 +214,22 @@ a:hover {
 .vue-switcher-theme--custom {
     &.vue-switcher-color--blue {
         div {
-            background-color: $nav-color-contrast;
+            background-color: $nav-text-color;
 
             &:after {
                 // for the circle on the switch
-                background-color: $year-active-color;
+                background-color: $nav-color;
                 border: $text-color solid 2px;
             }
         }
 
         &.vue-switcher--unchecked {
             div {
-                background-color: $nav-color-contrast;
+                background-color: $nav-text-color;
 
                 &:after {
                     background-color: $background-color;
+                    border: $input-text-color solid 2px;
                 }
             }
         }
