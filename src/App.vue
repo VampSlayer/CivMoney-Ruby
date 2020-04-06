@@ -9,7 +9,7 @@
     <header v-if="me">
       <b-navbar toggleable="lg" type="dark" class="civ-nav-bg">
         <b-navbar-brand>
-          <img v-if="theme.logo === 'black'" width="34px" class="d-inline-block align-top" src="https://i.imgur.com/xIzOjYI.png"/>
+          <img v-if="theme.logo === 0" width="34px" class="d-inline-block align-top" src="https://i.imgur.com/xIzOjYI.png"/>
           <img v-else width="34px" class="d-inline-block align-top"  src="https://i.imgur.com/JlQV6Co.png"/>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

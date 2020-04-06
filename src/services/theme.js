@@ -29,7 +29,7 @@ export default {
             yearLine: style.getPropertyValue('--cm-year-line-color'),
             themes: JSON.parse(style.getPropertyValue('--cm-themes')),
             luminosity: Number(style.getPropertyValue('--cm-luminosity')),
-            logo: style.getPropertyValue('--cm-logo')
+            logo: Number(style.getPropertyValue('--cm-logo'))
         }
         store.commit('updateTheme', theme);
     },
