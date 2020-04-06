@@ -186,7 +186,7 @@ export default {
     lineSeries.dataFields.valueY = "amount";
     lineSeries.dataFields.dateX = "date";
     lineSeries.tensionX = 0.7;
-    lineSeries.stroke = am4core.color(store.state.theme.text);
+    lineSeries.stroke = am4core.color(store.state.theme.yearLine);
     lineSeries.strokeWidth = 3;
     lineSeries.strokeOpacity = 0.75;
 
