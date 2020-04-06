@@ -13,6 +13,8 @@ export default {
         else if (sessionStorage.getItem('me')) {
             store.commit('updateMe', JSON.parse(sessionStorage.getItem('me')));
             return store.state.me;
+        } else {
+            theme.resetTheme()
         }
     },
     store(me) {

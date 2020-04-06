@@ -34,7 +34,7 @@ export default {
         store.commit('updateTheme', theme);
     },
     setThemeOnLoad(){
-        if (localStorage.getItem('cm--selected-theme') && sessionStorage.getItem('me')) document.documentElement.setAttribute('data-theme', localStorage.getItem('cm--selected-theme'));
+        if (localStorage.getItem('cm--selected-theme')) document.documentElement.setAttribute('data-theme', localStorage.getItem('cm--selected-theme'));
     },
     use(){
         this.setThemeOnLoad();
