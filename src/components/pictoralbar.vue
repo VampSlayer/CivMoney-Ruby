@@ -13,8 +13,7 @@
 <script>
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated.js";
-import am4themes_dark from "@amcharts/amcharts4/themes/dark.js";
+import graphing from '../services/graphing';
 import { mapState } from "vuex";
 export default {
   name: "pictoralbar",
@@ -61,8 +60,7 @@ export default {
   methods: {
     draw() {
       if(!this.data) return;
-      am4core.useTheme(am4themes_animated);
-      if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
+      graphing.useThemeExternal(am4core);
       var iconPath = this.iconPath;
       var chart = am4core.create(this.id, am4charts.SlicedChart);
       chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect

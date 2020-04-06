@@ -8,7 +8,9 @@
   <div class="h-100">
     <header v-if="me">
       <b-navbar toggleable="lg" type="dark" class="civ-nav-bg">
-        <b-navbar-brand to="/"><img width="34px"  class="d-inline-block align-top" src="https://i.imgur.com/JlQV6Co.png"/>
+        <b-navbar-brand>
+          <img v-if="theme.logo === 'black'" width="34px" class="d-inline-block align-top" src="https://i.imgur.com/xIzOjYI.png"/>
+          <img v-else width="34px" class="d-inline-block align-top"  src="https://i.imgur.com/JlQV6Co.png"/>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -48,11 +50,15 @@ export default {
       }
     }
   },
+  mounted() {
+    let debouncedGetYears = this.debounce(this.mappedGetYears, 250);
+    window.addEventListener('resize', debouncedGetYears)
+  },
   computed: {
-    ...mapState(['me'])
+    ...mapState(['me', 'theme']),
   },
   methods: {
-    ...mapActions(['logout', 'loginFaliure']),
+    ...mapActions(['logout', 'loginFaliure', 'getYears']),
     showProfile(){
       this.$showPanel({
         component: Profile,
@@ -66,6 +72,23 @@ export default {
     },
     onFailure(error){
       this.loginFaliure(error);
+    },
+    mappedGetYears(){
+      this.getYears()
+    },
+    debounce(func, wait, immediate) {
+      let timeout;
+      return function() {
+        const context = this, args = arguments;
+        let later = function() {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      }
     }
   }
 };

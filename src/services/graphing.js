@@ -3,11 +3,11 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated.js";
 import am4themes_dark from "@amcharts/amcharts4/themes/dark.js";
 import moment from 'moment';
+import store from '@/store';
 
 export default {
   vodalPie(id, data, title, vm) {
-    am4core.useTheme(am4themes_animated);
-    if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
+    this.useTheme()
     let chart = am4core.create(id, am4charts.PieChart);
     chart.data = data;
     let chartTitle = chart.titles.create();
@@ -39,8 +39,7 @@ export default {
     pieSeries.hiddenState.properties.startAngle = -90;
   },
   vodalBar(id, data, title, scope) {
-    am4core.useTheme(am4themes_animated);
-    if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
+    this.useTheme();
     let chart = am4core.create(id, am4charts.XYChart);
     chart.data = data;
     var chartTitle = chart.titles.create();
@@ -79,24 +78,24 @@ export default {
       if (field === "Total") {
         series.columns.template.adapter.add("stroke", function (fill, target) {
           if (target.dataItem && (target.dataItem.valueY < 0)) {
-            return am4core.color(window.civmoney.red);
+            return am4core.color(store.state.theme.red);
           }
           else if (target.dataItem && (target.dataItem.valueY > 0)) {
-            return am4core.color(window.civmoney.green);
+            return am4core.color(store.state.theme.green);
           }
           else {
-            return am4core.color(window.civmoney.orange);
+            return am4core.color(store.state.theme.orange);
           }
         });
         series.columns.template.adapter.add("fill", function (fill, target) {
           if (target.dataItem && (target.dataItem.valueY < 0)) {
-            return am4core.color(window.civmoney.red);
+            return am4core.color(store.state.theme.red);
           }
           else if (target.dataItem && (target.dataItem.valueY > 0)) {
-            return am4core.color(window.civmoney.green);
+            return am4core.color(store.state.theme.green);
           }
           else {
-            return am4core.color(window.civmoney.orange);
+            return am4core.color(store.state.theme.orange);
           }
         });
       }
@@ -125,8 +124,7 @@ export default {
     });
   },
   graphMonth(id, data, scope) {
-    if (window.civmoney.luminosity < 0.5) am4core.useTheme(am4themes_dark);
-    am4core.useTheme(am4themes_animated);
+    this.useTheme()
     let chart = am4core.create(id, am4charts.XYChart);
     chart.data = data;
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -152,24 +150,24 @@ export default {
     series.currency = scope.me.currency;
     series.columns.template.adapter.add("stroke", function (fill, target) {
       if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color(window.civmoney.red);
+        return am4core.color(store.state.theme.red);
       }
       else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color(window.civmoney.green);
+        return am4core.color(store.state.theme.green);
       }
       else {
-        return am4core.color(window.civmoney.orange);
+        return am4core.color(store.state.theme.orange);
       }
     });
     series.columns.template.adapter.add("fill", function (fill, target) {
       if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color(window.civmoney.red);
+        return am4core.color(store.state.theme.red);
       }
       else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color(window.civmoney.green);
+        return am4core.color(store.state.theme.green);
       }
       else {
-        return am4core.color(window.civmoney.orange);
+        return am4core.color(store.state.theme.orange);
       }
     });
     series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
@@ -188,7 +186,7 @@ export default {
     lineSeries.dataFields.valueY = "amount";
     lineSeries.dataFields.dateX = "date";
     lineSeries.tensionX = 0.7;
-    lineSeries.stroke = am4core.color(window.civmoney.text);
+    lineSeries.stroke = am4core.color(store.state.theme.text);
     lineSeries.strokeWidth = 3;
     lineSeries.strokeOpacity = 0.75;
 
@@ -205,13 +203,13 @@ export default {
       trend.strokeWidth = 3;
       trend.strokeDasharray = 4;
       if (trendAverageValue < 0) {
-        trend.stroke = trend.fill = am4core.color(window.civmoney.red);
+        trend.stroke = trend.fill = am4core.color(store.state.theme.red);
       }
       else if (trendAverageValue > 0) {
-        trend.stroke = trend.fill = am4core.color(window.civmoney.green);
+        trend.stroke = trend.fill = am4core.color(store.state.theme.green);
       }
       else {
-        trend.stroke = trend.fill = am4core.color(window.civmoney.orange);
+        trend.stroke = trend.fill = am4core.color(store.state.theme.orange);
       }
       trend.data = data;
 
@@ -235,12 +233,7 @@ export default {
     ], sumOfData, scope.me.currency);
   },
   graphYear(id, data, scope) {
-    if (window.civmoney.luminosity < 0.5) {
-      am4core.useTheme(am4themes_dark)
-    } else {
-      am4core.unuseAllThemes()
-    }
-    am4core.useTheme(am4themes_animated);
+    this.useTheme()
     let chart = am4core.create(id, am4charts.XYChart);
     chart.data = data;
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -285,24 +278,24 @@ export default {
     series.currency = scope.me.currency;
     series.columns.template.adapter.add("stroke", function (fill, target) {
       if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color(window.civmoney.red);
+        return am4core.color(store.state.theme.red);
       }
       else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color(window.civmoney.green);
+        return am4core.color(store.state.theme.green);
       }
       else {
-        return am4core.color(window.civmoney.orange);
+        return am4core.color(store.state.theme.orange);
       }
     });
     series.columns.template.adapter.add("fill", function (fill, target) {
       if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color(window.civmoney.red);
+        return am4core.color(store.state.theme.red);
       }
       else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color(window.civmoney.green);
+        return am4core.color(store.state.theme.green);
       }
       else {
-        return am4core.color(window.civmoney.orange);
+        return am4core.color(store.state.theme.orange);
       }
     });
     series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
@@ -315,13 +308,13 @@ export default {
       scope
     );
     series.columns.template.tooltipText = "[bold]{currency}{valueY}[/]";
-    series.fillOpacity = window.civmoney.luminosity > 0.5 ? 0.8 : 0.5;
+    series.fillOpacity = store.state.theme.luminosity > 0.5 ? 0.8 : 0.5;
 
     let lineSeries = chart.series.push(new am4charts.LineSeries());
     lineSeries.dataFields.valueY = "amount";
     lineSeries.dataFields.dateX = "datemonth";
     lineSeries.tensionX = 0.7;
-    lineSeries.stroke = am4core.color(window.civmoney.yearLine);
+    lineSeries.stroke = am4core.color(store.state.theme.yearLine);
     lineSeries.strokeWidth = 3;
     lineSeries.strokeOpacity = 0.75;
 
@@ -338,13 +331,13 @@ export default {
       trend.strokeWidth = 3;
       trend.strokeDasharray = 4;
       if (trendAverageValue < 0) {
-        trend.stroke = trend.fill = am4core.color(window.civmoney.red);
+        trend.stroke = trend.fill = am4core.color(store.state.theme.red);
       }
       else if (trendAverageValue > 0) {
-        trend.stroke = trend.fill = am4core.color(window.civmoney.green);
+        trend.stroke = trend.fill = am4core.color(store.state.theme.green);
       }
       else {
-        trend.stroke = trend.fill = am4core.color(window.civmoney.orange);
+        trend.stroke = trend.fill = am4core.color(store.state.theme.orange);
       }
       trend.data = data;
 
@@ -366,5 +359,21 @@ export default {
       { "date": data[data.length - 1].datemonth, "value": sumOfData },
       { "date": data[0].datemonth, "value": sumOfData }
     ], sumOfData, data[0].datemonth.substring(0, 4), scope.me.currency);
+  },
+  am4themes_customText(target) {
+    if (target instanceof am4core.InterfaceColorSet) {
+      target.setFor("text", am4core.color(store.state.theme.chartText));
+    }
+  },
+  useTheme(){
+    this.useThemeExternal(am4core)
+  },
+  useThemeExternal(am4core_ext){
+    am4core_ext.unuseAllThemes();
+    am4core_ext.useTheme(am4themes_animated);
+    if (store.state.theme.luminosity === 0) {
+      am4core_ext.useTheme(am4themes_dark);
+    }
+    am4core_ext.useTheme(this.am4themes_customText);
   }
 }
