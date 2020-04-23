@@ -2,7 +2,6 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated.js";
 import am4themes_dark from "@amcharts/amcharts4/themes/dark.js";
-import moment from 'moment';
 import store from '@/store';
 
 export default {
@@ -123,243 +122,6 @@ export default {
       });
     });
   },
-  graphMonth(id, data, scope) {
-    this.useTheme()
-    let chart = am4core.create(id, am4charts.XYChart);
-    chart.data = data;
-    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    dateAxis.renderer.minGridDistance = 50;
-    dateAxis.renderer.grid.template.location = 0.5;
-    dateAxis.dateFormats.setKey("datemonth", "DD");
-    dateAxis.renderer.labels.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-    dateAxis.renderer.labels.template.events.on(
-      "hit",
-      event => {
-        scope.show = true;
-        scope.selectedDate = moment(event.target.dataItem.dates.date).format('YYYY-MM-DD');
-      },
-      scope
-    );
-    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.title.text = `${scope.me.currency}`;
-    valueAxis.title.fontWeight = 'bolder';
-    valueAxis.title.rotation = 0;
-    let series = chart.series.push(new am4charts.ColumnSeries());
-    series.dataFields.valueY = "amount";
-    series.dataFields.dateX = "date";
-    series.currency = scope.me.currency;
-    series.columns.template.adapter.add("stroke", function (fill, target) {
-      if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color(store.state.theme.red);
-      }
-      else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color(store.state.theme.green);
-      }
-      else {
-        return am4core.color(store.state.theme.orange);
-      }
-    });
-    series.columns.template.adapter.add("fill", function (fill, target) {
-      if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color(store.state.theme.red);
-      }
-      else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color(store.state.theme.green);
-      }
-      else {
-        return am4core.color(store.state.theme.orange);
-      }
-    });
-    series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-    series.columns.template.events.on(
-      "hit",
-      event => {
-        scope.show = true;
-        scope.selectedDate = event.target.dataItem.dataContext.date;
-      },
-      scope
-    );
-    series.columns.template.tooltipText = "[bold]{currency}{valueY}[/]";
-    series.fillOpacity = 0.5;
-
-    let lineSeries = chart.series.push(new am4charts.LineSeries());
-    lineSeries.dataFields.valueY = "amount";
-    lineSeries.dataFields.dateX = "date";
-    lineSeries.tensionX = 0.7;
-    lineSeries.stroke = am4core.color(store.state.theme.yearLine);
-    lineSeries.strokeWidth = 3;
-    lineSeries.strokeOpacity = 0.75;
-
-    let range = valueAxis.createSeriesRange(series);
-    range.contents.strokeOpacity = 0;
-    range.value = -Number.MAX_SAFE_INTEGER;
-    range.endValue = Number.MAX_SAFE_INTEGER;
-
-    function createTrendLine(data, trendAverageValue, currency) {
-      var trend = chart.series.push(new am4charts.LineSeries());
-      trend.dataFields.valueY = "value";
-      trend.dataFields.dateX = "date";
-      trend.currency = currency;
-      trend.strokeWidth = 3;
-      trend.strokeDasharray = 4;
-      if (trendAverageValue < 0) {
-        trend.stroke = trend.fill = am4core.color(store.state.theme.red);
-      }
-      else if (trendAverageValue > 0) {
-        trend.stroke = trend.fill = am4core.color(store.state.theme.green);
-      }
-      else {
-        trend.stroke = trend.fill = am4core.color(store.state.theme.orange);
-      }
-      trend.data = data;
-
-      var bullet = trend.bullets.push(new am4charts.CircleBullet());
-      bullet.tooltipText = "{currency}{valueY}[/]";
-      bullet.strokeWidth = 2;
-      bullet.stroke = trend.stroke;
-      bullet.circle.fill = trend.stroke;
-      bullet.circle.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-    
-      var hoverState = bullet.states.create("hover");
-      hoverState.properties.scale = 1.7;
-
-      return trend;
-    }
-
-    const sumOfData = data.map(x => { return x.amount }).reduce((a, b) => a + b, 0);
-    createTrendLine([
-      { "date": data[data.length - 1].date, "value": sumOfData },
-      { "date": data[0].date, "value": sumOfData }
-    ], sumOfData, scope.me.currency);
-  },
-  graphYear(id, data, scope) {
-    this.useTheme()
-    let chart = am4core.create(id, am4charts.XYChart);
-    chart.data = data;
-    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    dateAxis.renderer.minGridDistance = 50;
-    dateAxis.renderer.grid.template.location = 0.5;
-    dateAxis.dateFormats.setKey("datemonth", "MMMM");
-    dateAxis.renderer.labels.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-    dateAxis.renderer.labels.template.events.on(
-      "hit",
-      event => {
-        let month = '';
-        if(event.event.explicitOriginalTarget){
-          month = [event.event.explicitOriginalTarget.data.split(" ")[0]];
-        }else{
-          month = event.event.target.innerHTML;
-        }
-        scope.selectedMonth = {
-          Jan: "01",
-          Feb: "02",
-          Mar: "03",
-          Apr: "04",
-          May: "05",
-          Jun: "06",
-          Jul: "07",
-          Aug: "08",
-          Sep: "09",
-          Oct: "10",
-          Nov: "11",
-          Dec: "12"
-        }[month];
-        if(!scope.selectedMonth) scope.selectedMonth = "01";
-      },
-      scope
-    );
-    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.title.text = `${scope.me.currency}`;
-    valueAxis.title.fontWeight = 'bolder';
-    valueAxis.title.rotation = 0;
-    let series = chart.series.push(new am4charts.ColumnSeries());
-    series.dataFields.valueY = "amount";
-    series.dataFields.dateX = "datemonth";
-    series.currency = scope.me.currency;
-    series.columns.template.adapter.add("stroke", function (fill, target) {
-      if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color(store.state.theme.red);
-      }
-      else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color(store.state.theme.green);
-      }
-      else {
-        return am4core.color(store.state.theme.orange);
-      }
-    });
-    series.columns.template.adapter.add("fill", function (fill, target) {
-      if (target.dataItem && (target.dataItem.valueY < 0)) {
-        return am4core.color(store.state.theme.red);
-      }
-      else if (target.dataItem && (target.dataItem.valueY > 0)) {
-        return am4core.color(store.state.theme.green);
-      }
-      else {
-        return am4core.color(store.state.theme.orange);
-      }
-    });
-    series.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-    series.columns.template.events.on(
-      "hit",
-      event => {
-        scope.show = true;
-        scope.monthBar = event.target.dataItem.dataContext.datemonth;
-      },
-      scope
-    );
-    series.columns.template.tooltipText = "[bold]{currency}{valueY}[/]";
-    series.fillOpacity = store.state.theme.luminosity > 0.5 ? 0.8 : 0.5;
-
-    let lineSeries = chart.series.push(new am4charts.LineSeries());
-    lineSeries.dataFields.valueY = "amount";
-    lineSeries.dataFields.dateX = "datemonth";
-    lineSeries.tensionX = 0.7;
-    lineSeries.stroke = am4core.color(store.state.theme.yearLine);
-    lineSeries.strokeWidth = 3;
-    lineSeries.strokeOpacity = 0.75;
-
-    let range = valueAxis.createSeriesRange(series);
-    range.value = -Number.MAX_SAFE_INTEGER;
-    range.endValue = Number.MAX_SAFE_INTEGER;
-
-    function createTrendLine(data, trendAverageValue, year, currency) {
-      var trend = chart.series.push(new am4charts.LineSeries());
-      trend.dataFields.valueY = "value";
-      trend.dataFields.dateX = "date";
-      trend.year = year;
-      trend.currency = currency;
-      trend.strokeWidth = 3;
-      trend.strokeDasharray = 4;
-      if (trendAverageValue < 0) {
-        trend.stroke = trend.fill = am4core.color(store.state.theme.red);
-      }
-      else if (trendAverageValue > 0) {
-        trend.stroke = trend.fill = am4core.color(store.state.theme.green);
-      }
-      else {
-        trend.stroke = trend.fill = am4core.color(store.state.theme.orange);
-      }
-      trend.data = data;
-
-      var bullet = trend.bullets.push(new am4charts.CircleBullet());
-      bullet.tooltipText = "[bold]{year}[/]: {currency}{valueY}[/]";
-      bullet.strokeWidth = 2;
-      bullet.stroke = trend.stroke;
-      bullet.circle.fill = trend.stroke;
-      bullet.circle.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-    
-      var hoverState = bullet.states.create("hover");
-      hoverState.properties.scale = 1.7;
-
-      return trend;
-    }
-
-    const sumOfData = data.map(x => { return x.amount }).reduce((a, b) => a + b, 0);
-    createTrendLine([
-      { "date": data[data.length - 1].datemonth, "value": sumOfData },
-      { "date": data[0].datemonth, "value": sumOfData }
-    ], sumOfData, data[0].datemonth.substring(0, 4), scope.me.currency);
-  },
   am4themes_customText(target) {
     if (target instanceof am4core.InterfaceColorSet) {
       target.setFor("text", am4core.color(store.state.theme.chartText));
@@ -375,5 +137,44 @@ export default {
       am4core_ext.useTheme(am4themes_dark);
     }
     am4core_ext.useTheme(this.am4themes_customText);
+  },
+  createTrendLine(data, chart, currency, theme){
+    const sumOfData = data
+    .map(x => {
+      return x.amount;
+    })
+    .reduce((a, b) => a + b, 0);
+
+    let trend = chart.series.push(new am4charts.LineSeries());
+      trend.dataFields.valueY = "value";
+      trend.dataFields.dateX = "date";
+      trend.currency = currency;
+      trend.strokeWidth = 3;
+      trend.strokeDasharray = 4;
+      if (sumOfData < 0) {
+        trend.stroke = trend.fill = am4core.color(theme.red);
+      } else if (sumOfData > 0) {
+        trend.stroke = trend.fill = am4core.color(theme.green);
+      } else {
+        trend.stroke = trend.fill = am4core.color(theme.orange);
+      }
+      
+      const dataFirstDate = data[0].date || data[0].datemonth
+      const dataLastDate = data[data.length - 1].date || data[data.length - 1].datemonth
+      const trendData = [
+        { date: dataLastDate, value: sumOfData },
+        { date: dataFirstDate, value: sumOfData }
+      ]
+      trend.data = trendData;
+
+      let bullet = trend.bullets.push(new am4charts.CircleBullet());
+      bullet.tooltipText = "{currency}{valueY}[/]";
+      bullet.strokeWidth = 2;
+      bullet.stroke = trend.stroke;
+      bullet.circle.fill = trend.stroke;
+      bullet.circle.cursorOverStyle = am4core.MouseCursorStyle.pointer;
+
+      let hoverState = bullet.states.create("hover");
+      hoverState.properties.scale = 1.7;
   }
 }

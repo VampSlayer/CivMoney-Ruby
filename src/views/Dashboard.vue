@@ -32,9 +32,10 @@
           :duration="500"
           :closeButton="false"
           :closeOnEsc="true">
-          <bar :year="selectedYear" :month="monthBar" :date="selectedDate"></bar>
+          <bar :year="Number(selectedYear)" :month="monthBar" :date="selectedDate"></bar>
         </vodal>
-        <div id="chartdiv"></div>
+        <year-bar v-if="monthData.length === 0" :data="data" v-on:draw-month="showMonth" v-on:draw-month-modal="showMonthModal"></year-bar>
+        <month-bar v-else :data="monthData" v-on:draw-date-modal="showDateModal"></month-bar>
       </div>
     </div>
   </div>
@@ -48,14 +49,14 @@ import AddTransaction from "../components/addtransaction";
 import MonthlyTransactions from "../components/monthlytransactions";
 import SearchTransactions from '../components/serachtransactions';
 import ViewNav from '../components/viewnav';
-import graphing from "../services/graphing";
 import introJs from 'intro.js';
+
+import YearBar from '../components/yearbar';
+import MonthBar from '../components/monthbar';
+
 export default {
   name: "dashboard",
-  components: {
-    Bar,
-    ViewNav
-  },
+  components: { Bar, ViewNav, YearBar, MonthBar },
   data() {
     return {
       modalHeight: 0,
@@ -65,6 +66,8 @@ export default {
       selectedDate: "",
       selectedMonth: "",
       monthBar: "",
+      data: [],
+      monthData: []
     };
   },
   watch: {
@@ -74,26 +77,30 @@ export default {
             if(hashRouteSplit[1]){
               this.selectedMonth = hashRouteSplit[1];
             } else if (!hashRouteSplit[1] && this.years[this.selectedYear]) {
-              graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
+              this.monthData = [];
+              this.data = this.years[this.selectedYear].months;
             }
         }
     },
     selectedMonth: function(newVal) {
       if(this.selectedYear){
         this.$router.push({name: 'home', hash: `#${this.selectedYear}/${this.selectedMonth}`});
-        if (newVal === "") graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
+        this.monthData = [];
+        if (newVal === "") this.data = this.years[this.selectedYear].months
         this.getTotalPerDayForMonth();
       }
     },
     selectedYear: function() {
       this.$router.push({name: 'home', hash: `#${this.selectedYear}`});
       if(this.years[this.selectedYear]){
-        graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
+        this.monthData = []
+        this.data = this.years[this.selectedYear].months
       }
     },
     selectableYears: function() {
       if(this.years[this.selectedYear]){
-        graphing.graphYear("chartdiv", this.years[this.selectedYear].months, this);
+        this.monthData = []
+        this.data = this.years[this.selectedYear].months
       }
     }
   },
@@ -123,6 +130,7 @@ export default {
     ...mapState(["years", "me", "selectedYear", "selectableYears"]),
   },
   methods: {
+    ...mapActions(["getYears"]),
     showAddTransaction(){
      this.$showPanel({
         component: AddTransaction,
@@ -147,21 +155,32 @@ export default {
         cssClass: 'slideout-bg'
      }); 
     },
-    hideModal(){
-      this.show = false;
-    },
-    ...mapActions(["getYears"]),
     async getTotalPerDayForMonth() {
       if (!this.selectedMonth) return;
+      this.monthData = []
       try {
         var response = await totals.getTotalPerDayForMonth(
           this.selectedYear,
           this.selectedMonth
         );
-        graphing.graphMonth("chartdiv", response.data, this);
+        this.monthData = response.data
       } catch (error) {
         this.error = error.repsonse.data;
       }
+    },
+    hideModal(){
+      this.show = false;
+    },
+    showMonth(month){
+      this.selectedMonth = month;
+    },
+    showMonthModal(month){
+      this.show = true;
+      this.monthBar = month;
+    },
+    showDateModal(date){
+      this.show = true;
+      this.selectedDate = date;
     }
   }
 };
