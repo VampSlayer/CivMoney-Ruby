@@ -2,31 +2,26 @@
   <div>
     <slideout-panel></slideout-panel>
     <div class="mt-2 h-100">
-      <div class="row">
-        <div class="col-4">
-          <b-nav align="left">
-            <b-nav-item v-on:click="showAddTransaction">
-              <i title="Add a Transaction" class="fa fa-plus"></i>
-            </b-nav-item>
-            <b-nav-item v-on:click="showAddMonthlyTransactions" data-hint='Welcome to CivMoney. To get started add this months Incomes and Expense here. Once added the visuals begin!'>
-              <i title="Monthly Income & Expenses" class="fa fa-calendar"></i>
-            </b-nav-item>
-            <b-nav-item v-on:click="showSearchTransactions">
-              <i title="Search Transactions" class="fa fa-search"></i>
-            </b-nav-item>
-            <b-nav-item to="/stats">
-              <i title="Statistics" class="fa fa-percent"></i>
-            </b-nav-item>
-            <b-nav-item to="/averages">
-              <i title="Averages" class="fas fa-thermometer-empty"></i>
-            </b-nav-item>
-            <b-nav-item to="/year">
-              <i title="Year" class="fas fa-signal"></i>
-            </b-nav-item>
-          </b-nav>
-        </div>
-        <year-select></year-select>
-      </div>
+      <lower-nav>
+        <b-nav-item v-on:click="showAddTransaction">
+          <i title="Add a Transaction" class="fa fa-plus"></i>
+        </b-nav-item>
+        <b-nav-item v-on:click="showAddMonthlyTransactions" data-hint='Welcome to CivMoney. To get started add this months Incomes and Expense here. Once added the visuals begin!'>
+          <i title="Monthly Income & Expenses" class="fa fa-calendar"></i>
+        </b-nav-item>
+        <b-nav-item v-on:click="showSearchTransactions">
+          <i title="Search Transactions" class="fa fa-search"></i>
+        </b-nav-item>
+        <b-nav-item to="/stats">
+          <i title="Statistics" class="fa fa-percent"></i>
+        </b-nav-item>
+        <b-nav-item to="/averages">
+          <i title="Averages" class="fas fa-thermometer-empty"></i>
+        </b-nav-item>
+        <b-nav-item to="/year">
+          <i title="Year" class="fas fa-signal"></i>
+        </b-nav-item>
+      </lower-nav>
       <div class="row h-100">
         <vodal
           :show="show"
@@ -52,14 +47,14 @@ import Bar from "../components/bar";
 import AddTransaction from "../components/addtransaction";
 import MonthlyTransactions from "../components/monthlytransactions";
 import SearchTransactions from '../components/serachtransactions';
-import YearSelect from '../components/yearselect';
+import LowerNav from '../components/lowernav';
 import graphing from "../services/graphing";
 import introJs from 'intro.js';
 export default {
   name: "dashboard",
   components: {
     Bar,
-    YearSelect
+    LowerNav
   },
   data() {
     return {

@@ -7,22 +7,17 @@
 <template>
     <div>
     <div class="mt-2 h-100">
-      <div class="row">
-        <div class="col-4">
-          <b-nav align="left">
-            <b-nav-item to="/">
-              <i title="Dashboard" class="fas fa-chart-bar"></i>
-            </b-nav-item>
-            <b-nav-item to="/stats">
-              <i title="Statistics" class="fa fa-percent"></i>
-            </b-nav-item>
-            <b-nav-item to="/year">
-              <i title="Year" class="fas fa-signal"></i>
-            </b-nav-item>
-          </b-nav>
-        </div>
-        <year-select></year-select>
-      </div>
+      <lower-nav>
+        <b-nav-item to="/">
+          <i title="Dashboard" class="fas fa-chart-bar"></i>
+        </b-nav-item>
+        <b-nav-item to="/stats">
+          <i title="Statistics" class="fa fa-percent"></i>
+        </b-nav-item>
+        <b-nav-item to="/year">
+          <i title="Year" class="fas fa-signal"></i>
+        </b-nav-item>
+      </lower-nav>
       <div class="h-100">
             <div class="text-center h-100">
                 <multiLine :data="monthlyAvgsForYear"></multiLine>
@@ -34,8 +29,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import multiLine from '../components/multiLine';
-import YearSelect from '../components/yearselect';
+import MultiLine from '../components/multiLine';
+import LowerNav from '../components/lowernav';
 import statsX from '../services/stats';
 
 export default {
@@ -46,7 +41,7 @@ export default {
             error: null
         }
     },
-    components: { multiLine, YearSelect },
+    components: { MultiLine, LowerNav },
     created: function() {
         this.getYears();
     },
