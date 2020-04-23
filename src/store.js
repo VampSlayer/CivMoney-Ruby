@@ -43,13 +43,13 @@ export default new Vuex.Store({
   actions: {
     async getYears({ commit }){
       try {
-        let response = await totals.years();
-        let years = response.data;
+        let yearTotalsResponse = await totals.years();
+        let years = yearTotalsResponse.data;
         let yearsMap = {};
         let selectableYears = [];
         await years.forEach(async (year) =>  {
-          let response = await totals.getTotalPerMonthForYear(year.dateyear);
-          let data = response.data;
+          let monthTotalsResponse = await totals.getTotalPerMonthForYear(year.dateyear);
+          let data = monthTotalsResponse.data;
           let months = data.map(x => {return x.datemonth});
           data.forEach(x => {
             x.datemonth = moment(`${year.dateyear}-${x.datemonth}-01`).format()

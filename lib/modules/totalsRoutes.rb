@@ -98,9 +98,9 @@ module Sinatra
 		GROUP BY Datemonth
 		ORDER BY 1 ASC", params[:year], session[:id]]
         @transactions.each do |transaction|
-          numberOfDaysInMonth = Time.days_in_month(transaction[:datemonth].to_i, params[:year].to_i)
-          transaction[:spent] = (transaction[:spent] / numberOfDaysInMonth).to_f.round(2)
-          transaction[:saved] = (transaction[:saved] / numberOfDaysInMonth).to_f.round(2)
+          number_of_days_in_month = Time.days_in_month(transaction[:datemonth].to_i, params[:year].to_i)
+          transaction[:spent] = (transaction[:spent] / number_of_days_in_month).to_f.round(2)
+          transaction[:saved] = (transaction[:saved] / number_of_days_in_month).to_f.round(2)
         end
         return_message = {}
         return_message = @transactions

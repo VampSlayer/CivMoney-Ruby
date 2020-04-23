@@ -58,9 +58,7 @@ export default {
         }
     },
     destroyed: async function(){
-        let getYearsCalled = false
-        if(this.deletionOccured && !getYearsCalled){
-            getYearsCalled = true
+        if (this.deletionOccured) {
             await this.getYears()
         }
     },
@@ -110,8 +108,8 @@ export default {
                 this.error = error;  
             }
         },
-        setFilteredTransactions: function(transactions){
-            this.filteredTransactions = transactions;
+        setFilteredTransactions: function(transactionsToBeSet){
+            this.filteredTransactions = transactionsToBeSet;
         }
     }
 }

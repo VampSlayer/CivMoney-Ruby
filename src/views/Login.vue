@@ -83,7 +83,8 @@ h1 {
             <a
               class="cursor civ-link"
               href="https://civilization.com/"
-              target="_blank">Civilization</a>.
+              target="_blank"
+              rel="noopener noreferrer">Civilization</a>.
             In Civilization you must be careful that your expenses for your empire are lower than
             your income. If you spend more than you earn you
             go into the
@@ -115,13 +116,14 @@ h1 {
       </div>
       <div class="d-none d-xl-block">
         <div class="p-link-group">
-          <a class="cursor" href="https://github.com/VampSlayer/CivMoney" target="_blank">
+          <a class="cursor" href="https://github.com/VampSlayer/CivMoney" target="_blank" rel="noopener noreferrer">
             <img class="img-link" src="https://i.imgur.com/MV1bJll.png" />
           </a>
           <a
             class="pl-3 cursor"
             href="https://www.linkedin.com/in/sayam-hussain-52475210b/"
-            target="_blank">
+            target="_blank"
+            rel="noopener noreferrer">
             <img class="img-link" src="https://i.imgur.com/V3CSeYq.png" />
           </a>
         </div>

@@ -54,11 +54,11 @@ module Sinatra
         description = params[:description]
         year = params[:year]
         month = params[:month]
-        numberOfDaysInMonth = Time.days_in_month(month.to_i, year.to_i)
-        dailyAmount = (amount.to_f / numberOfDaysInMonth).round(2)
-        for i in 1..numberOfDaysInMonth
+        number_of_days_in_month = Time.days_in_month(month.to_i, year.to_i)
+        daily_amount = (amount.to_f / number_of_days_in_month).round(2)
+        for i in 1..number_of_days_in_month
           transaction = Transaction.new()
-          transaction.amount = dailyAmount
+          transaction.amount = daily_amount
           transaction.date = Date.new(year.to_i, month.to_i, i)
           transaction.user_id = session[:id]
           transaction.description = description

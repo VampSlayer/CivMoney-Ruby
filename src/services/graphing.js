@@ -213,7 +213,7 @@ export default {
       }
       trend.data = data;
 
-      var bullet = trend.bullets.push(new am4charts.CircleBullet());{currency}
+      var bullet = trend.bullets.push(new am4charts.CircleBullet());
       bullet.tooltipText = "{currency}{valueY}[/]";
       bullet.strokeWidth = 2;
       bullet.stroke = trend.stroke;
