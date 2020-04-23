@@ -2,7 +2,7 @@
   <div>
     <slideout-panel></slideout-panel>
     <div class="mt-2 h-100">
-      <lower-nav>
+      <view-nav>
         <b-nav-item v-on:click="showAddTransaction">
           <i title="Add a Transaction" class="fa fa-plus"></i>
         </b-nav-item>
@@ -21,7 +21,7 @@
         <b-nav-item to="/year">
           <i title="Year" class="fas fa-signal"></i>
         </b-nav-item>
-      </lower-nav>
+      </view-nav>
       <div class="row h-100">
         <vodal
           :show="show"
@@ -47,14 +47,14 @@ import Bar from "../components/bar";
 import AddTransaction from "../components/addtransaction";
 import MonthlyTransactions from "../components/monthlytransactions";
 import SearchTransactions from '../components/serachtransactions';
-import LowerNav from '../components/lowernav';
+import ViewNav from '../components/viewnav';
 import graphing from "../services/graphing";
 import introJs from 'intro.js';
 export default {
   name: "dashboard",
   components: {
     Bar,
-    LowerNav
+    ViewNav
   },
   data() {
     return {

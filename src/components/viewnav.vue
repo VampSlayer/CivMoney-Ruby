@@ -12,7 +12,7 @@
 <script>
 import YearSelect from './yearselect';
 export default {
-    name: "LowerNav",
+    name: "ViewNav",
     components: { YearSelect }
 }
 </script>

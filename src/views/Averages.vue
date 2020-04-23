@@ -7,7 +7,7 @@
 <template>
     <div>
     <div class="mt-2 h-100">
-      <lower-nav>
+      <view-nav>
         <b-nav-item to="/">
           <i title="Dashboard" class="fas fa-chart-bar"></i>
         </b-nav-item>
@@ -17,7 +17,7 @@
         <b-nav-item to="/year">
           <i title="Year" class="fas fa-signal"></i>
         </b-nav-item>
-      </lower-nav>
+      </view-nav>
       <div class="h-100">
             <div class="text-center h-100">
                 <multiLine :data="monthlyAvgsForYear"></multiLine>
@@ -30,7 +30,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import MultiLine from '../components/multiLine';
-import LowerNav from '../components/lowernav';
+import ViewNav from '../components/viewnav';
 import statsX from '../services/stats';
 
 export default {
@@ -41,7 +41,7 @@ export default {
             error: null
         }
     },
-    components: { MultiLine, LowerNav },
+    components: { MultiLine, ViewNav },
     created: function() {
         this.getYears();
     },

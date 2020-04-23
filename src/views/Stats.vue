@@ -1,7 +1,7 @@
 <template>
     <div>
     <div class="mt-2 h-100">
-      <lower-nav>
+      <view-nav>
         <b-nav-item to="/">
             <i title="Dashboard" class="fas fa-chart-bar"></i>
         </b-nav-item>
@@ -11,7 +11,7 @@
         <b-nav-item to="/year">
             <i title="Year" class="fas fa-signal"></i>
         </b-nav-item>
-      </lower-nav>
+      </view-nav>
       <div class="h-100">
         <div class="row stats-border-btm">
             <div class="col-md-6 offset-md-3 h-100">
@@ -33,7 +33,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import Pictorialbar from '../components/pictoralbar';
-import LowerNav from '../components/lowernav';
+import ViewNav from '../components/viewnav';
 import statsX from '../services/stats';
 import moment from 'moment';
 
@@ -46,7 +46,7 @@ export default {
             error: null
         }
     },
-    components: { Pictorialbar, LowerNav },
+    components: { Pictorialbar, ViewNav },
     created: function() {
         this.getYears();
         this.getYearlyStats();
