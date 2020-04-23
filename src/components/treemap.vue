@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     draw: function() {
-      graphing.useThemeExternal(am4core);
+      graphing.useTheme(am4core);
       var chart = am4core.create(this.id, am4charts.TreeMap);
       chart.hiddenState.properties.opacity = 0; 
       chart.data = this.data;

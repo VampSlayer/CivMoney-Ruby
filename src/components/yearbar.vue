@@ -3,9 +3,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import { mapState } from "vuex";
 import graphing from "../services/graphing";
 
 export default {
@@ -30,7 +30,7 @@ export default {
   methods: {
     draw() {
       if (!this.data || this.data.length === 0) return;
-      graphing.useThemeExternal(am4core);
+      graphing.useTheme(am4core);
 
       let chart = am4core.create("dashboard-chart", am4charts.XYChart);
       chart.data = this.data;

@@ -43,7 +43,7 @@ export default {
   methods: {
     draw() {
       if(!this.data) return;
-      graphing.useThemeExternal(am4core)
+      graphing.useTheme(am4core)
       var chart = am4core.create(this.id, am4charts.XYChart);
       chart.colors.step = 2;
 
