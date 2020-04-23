@@ -60,7 +60,7 @@ export default {
   methods: {
     draw() {
       if(!this.data) return;
-      graphing.useThemeExternal(am4core);
+      graphing.useTheme(am4core);
       var iconPath = this.iconPath;
       var chart = am4core.create(this.id, am4charts.SlicedChart);
       chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect

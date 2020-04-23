@@ -32,7 +32,7 @@
           :duration="500"
           :closeButton="false"
           :closeOnEsc="true">
-          <bar :year="Number(selectedYear)" :month="monthBar" :date="selectedDate"></bar>
+          <modal-graph :year="Number(selectedYear)" :month="monthBar" :date="selectedDate" :showing="show"></modal-graph>
         </vodal>
         <year-bar v-if="monthData.length === 0" :data="data" v-on:draw-month="showMonth" v-on:draw-month-modal="showMonthModal"></year-bar>
         <month-bar v-else :data="monthData" v-on:draw-date-modal="showDateModal"></month-bar>
@@ -43,20 +43,19 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import introJs from 'intro.js';
 import totals from "../services/totals";
-import Bar from "../components/bar";
+import ModalGraph from "../components/modalgraph";
 import AddTransaction from "../components/addtransaction";
 import MonthlyTransactions from "../components/monthlytransactions";
 import SearchTransactions from '../components/serachtransactions';
 import ViewNav from '../components/viewnav';
-import introJs from 'intro.js';
-
 import YearBar from '../components/yearbar';
 import MonthBar from '../components/monthbar';
 
 export default {
   name: "dashboard",
-  components: { Bar, ViewNav, YearBar, MonthBar },
+  components: { ModalGraph, ViewNav, YearBar, MonthBar },
   data() {
     return {
       modalHeight: 0,
@@ -169,18 +168,22 @@ export default {
       }
     },
     hideModal(){
+      this.selectedDate = ""
+      this.monthBar = ""
       this.show = false;
     },
     showMonth(month){
       this.selectedMonth = month;
     },
     showMonthModal(month){
-      this.show = true;
+      this.selectedDate = ""
       this.monthBar = month;
+      this.show = true;
     },
     showDateModal(date){
-      this.show = true;
+      this.monthBar = ""
       this.selectedDate = date;
+      this.show = true;
     }
   }
 };

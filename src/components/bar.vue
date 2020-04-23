@@ -1,121 +1,119 @@
-<style scoped>
-  .bar-chart {
-    width: 100%;
-    height: 95%;
-  }
-</style>
-
 <template>
-  <div class="h-inherit">
-    <b-alert v-if="error" show variant="danger" dismissible>{{error}}</b-alert>
-    <div class="bar-chart" :id="id"></div>
-  </div>
+  <div class="modal-graph" :id="id"></div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
 import graphing from "../services/graphing";
-import totals from "../services/totals";
-import moment from "moment";
+import { mapState } from "vuex";
+
 export default {
   name: "bar",
   props: {
-    year: Number || String,
-    month: String,
-    date: String
+    id: String,
+    data: Array,
+    title: String
   },
-  data() {
-    return {
-      id: `${this._uid}bar`,
-      data: [],
-      title: "",
-      error: ""
-    };
-  },
-    computed: {
-    ...mapState(["me"])
+  mounted() {
+    this.draw();
   },
   watch: {
-    year: function(){
-      if(!this.year || !this.month || this.month === "") return;
-      this.title = `${moment(this.month).format("LL")}`;
-      this.getTransactions("month");
-    },
-    month: function(){
-      if(!this.month || this.month === "") return;
-      this.title = `${moment(this.month).format("MMMM, YYYY")}`;
-      this.getTransactions("month");
-    },
-    date: function(){
-      if(!this.date || this.date === "") return;
-      this.title = `${moment(this.date).format("LL")}`;
-      this.getTransactions("date");
+    data: function() {
+      this.draw();
     }
   },
+  computed: {
+    ...mapState(["me", "theme"])
+  },
   methods: {
-    async getTransactions(type){
-      try{
-        document.getElementById(this.id).innerHTML = '';
-        this.data = [];
-        let response = {};
-        switch (type) {
-          case "month":
-            response = await totals.getMonthGroupedToals(this.year, moment(this.month).format("MM"));
-            break;
-          case "date":
-            response = await totals.getTransactionsForDate(this.date);
-            break;
-        }
-        let incomes = {type: "Incomes"};
-        let outgoings = {type: "Outgoings"};
-        let total = {type: "Total", Total: 0};
-        response.data.forEach(element => {
-          total.Total += element.amount;
-          if(element.amount > 0){
-            if(element.description in incomes){
-              incomes[element.description] += element.amount;  
-            }else{  
-              incomes[element.description] = element.amount;
-            }
+    draw: function() {
+      if (!this.data || this.data.length === 0) return;
+      graphing.useTheme(am4core);
+      let chart = am4core.create(this.id, am4charts.XYChart);
+      chart.data = this.data;
+      var chartTitle = chart.titles.create();
+      chartTitle.text = this.title;
+      chartTitle.fontSize = 20;
+      let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+      categoryAxis.dataFields.category = "type";
+      categoryAxis.renderer.grid.template.location = 0;
+      categoryAxis.renderer.labels.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
+      categoryAxis.renderer.labels.template.events.on(
+        "hit",
+        event => {
+          if (event.event.explicitOriginalTarget) {
+            this.showPie(event.event.explicitOriginalTarget.data);
+          } else {
+            this.showPie(event.event.target.innerHTML);
           }
-          if(element.amount < 0){
-            if(element.description in outgoings){ 
-              outgoings[element.description] += element.amount;
-            }else{
-              outgoings[element.description] = element.amount;
-            }
+        },
+        this
+      );
+      let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.title.text = `${this.me.currency}`;
+      valueAxis.renderer.inside = true;
+      valueAxis.title.rotation = 0;
+      valueAxis.title.fontWeight = "bolder";
+
+      chart.data.forEach(element => {
+        let keys = Object.keys(element).filter(x => {
+          return x != "type";
+        });
+        keys.forEach(x => {
+          this.createSeries(chart, x);
+        });
+      });
+    },
+    createSeries(chart, field) {
+      let series = chart.series.push(new am4charts.ColumnSeries());
+      series.name = field;
+      series.dataFields.valueY = field;
+      series.dataFields.categoryX = "type";
+      series.currency = this.me.currency;
+      series.sequencedInterpolation = true;
+      series.fillOpacity = 0.5;
+      series.stacked = true;
+      if (field === "Total") {
+        series.columns.template.adapter.add("stroke", (fill, target) => {
+          if (target.dataItem && target.dataItem.valueY < 0) {
+            return am4core.color(this.theme.red);
+          } else if (target.dataItem && target.dataItem.valueY > 0) {
+            return am4core.color(this.theme.green);
+          } else {
+            return am4core.color(this.theme.orange);
           }
         });
-        this.data.push(incomes);
-        this.data.push(outgoings);
-        this.data.push(total);  
-        graphing.vodalBar(this.id, this.data, this.title, this);
+        series.columns.template.adapter.add("fill", (fill, target) => {
+          if (target.dataItem && target.dataItem.valueY < 0) {
+            return am4core.color(this.theme.red);
+          } else if (target.dataItem && target.dataItem.valueY > 0) {
+            return am4core.color(this.theme.green);
+          } else {
+            return am4core.color(this.theme.orange);
+          }
+        });
       }
-      catch(error){
-        this.error = error;
-      }
+      series.columns.template.width = am4core.percent(60);
+      series.columns.template.tooltipText =
+        "[bold]{name}[/]\n[font-size:14px]{currency}{valueY}";
+      series.columns.template.cursorOverStyle =
+        am4core.MouseCursorStyle.pointer;
+      series.columns.template.events.on(
+        "hit",
+        event => {
+          this.showPie(event.target.dataItem.dataContext.type);
+        },
+        this
+      );
+      let labelBullet = series.bullets.push(new am4charts.LabelBullet());
+      labelBullet.label.text = "{valueY}";
+      labelBullet.locationY = 0.5;
+      return series;
     },
-    drawVodalBar: function(){
-      graphing.vodalBar(this.id, this.data, this.title, this);
-    },
-    createPieData(type) {
-      let data = this.data.find(x => {
-        return x.type === type;
-      });
-      let pieData = [];
-      let keys = Object.keys(data).filter(x => {
-        return x != "type";
-      });
-      keys.forEach(x => {
-        let datum = {};
-        datum["description"] = x;
-        datum["amount"] = Math.abs(data[x]);
-        pieData.push(datum);
-      });
-      let pieTitle = `${this.title} ${type}`;
-      graphing.vodalPie(this.id, pieData, pieTitle, this);
+    showPie: function(type) {
+      this.$emit("show-pie", type);
     }
   }
 };
 </script>
-
