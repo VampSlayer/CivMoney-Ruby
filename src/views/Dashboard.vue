@@ -120,7 +120,7 @@ export default {
       this.modalHeight = window.innerHeight / 2;
     };
     if(localStorage.getItem('cm--intro-seen') !== 'seen'){
-      introJs.introJs().addHints().onhintclose(function() { localStorage.setItem('cm--intro-seen', 'seen') });
+      introJs.introJs().addHints().onhintclose(() => { localStorage.setItem('cm--intro-seen', 'seen') });
     }
   },
   created: function() {
