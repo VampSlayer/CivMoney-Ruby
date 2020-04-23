@@ -41,6 +41,7 @@ export default {
         this.getTransactions();
       } else {
         this.data = [];
+        this.pieData = [];
         this.title = "";
         this.error = "";
       }
