@@ -16,9 +16,13 @@
                     <b-input :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                     <b-input :state="dateState" v-model="date" type="date" class="mb-1" placeholder="Date"></b-input>
                     <div class="row">
-                        <switches class="col" v-model="income" text-enabled="Income" text-disabled="Expense" color="blue" theme="custom"></switches>
+                        <div class="col-10">
+                            <switches v-model="income" text-enabled="Income" text-disabled="Expense" color="blue" theme="custom"></switches>
+                        </div>
+                        <div class="col-2 pt-44">
+                        <button class="float-right add-st-btn" title="Add Transaction" v-on:click="addTransaction" > <i class="fa fa-plus"></i></button>
+                        </div>
                     </div>
-                    <button class="float-right add-st-btn" title="Add Transaction" v-on:click="addTransaction" > <i class="fa fa-plus"></i></button>
                 </b-card>
             </div>
         </div>

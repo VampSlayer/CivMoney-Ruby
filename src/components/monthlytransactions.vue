@@ -34,9 +34,13 @@
                                     <b-input min=0 step="0.01" v-model="transaction.amount" type="number" class="mb-1" placeholder="Amount"></b-input>
                                     <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                                     <div class="row">
-                                        <switches class="col" v-model="transaction.income" text-enabled="Income" text-disabled="Expense" color="blue" theme="custom"></switches>
+                                        <div class="col-10">
+                                            <switches v-model="transaction.income" text-enabled="Income" text-disabled="Expense" color="blue" theme="custom"></switches>
+                                        </div>
+                                        <div class="col">
+                                            <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-right cursor mb-minus-15"><i class="fa fa-minus"></i></a>
+                                        </div>
                                     </div>
-                                    <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-right cursor mb-minus-15"><i class="fa fa-minus"></i></a>
                                 </b-card>
                             </div>
                             <div>
