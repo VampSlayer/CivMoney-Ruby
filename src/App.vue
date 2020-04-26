@@ -33,9 +33,10 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import keys from "@/config/keys";
+import keys from "./config/keys";
 import GoogleLogin from "vue-google-login";
-import Profile from "@/components/profile";
+import Profile from "./components/profile";
+
 export default {
   name: "app",
   components: {

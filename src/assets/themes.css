@@ -16,7 +16,7 @@ html {
     --cm-nav-color:#248df0;
     --cm-nav-text-color:rgba(255, 255, 255, 0.5);
 
-    --cm-luminosity:0;
+    --cm-luminosity:0.5;
     --cm-logo:1;
 
     --cm-themes: ["Dark", "Light", "Matrix"]
@@ -40,7 +40,7 @@ html[data-theme='Light'] {
     --cm-nav-color:#2e9aff;
     --cm-nav-text-color:rgba(255, 255, 255, 0.5);
 
-    --cm-luminosity:1;
+    --cm-luminosity:0.8;
     --cm-logo:1;
 }
 
@@ -62,6 +62,6 @@ html[data-theme='Matrix'] {
     --cm-nav-color:#00FF41;
     --cm-nav-text-color:rgba(13, 2, 8, 0.7);
 
-    --cm-luminosity:0;
+    --cm-luminosity:0.5;
     --cm-logo:0;
 }

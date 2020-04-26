@@ -26,7 +26,7 @@
         <vodal
           :show="show"
           animation="slideUp"
-          @hide="hideModal()"
+          v-on:hide="hideModal"
           :width="modalWidth"
           :height="modalHeight"
           :duration="500"

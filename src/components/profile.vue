@@ -12,7 +12,7 @@
                         <h6>Change Your Currency</h6>
                     </b-card-title>
                     <b-card-body>
-                        <multiselect @input="updateme" :allowEmpty="false" v-model="me.currency" :options="currencies" placeholder="Change Your Currency"></multiselect>
+                        <multiselect v-on:input="updateme" :allowEmpty="false" v-model="me.currency" :options="currencies" placeholder="Change Your Currency"></multiselect>
                     </b-card-body>
                 </b-card>
             </div>
@@ -22,7 +22,7 @@
                         <h6>Change Your Theme</h6>
                     </b-card-title>
                      <b-card-body>
-                        <multiselect @input="updateme" :allowEmpty="false" v-model="me.theme" :options="theme.themes" placeholder="Change Your Theme"></multiselect>
+                        <multiselect v-on:input="updateme" :allowEmpty="false" v-model="me.theme" :options="theme.themes" placeholder="Change Your Theme"></multiselect>
                     </b-card-body>
                 </b-card>
             </div>
@@ -33,7 +33,8 @@
 <script>
 import Multiselect from "vue-multiselect";
 import { mapState, mapActions } from "vuex";
-import user from "@/services/auth";
+import user from "../services/auth";
+
 export default {
     name: "Profile",
     components: { Multiselect },

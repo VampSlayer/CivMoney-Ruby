@@ -1,8 +1,8 @@
-import axios from 'axios'
+import axios from "axios"
 
 export default {
     async years() {
-        return await axios.get('/api/transactions/yearsTotals');
+        return await axios.get("/api/transactions/yearsTotals");
     },
     async getTotalPerMonthForYear(year){
         return await axios.get(`/api/transactions/yearsMonthTotals?year=${year}`);

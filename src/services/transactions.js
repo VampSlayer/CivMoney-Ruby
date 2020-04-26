@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios"
 
 export default {
     async addTransaction(amount, description, date){
@@ -14,6 +14,6 @@ export default {
         return await axios.delete(`/api/transactions/delete?id=${id}`);
     },
     async seedData(){
-        return await axios.get('api/seed');
+        return await axios.get("api/seed");
     }
 }
