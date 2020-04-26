@@ -13,6 +13,7 @@ export default new Vuex.Store({
     years: {},
     selectableYears: [],
     selectedYear: null,
+    selectedMonth: null,
     loggingIn: false,
     loginError: null,
     theme: {}
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     },
     updateSelectedYear: (state, year) => {
       state.selectedYear = year;
+    },
+    updateSelectedMonth: (state, month) => {
+      state.selectedMonth = month;
     },
     updateTheme: (state, theme) => {
       state.theme = theme;

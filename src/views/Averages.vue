@@ -1,11 +1,5 @@
-<style scoped>
-.border-btm {
-    border-bottom: 1px solid rgba(204, 204, 204, 0.933);
-}
-</style>
-
 <template>
-    <div>
+  <div>
     <div class="mt-2 h-100">
       <view-nav>
         <b-nav-item to="/">
@@ -19,9 +13,9 @@
         </b-nav-item>
       </view-nav>
       <div class="h-100">
-            <div class="text-center h-100">
-                <multiLine :data="monthlyAvgsForYear"></multiLine>
-            </div>
+        <div class="text-center h-100">
+          <multiLine :data="monthlyAvgsForYear"></multiLine>
+        </div>
       </div>
     </div>
   </div>
@@ -29,42 +23,45 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import MultiLine from '../components/multiLine';
-import ViewNav from '../components/viewnav';
-import statsX from '../services/stats';
+import MultiLine from "../components/multiLine";
+import ViewNav from "../components/viewnav";
+import statsX from "../services/stats";
 
 export default {
-    name: 'Averages',
-    data() {
-        return {
-            monthlyAvgsForYear: [],
-            error: null
-        }
-    },
-    components: { MultiLine, ViewNav },
-    created: function() {
-        this.getYears();
-    },
-    watch: {
-        selectedYear: async function(){
-            this.$router.push({name: 'averages', hash: `/#${this.selectedYear}`});
-            try {
-                const result = await statsX.getMonthAvgsForYear(this.selectedYear);
-                this.monthlyAvgsForYear = result.data;
-                this.monthlyAvgsForYear.forEach(x => {
-                    x.id = x.datemonth;
-                    x.datemonth = `${this.selectedYear}-${x.datemonth}-01`
-                });
-            } catch (error) {
-                this.error = error;
-            }
-        }
-    },
-    computed: {
-        ...mapState(["years", "me", "selectedYear"]),
-    },
-    methods: {
-        ...mapActions(["getYears"])
+  name: "Averages",
+  data() {
+    return {
+      monthlyAvgsForYear: [],
+      error: null
+    };
+  },
+  components: { MultiLine, ViewNav },
+  created: function() {
+    this.getYears();
+    this.getMonthAvgsForYear();
+  },
+  watch: {
+    selectedYear: async function() {
+      this.getMonthAvgsForYear();
     }
-}
+  },
+  computed: {
+    ...mapState(["years", "me", "selectedYear"])
+  },
+  methods: {
+    ...mapActions(["getYears"]),
+    getMonthAvgsForYear: async function() {
+      try {
+        const result = await statsX.getMonthAvgsForYear(this.selectedYear);
+        this.monthlyAvgsForYear = result.data;
+        this.monthlyAvgsForYear.forEach(x => {
+          x.id = x.datemonth;
+          x.datemonth = `${this.selectedYear}-${x.datemonth}-01`;
+        });
+      } catch (error) {
+        this.error = error;
+      }
+    }
+  }
+};
 </script>

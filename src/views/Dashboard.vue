@@ -63,46 +63,31 @@ export default {
       show: false,
       error: "",
       selectedDate: "",
-      selectedMonth: "",
       monthBar: "",
       data: [],
       monthData: []
     };
   },
   watch: {
-     '$route.hash': function(val){
-        if(val){
-            const hashRouteSplit = val.split("#")[1].split("/");
-            if(hashRouteSplit[1]){
-              this.selectedMonth = hashRouteSplit[1];
-            } else if (!hashRouteSplit[1] && this.years[hashRouteSplit[0]]) {
-              this.monthData = [];
-              this.selectedMonth = ""
-              this.updateSelectedYear(hashRouteSplit[0])
-              this.data = this.years[this.selectedYear].months;
-            }
-        }
-    },
     selectedMonth: function(newVal) {
       if(this.selectedYear){
-        this.$router.push({name: 'home', hash: `#${this.selectedYear}/${this.selectedMonth}`});
         this.monthData = [];
         if (newVal === "") this.data = this.years[this.selectedYear].months
         this.getTotalPerDayForMonth();
       }
+      if (newVal === "") this.data = this.years[this.selectedYear].months
     },
     selectedYear: function() {
-      this.$router.push({name: 'home', hash: `#${this.selectedYear}`});
       if(this.years[this.selectedYear]){
         this.monthData = []
-        this.selectedMonth = ""
+        this.updateSelectedMonth("")
         this.data = this.years[this.selectedYear].months
       }
     },
     selectableYears: function() {
       if(this.years[this.selectedYear]){
         this.monthData = []
-        this.selectedMonth = ""
+        this.updateSelectedMonth("")
         this.data = this.years[this.selectedYear].months
       }
     }
@@ -130,11 +115,11 @@ export default {
     this.getYears();
   },
   computed: {
-    ...mapState(["years", "me", "selectedYear", "selectableYears"]),
+    ...mapState(["years", "me", "selectedYear", "selectableYears", "selectedMonth"]),
   },
   methods: {
     ...mapActions(["getYears"]),
-    ...mapMutations(['updateSelectedYear']),
+    ...mapMutations(['updateSelectedMonth']),
     showAddTransaction(){
      this.$showPanel({
         component: AddTransaction,
@@ -178,7 +163,7 @@ export default {
       this.show = false;
     },
     showMonth(month){
-      this.selectedMonth = month;
+      this.updateSelectedMonth(month);
     },
     showMonthModal(month){
       this.selectedDate = ""
