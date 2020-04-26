@@ -18,6 +18,7 @@ $nav-text-color: var(--cm-nav-text-color);
 .navbar-dark .navbar-text {
     color: $nav-text-color;
 }
+
 .navbar-dark .navbar-nav .nav-link {
     color: $nav-text-color;
 }
@@ -60,7 +61,7 @@ a:hover {
     border-radius: 0px !important;
 }
 
-#dashboard-chart{
+#dashboard-chart {
     width: 100%;
     height: 100%;
 }
@@ -178,6 +179,10 @@ a:hover {
     width: 100%;
 }
 
+.h-100 {
+    height: 100%;
+}
+
 .stats-border-btm {
     border-bottom: 1px solid $nav-color;
     height: 79%;
@@ -207,7 +212,7 @@ a:hover {
     font-size: 1em !important;
 }
 
-.mb-minus-15{
+.mb-minus-15 {
     margin-bottom: -15px;
 }
 

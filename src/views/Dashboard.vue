@@ -6,7 +6,7 @@
         <b-nav-item v-on:click="showAddTransaction">
           <i title="Add a Transaction" class="fa fa-plus"></i>
         </b-nav-item>
-        <b-nav-item v-on:click="showAddMonthlyTransactions" data-hint='Welcome to CivMoney. To get started add this months Incomes and Expense here. Once added the visuals begin!'>
+        <b-nav-item v-on:click="showAddMonthlyTransactions" data-hint="Welcome to CivMoney. To get started add this months Incomes and Expense here. Once added the visuals begin!">
           <i title="Monthly Income & Expenses" class="fa fa-calendar"></i>
         </b-nav-item>
         <b-nav-item v-on:click="showSearchTransactions">
@@ -43,15 +43,15 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import introJs from 'intro.js';
+import introJs from "intro.js";
 import totals from "../services/totals";
 import ModalGraph from "../components/modalgraph";
 import AddTransaction from "../components/addtransaction";
 import MonthlyTransactions from "../components/monthlytransactions";
-import SearchTransactions from '../components/serachtransactions';
-import ViewNav from '../components/viewnav';
-import YearBar from '../components/yearbar';
-import MonthBar from '../components/monthbar';
+import SearchTransactions from "../components/serachtransactions";
+import ViewNav from "../components/viewnav";
+import YearBar from "../components/yearbar";
+import MonthBar from "../components/monthbar";
 
 export default {
   name: "dashboard",
@@ -107,8 +107,8 @@ export default {
       }
       this.modalHeight = window.innerHeight / 2;
     };
-    if(localStorage.getItem('cm--intro-seen') !== 'seen'){
-      introJs.introJs().addHints().onhintclose(() => { localStorage.setItem('cm--intro-seen', 'seen') });
+    if(localStorage.getItem("cm--intro-seen") !== "seen"){
+      introJs.introJs().addHints().onhintclose(() => { localStorage.setItem("cm--intro-seen", "seen") });
     }
   },
   created: function() {
@@ -119,29 +119,29 @@ export default {
   },
   methods: {
     ...mapActions(["getYears"]),
-    ...mapMutations(['updateSelectedMonth']),
+    ...mapMutations(["updateSelectedMonth"]),
     showAddTransaction(){
      this.$showPanel({
         component: AddTransaction,
         height: ((this.modalHeight * 2) / 100) * 27.5,
-        openOn: 'top',
-        cssClass: 'slideout-bg'
+        openOn: "top",
+        cssClass: "slideout-bg"
      }); 
     },
     showAddMonthlyTransactions(){
       this.$showPanel({
         component: MonthlyTransactions,
         height: ((this.modalHeight * 2) / 100) * 75,
-        openOn: 'top',
-        cssClass: 'slideout-bg'
+        openOn: "top",
+        cssClass: "slideout-bg"
      }); 
     },
     showSearchTransactions(){
       this.$showPanel({
         component: SearchTransactions,
         height: ((this.modalHeight * 2) / 100) * 75,
-        openOn: 'top',
-        cssClass: 'slideout-bg'
+        openOn: "top",
+        cssClass: "slideout-bg"
      }); 
     },
     async getTotalPerDayForMonth() {

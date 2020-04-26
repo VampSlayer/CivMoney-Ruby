@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import YearSelect from './yearselect';
+import YearSelect from "./yearselect";
 export default {
     name: "ViewNav",
     components: { YearSelect }

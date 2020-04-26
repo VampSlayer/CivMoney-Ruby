@@ -1,12 +1,6 @@
-<style scoped>
-.multi-line-chart {
-  height: 100%;
-}
-</style>
-
 <template>
   <div class="h-inherit">
-    <div class="multi-line-chart" :id="id"></div>
+    <div class="h-100" :id="id"></div>
   </div>
 </template>
 
@@ -14,7 +8,7 @@
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import { mapState } from "vuex";
-import graphing from '../services/graphing';
+import graphing from "../services/graphing";
 
 export default {
   name: "multiLine",
@@ -27,7 +21,7 @@ export default {
     };
   },
   watch: {
-      'me.currency': function() {
+      "me.currency": function() {
         this.draw()
       },
       data: function(){

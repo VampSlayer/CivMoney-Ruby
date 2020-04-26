@@ -1,19 +1,13 @@
-<style scoped>
-.treemap-chart {
-  height: 100%;
-}
-</style>
-
 <template>
   <div class="h-inherit">
-    <div class="treemap-chart" :id="id"></div>
+    <div class="h-100" :id="id"></div>
   </div>
 </template>
 
 <script>
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import graphing from '../services/graphing';
+import graphing from "../services/graphing";
 import { mapState } from "vuex";
 
 export default {

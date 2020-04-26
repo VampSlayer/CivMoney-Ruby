@@ -30,20 +30,20 @@
 </template>
 
 <script>
-import transactions from '../services/transactions';
+import transactions from "../services/transactions";
 import { mapActions } from "vuex";
-import moment from 'moment'
-import Switches from 'vue-switches';
+import moment from "moment"
+import Switches from "vue-switches";
 export default {
     name: "AddTransaction",
     components: { Switches },
     data() {
         return {
             amount: 0,
-            description: '',
+            description: "",
             date: moment(),
             income: true,
-            error: '',
+            error: "",
             shake: false
         };
     },
@@ -80,7 +80,7 @@ export default {
             }
         },
         close(){
-            this.$emit('closePanel', {})
+            this.$emit("closePanel", {})
         }
     }
 }

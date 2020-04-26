@@ -13,7 +13,6 @@
           <img v-else width="34px" class="d-inline-block align-top"  src="https://i.imgur.com/JlQV6Co.png"/>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-text>{{me.username}}</b-nav-text>
@@ -25,7 +24,6 @@
             </b-nav-item>
           </b-navbar-nav>
         </b-collapse>
-
       </b-navbar>
     </header>
     <slideout-panel></slideout-panel>
@@ -34,10 +32,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import keys from '@/config/keys';
-import GoogleLogin from 'vue-google-login';
-import Profile from '@/components/profile';
+import { mapState, mapActions } from "vuex";
+import keys from "@/config/keys";
+import GoogleLogin from "vue-google-login";
+import Profile from "@/components/profile";
 export default {
   name: "app",
   components: {
@@ -52,19 +50,19 @@ export default {
   },
   mounted() {
     let debouncedGetYears = this.debounce(this.mappedGetYears, 250);
-    window.addEventListener('resize', debouncedGetYears)
+    window.addEventListener("resize", debouncedGetYears)
   },
   computed: {
-    ...mapState(['me', 'theme']),
+    ...mapState(["me", "theme"]),
   },
   methods: {
-    ...mapActions(['logout', 'loginFaliure', 'getYears']),
+    ...mapActions(["logout", "loginFaliure", "getYears"]),
     showProfile(){
       this.$showPanel({
         component: Profile,
         height: ((window.innerHeight) / 100) * 27.5,
-        openOn: 'top',
-        cssClass: 'slideout-bg'
+        openOn: "top",
+        cssClass: "slideout-bg"
      });
     },
     async onSuccess(){

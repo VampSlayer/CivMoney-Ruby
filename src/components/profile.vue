@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
+import Multiselect from "vue-multiselect";
 import { mapState, mapActions } from "vuex";
 import user from "@/services/auth";
 export default {

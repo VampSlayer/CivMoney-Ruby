@@ -12,7 +12,7 @@
                             <b-card-body>
                                 <h4>Monthly Income & Expenses</h4> 
                                 Here you can add Incomes and Expenses for any month this year.
-                                Simply add something like 'Wages' as an Income and 'Rent' as an Expense.
+                                Simply add something like "Wages" as an Income and "Rent" as an Expense.
                                 Or
                                 <a class="cursor font-weight-bold" :disabled="loading" variant="light" v-on:click="CreateSampleData">click here to create sample Transactions.</a>
                                 This will then been shown as breakdown visualizations on the dashboard.
@@ -53,30 +53,30 @@
 </template>
 
 <script>
-import transactionsService from '../services/transactions';
+import transactionsService from "../services/transactions";
 import { mapActions } from "vuex";
-import Multiselect from 'vue-multiselect';
-import moment from 'moment';
-import Switches from 'vue-switches';
+import Multiselect from "vue-multiselect";
+import moment from "moment";
+import Switches from "vue-switches";
 export default {
-    name: 'monthlyTransactions',
+    name: "monthlyTransactions",
     components: { Multiselect, Switches },
     data() {
         return {
-            months: [{name: 'January', value: '01'}, {name: 'Febuary', value: '02'}, {name: 'March', value: '03'}, {name: 'April', value: '04'}, {name: 'May', value: '05'},
-                    {name: 'June', value: '06'}, {name: 'July', value: '07'}, {name: 'August', value: '08'}, {name: 'September', value: '09'}, {name: 'October', value: '10'},
-                    {name: 'November', value: '11'}, {name: 'December', value: '12'}],
+            months: [{name: "January", value: "01"}, {name: "Febuary", value: "02"}, {name: "March", value: "03"}, {name: "April", value: "04"}, {name: "May", value: "05"},
+                    {name: "June", value: "06"}, {name: "July", value: "07"}, {name: "August", value: "08"}, {name: "September", value: "09"}, {name: "October", value: "10"},
+                    {name: "November", value: "11"}, {name: "December", value: "12"}],
             transactions: [],
             selected: "income",
-            error: '',
+            error: "",
             shake: false,
-            month: '',
+            month: "",
             loading: false
         };
     },
     created: function(){
         this.month = this.months.find(month => {
-            if(month.name === moment().format('MMMM')){
+            if(month.name === moment().format("MMMM")){
                 return month;
             }
         }); 
@@ -91,7 +91,7 @@ export default {
         addTransactionToView(){
             this.transactions.push({
                 amount: 0,
-                description: '',
+                description: "",
                 income: true
             })
         },
@@ -106,7 +106,7 @@ export default {
                     if(transaction.income === false) amount = -amount;
                     await transactionsService.addMonthlyTransaction(amount, transaction.description, new Date().getFullYear(), this.month.value);
                     await this.getYears();
-                    this.$emit('closePanel', {});
+                    this.$emit("closePanel", {});
                 } catch (error) {
                     this.error = "Cannot add monthly transactions"
                 }
@@ -119,7 +119,7 @@ export default {
                 this.loading = true;
                 await transactionsService.seedData();
                 await this.getYears();
-                this.$emit('closePanel', {})
+                this.$emit("closePanel", {})
             } catch (error) {
                 this.error = "Cannot add sample data"
             } finally{

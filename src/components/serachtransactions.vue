@@ -7,10 +7,7 @@
                     <b-card-body>
                         <h4>Search</h4> Here you can search and manage your transactions, you can delete, filter and sort.
                         <div class="mt-2">
-                            <v-date-picker  v-model="range" mode='range' :input-props='{
-                        class: "w-full w-100 shadow appearance-none border rounded py-2 px-3 text-gray-700 hover:border-blue-5",
-                        placeholder: "Please enter dates",
-                        readonly: true}'/>
+                            <v-date-picker  v-model="range" mode="range" :input-props="inputProps"/>
                         </div>
                         <span class="red" v-if="noTransactions">No Transactions in that range.</span>
                         <div class="mt-2" v-if="transactions.length > 0">
@@ -37,7 +34,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 import transactions from "../services/transactions";
 import { mapActions } from "vuex";
 export default {
@@ -45,16 +42,21 @@ export default {
     data() {
         return {
             fields: [{key: "date", sortable: true} , {key: "amount", sortable: true}, {key: "description", sortable: true}, "delete"],
-            error: '',
+            error: "",
             range: {
-                start: '',
-                end: ''
+                start: "",
+                end: ""
             },
             transactions: [],
             filter: null,
             noTransactions: false,
             filteredTransactions: [],
-            deletionOccured: false
+            deletionOccured: false,
+            inputProps: {
+                class: "w-full w-100 shadow appearance-none border rounded py-2 px-3 text-gray-700 hover:border-blue-5",
+                placeholder: "Please enter dates",
+                readonly: true
+            }
         }
     },
     destroyed: async function(){
@@ -70,8 +72,8 @@ export default {
     methods: {
         ...mapActions(["getYears"]),
         getAmountClass(value){
-            if (value === 0 || value === 0.00) return 'orange'
-            return value > 0 ? 'green' : 'red'
+            if (value === 0 || value === 0.00) return "orange"
+            return value > 0 ? "green" : "red"
         },
         deleteTransaction: async function(id){
             if(!id) return;

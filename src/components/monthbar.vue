@@ -31,7 +31,7 @@ export default {
   methods: {
     draw() {
       if (!this.data || this.data.length === 0) return;
-      this.$router.push({name: 'home', hash: `#${this.selectedYear}/${this.selectedMonth}`});
+      this.$router.push({name: "home", hash: `#${this.selectedYear}/${this.selectedMonth}`});
       graphing.useTheme(am4core);
 
       let chart = am4core.create("dashboard-chart", am4charts.XYChart);
