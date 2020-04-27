@@ -1,6 +1,9 @@
 import axios from "axios"
 
 export default {
+    async getTransactionsForDate(date){
+        return await axios.get(`/api/transactions/date?date=${date}`);
+    },
     async addTransaction(amount, description, date){
         return await axios.post(`/api/transaction?transaction[amount]=${amount}&transaction[description]=${description}&transaction[date]=${date}`);
     },

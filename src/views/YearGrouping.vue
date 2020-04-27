@@ -57,6 +57,7 @@ export default {
   methods: {
     ...mapActions(["getYears"]),
     getYearGroupedTotals: async function() {
+      if (!this.selectedYear) return;
       try {
         const result = await Total.getYearGroupedTotals(this.selectedYear);
         let incomes = [];

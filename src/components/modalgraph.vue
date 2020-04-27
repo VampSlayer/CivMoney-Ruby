@@ -10,6 +10,7 @@
 import { mapState } from "vuex";
 import moment from "moment";
 import totals from "../services/totals";
+import transactions from "../services/transactions";
 import Bar from "./bar";
 import Pie from "./pie";
 
@@ -55,13 +56,13 @@ export default {
         let response = {};
         if (this.month && this.month.length > 0) {
           this.title = `${moment(this.month).format("MMMM, YYYY")}`;
-          response = await totals.getMonthGroupedToals(
+          response = await totals.getMonthGroupedTotals(
             this.year,
             moment(this.month).format("MM")
           );
         } else if (this.date && this.date.length > 0) {
           this.title = `${moment(this.date).format("LL")}`;
-          response = await totals.getTransactionsForDate(this.date);
+          response = await transactions.getTransactionsForDate(this.date);
         }
         let incomes = { type: "Incomes" };
         let outgoings = { type: "Expenses" };

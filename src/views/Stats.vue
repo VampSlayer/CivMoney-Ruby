@@ -16,7 +16,7 @@
         <div class="row stats-border-btm">
           <div class="col-md-6 offset-md-3 h-100">
             <div class="text-center h-100">
-              <pictorialbar :alignLabels="true" :data="selectedYearsStats"></pictorialbar>
+              <pictorialbar :alignLabels="true" :data="yearsStats"></pictorialbar>
             </div>
           </div>
         </div>
@@ -45,21 +45,20 @@ export default {
   name: "Stats",
   data() {
     return {
-      yearlyStats: [],
       monthlyStatsForYear: [],
-      selectedYearsStats: {},
+      yearsStats: {},
       error: null
     };
   },
   components: { Pictorialbar, ViewNav },
   created: function() {
     this.getYears();
-    this.getYearlyStats();
+    this.getStatsForYear();
     this.getMonthStatsForYear();
   },
   watch: {
-    selectedYear: async function(val) {
-      this.findSelectedYearsStats(val);
+    selectedYear: async function() {
+      this.getStatsForYear();
       this.getMonthStatsForYear();
     }
   },
@@ -68,21 +67,17 @@ export default {
   },
   methods: {
     ...mapActions(["getYears"]),
-    async getYearlyStats() {
+    async getStatsForYear() {
+      if (!this.selectedYear) return;
       try {
-        const response = await statsX.years();
-        this.yearlyStats = response.data;
-        this.findSelectedYearsStats(this.selectedYear);
+        const response = await statsX.getStatsForYear(this.selectedYear);
+        this.yearsStats = response.data;
       } catch (error) {
         this.error = error;
       }
     },
-    findSelectedYearsStats(year) {
-      this.selectedYearsStats = this.yearlyStats.find(x => {
-        return Number(x.dateyear) === Number(year);
-      });
-    },
     async getMonthStatsForYear() {
+      if (!this.selectedYear) return;
       try {
         const result = await statsX.getMonthStatsForYear(this.selectedYear);
         let monthlyStatsForYear = result.data;

@@ -2,53 +2,46 @@ module Sinatra
   module TransactionsRoutes
     def self.registered(app)
 
-      #add new transaction
-      #/api/transaction?transaction[amount]=1&transaction[description]=hello&transaction[date]=2016.08.08
+      # add new transaction
+      # /api/transaction?transaction[amount]=1&transaction[description]=hello&transaction[date]=2016.08.08
       app.post "/api/transaction", :auth => [:user] do
-        @transaction = Transaction.new(params[:transaction])
-        @transaction.user_id = session[:id]
-        if @transaction.save
+        transaction = Transaction.new(params[:transaction])
+        transaction.user_id = session[:id]
+        if transaction.save
           return 200
         else
           return 500
         end
       end
 
-      #get transaction for date
-      #/api/transactions/date?[date]=2016.08.03
+      # get transaction for date
+      # /api/transactions/date?date=2016.08.03
       app.get "/api/transactions/date", :auth => [:user] do
-        content_type :json
-        @transactions = Transaction.where("date = ? AND user_id = ?", params[:date], session[:id])
-        return_message = {}
-        return_message = @transactions
-        return_message.to_json
+        transactions = Transaction.where("date = ? AND user_id = ?", params[:date], session[:id])
+        transactions.to_json
       end
 
-      #get transactions for range
-      #/api/transactions/rangeAll?dateStart=2019.01.01&dateEnd=2019.01.02
+      # get transactions for range
+      # /api/transactions/rangeAll?dateStart=2019.01.01&dateEnd=2019.01.02
       app.get "/api/transactions/rangeAll", :auth => [:user] do
-        content_type :json
-        @date0 = Date.parse(params[:dateStart])
-        @date1 = Date.parse(params[:dateEnd])
-        @transactions = Transaction.where("date IN (?) AND user_id = ?", (@date0)..@date1, session[:id]).order("date ASC")
-        return_message = {}
-        return_message = @transactions
-        return_message.to_json
+        date_start = Date.parse(params[:dateStart])
+        date_end = Date.parse(params[:dateEnd])
+        transactions = Transaction.where("date IN (?) AND user_id = ?", (date_start)..date_end, session[:id]).order("date ASC")
+        transactions.to_json
       end
 
-      #delete transaction
-      #/api/transactions/delete?[id]=1
+      # delete transaction
+      # /api/transactions/delete?id=1
       app.delete "/api/transactions/delete", :auth => [:user] do
-        @transaction = Transaction.find(params[:id]).destroy
-        if @transaction.save
+        if Transaction.destroy(params[:id])
           return 204
         else
           return 500
         end
       end
 
-      #add monthly fixed Transaction
-      #/api/transactions/addMonthlyFixedTransaction?[amount]=500&[description]=monthly&[year]=2000&[month]=1
+      # add monthly fixed transaction
+      # /api/transactions/addMonthlyFixedTransaction?amount=500&description=monthly&year=2000&month=1
       app.post "/api/transactions/addMonthlyFixedTransaction", :auth => [:user] do
         amount = params[:amount]
         description = params[:description]
@@ -56,7 +49,7 @@ module Sinatra
         month = params[:month]
         number_of_days_in_month = Time.days_in_month(month.to_i, year.to_i)
         daily_amount = (amount.to_f / number_of_days_in_month).round(2)
-        for i in 1..number_of_days_in_month
+        (1..number_of_days_in_month).each do |i|
           transaction = Transaction.new()
           transaction.amount = daily_amount
           transaction.date = Date.new(year.to_i, month.to_i, i)

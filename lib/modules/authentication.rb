@@ -5,7 +5,7 @@ module Sinatra
       #set authentication to check if session id is not null and user exists
       app.set(:auth) do |*roles|
         condition do
-          unless session[:id].nil?.! && User.exists?(:id => session[:id])
+          unless !session[:id].nil? && User.exists?(:id => session[:id])
             redirect "/unauthorized", 401
           end
         end
@@ -25,18 +25,18 @@ module Sinatra
           payload = validator.check(params[:id_token], audience)
           puts(payload["email"])
           if User.exists?(:email => payload["email"])
-            @user = User.where(email: payload["email"])
-            session[:id] = @user.first.id
+            user = User.where(email: payload["email"])
+            session[:id] = user.first.id
             session.options[:expire_after] = 2592000 #30days
             return 204
           else
-            @user = User.new()
-            @user.username = payload["name"]
-            @user.email = payload["email"]
-            @user.currency = "$"
-            if @user.save
-              @newSavedUser = User.where(email: payload["email"])
-              session[:id] = @newSavedUser.first.id
+            user = User.new()
+            user.username = payload["name"]
+            user.email = payload["email"]
+            user.currency = "$"
+            if user.save
+              new_saved_user = User.where(email: payload["email"])
+              session[:id] = new_saved_user.first.id
               session.options[:expire_after] = 2592000 #30days
               return 204
             else
@@ -49,8 +49,7 @@ module Sinatra
         end
       end
 
-      #user logout, clears session
-      #/logout
+      # logouts user & clears session
       app.post "/api/logout" do
         session.clear
         return 204

@@ -51,6 +51,7 @@ export default {
   methods: {
     ...mapActions(["getYears"]),
     getMonthAvgsForYear: async function() {
+      if (!this.selectedYear) return;
       try {
         const result = await statsX.getMonthAvgsForYear(this.selectedYear);
         this.monthlyAvgsForYear = result.data;
