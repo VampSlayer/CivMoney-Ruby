@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Guard from "./services/auth.middleware"
+import Guard from "./services/auth.middleware";
 
 Vue.use(Router);
 

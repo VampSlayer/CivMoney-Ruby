@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import router from "./router"
+import router from "./router";
 import user from "./services/auth";
 import totals from "./services/totals";
 import moment from "moment";
@@ -56,7 +56,7 @@ export default new Vuex.Store({
           let data = monthTotalsResponse.data;
           let months = data.map(x => { return x.datemonth });
           data.forEach(x => {
-            x.datemonth = moment(`${year.dateyear}-${x.datemonth}-01`).format()
+            x.datemonth = moment(`${year.dateyear}-${x.datemonth}-01`).format();
           });
           [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(x => {
             if (!months.includes(x)) {
@@ -73,10 +73,12 @@ export default new Vuex.Store({
           });
           selectableYears.push(year.dateyear);
           commit("updateSelectableYears", selectableYears);
-          if (router.app.$route.hash && router.app.$route.hash.split("#")[1].split("/")[0]) {
-            commit("updateSelectedYear", router.app.$route.hash.split("#")[1].split("/")[0])
-          } else {
-            commit("updateSelectedYear", selectableYears[selectableYears.length - 1])
+          if (router.app.$route.hash && router.app.$route.hash.split("#")[1].split("/")[0])
+          {
+            commit("updateSelectedYear", router.app.$route.hash.split("#")[1].split("/")[0]);
+          }
+          else {
+            commit("updateSelectedYear", selectableYears[selectableYears.length - 1]);
           }
         });
         commit("updateYears", yearsMap);
