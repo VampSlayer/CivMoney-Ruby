@@ -86,7 +86,7 @@ export default {
         Dec: "12"
       };
       if (!month) month = "Jan";
-      this.$emit("draw-month", months[month]);
+      this.$emit("draw-month", months[month.split(" ")[0]]);
     },
     drawModalMonth(month) {
       if (!month) return;
