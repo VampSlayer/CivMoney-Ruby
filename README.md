@@ -22,8 +22,7 @@
 <h4 align="center">Frontend Technologies</h4>
 <p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg" alt="vuejs" width="100px"/><p>
 
-<section align="center">
-<h4>Previous Versions</h4>
+<h4 align="center">Previous Versions</h4>
 <a href="https://civmoneyv1.herokuapp.com" title="v1">
 <figure>
   <p align="center"><img src="https://i.imgur.com/9QSq30J.png" alt="v1" width="400px" /></p>
@@ -35,4 +34,3 @@
 <figcaption><p align="center">V2 - React<p></figcaption>
 </figure>
 </a>
-</section>
