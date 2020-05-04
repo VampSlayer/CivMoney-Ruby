@@ -14,10 +14,10 @@ module Sinatra
         end
       end
 
-      # get transaction for date
+      # get transactions for date
       # /api/transactions/date?date=2016.08.03
       app.get "/api/transactions/date", :auth => [:user] do
-        transactions = Transaction.where("date = ? AND user_id = ?", params[:date], session[:id])
+        transactions = Transaction.where(date: params[:date], user_id: session[:id])
         transactions.to_json
       end
 
@@ -26,14 +26,14 @@ module Sinatra
       app.get "/api/transactions/rangeAll", :auth => [:user] do
         date_start = Date.parse(params[:dateStart])
         date_end = Date.parse(params[:dateEnd])
-        transactions = Transaction.where("date IN (?) AND user_id = ?", (date_start)..date_end, session[:id]).order("date ASC")
+        transactions = Transaction.where(date: (date_start)..date_end, user_id: session[:id]).order(:date)
         transactions.to_json
       end
 
       # delete transaction
       # /api/transactions/delete?id=1
       app.delete "/api/transactions/delete", :auth => [:user] do
-        if Transaction.destroy(params[:id])
+        if Transaction.where(id: params[:id].to_i, user_id: session[:id]).delete_all()
           return 204
         else
           return 500

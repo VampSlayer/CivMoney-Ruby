@@ -10,7 +10,7 @@ module Sinatra
         today = Date.new(year.to_i, month.to_i, 1.to_i)
         start_of_month = today.beginning_of_month
         end_of_month = start_of_month.beginning_of_month.next_month - 1.day
-        totals = Transaction.select("date, sum(amount) as amount").where("date IN (?) AND user_id = ?", (start_of_month)..end_of_month, session[:id]).group("date").order("date ASC")
+        totals = Transaction.select("date, sum(amount) as amount").where(date: (start_of_month)..end_of_month, user_id: session[:id]).group(:date).order(:date)
         totals.to_json
       end
 
