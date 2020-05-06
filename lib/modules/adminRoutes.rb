@@ -4,8 +4,7 @@ module Sinatra
 
       # get total number of users
       app.get "/api/user/totalNumberOfUsers" do
-        user_count = User.count
-        user_count.to_json
+        User.count.to_json
       end
 
     end
