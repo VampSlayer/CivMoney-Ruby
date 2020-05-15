@@ -19,7 +19,7 @@ html {
     --cm-luminosity:0.5;
     --cm-logo:1;
 
-    --cm-themes: ["Dark", "Light", "Matrix"]
+    --cm-themes: ["Dark", "Light", "Matrix", "Grayscale", "Invert Grayscale"]
 }
 
 html[data-theme='Light'] {
@@ -64,4 +64,48 @@ html[data-theme='Matrix'] {
 
     --cm-luminosity:0.5;
     --cm-logo:0;
+}
+
+html[data-theme='Grayscale'] {
+    --cm-theme-name:grayscale;
+
+    --cm-background:black;
+
+    --cm-text-color:black;
+    --cm-input-text-color:white;
+    --cm-chart-text-color:white;
+    --cm-year-active-color:white;
+
+    --cm-green:#00ff7f;
+    --cm-red:#ff3333;
+    --cm-orange:#ff8000;
+    --cm-year-line-color:white;
+
+    --cm-nav-color:white;
+    --cm-nav-text-color:black;
+
+    --cm-luminosity:0.5;
+    --cm-logo:0;
+}
+
+html[data-theme='Invert Grayscale'] {
+    --cm-theme-name:invert-grayscale;
+
+    --cm-background:white;
+
+    --cm-text-color:white;
+    --cm-input-text-color:black;
+    --cm-chart-text-color:black;
+    --cm-year-active-color:black;
+
+    --cm-green:#00ff7f;
+    --cm-red:#ff3333;
+    --cm-orange:#ff8000;
+    --cm-year-line-color:black;
+
+    --cm-nav-color:black;
+    --cm-nav-text-color:white;
+
+    --cm-luminosity:0.8;
+    --cm-logo:1;
 }

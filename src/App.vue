@@ -73,6 +73,7 @@ export default {
       this.loginFaliure(error);
     },
     mappedGetYears(){
+      if (!this.me) return;
       this.getYears()
     },
     debounce(func, wait, immediate) {
