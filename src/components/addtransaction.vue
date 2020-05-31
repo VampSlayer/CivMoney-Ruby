@@ -41,7 +41,7 @@ export default {
         return {
             amount: 0,
             description: "",
-            date: moment(),
+            date: moment().format('YYYY-MM-DD'),
             income: true,
             error: "",
             shake: false
