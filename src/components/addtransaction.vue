@@ -12,9 +12,9 @@
             <div class="col-4 col-md-4 col-lg-4 col-xl-3" :class="{'btn-shake' : shake === true}">
                 <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                 <b-card>
-                    <b-input :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1" placeholder="Amount"></b-input>
+                    <b-input :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1"></b-input>
                     <b-input :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
-                    <b-input :state="dateState" v-model="date" type="date" class="mb-1" placeholder="Date"></b-input>
+                    <b-input :state="dateState" v-model="date" type="date" class="mb-1"></b-input>
                     <div class="row">
                         <div class="col-10">
                             <switches v-model="income" text-enabled="Income" text-disabled="Expense" color="blue" theme="custom"></switches>

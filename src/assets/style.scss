@@ -249,3 +249,10 @@ a:hover {
 .pt-44 {
     padding-top: 43px;
 }
+
+// chrome fix. Calendar picker icon not visible on dark
+[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: $nav-color;
+    cursor: pointer;
+    border-radius: 1px;
+}
