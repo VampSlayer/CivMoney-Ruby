@@ -41,7 +41,7 @@ export default {
           event => {
             let month = "";
             if (event.event.explicitOriginalTarget) {
-              month = [event.event.explicitOriginalTarget.data.split(" ")[0]];
+              month = event.event.explicitOriginalTarget.data.split(" ")[0];
             } else {
               month = event.event.target.innerHTML;
             }
