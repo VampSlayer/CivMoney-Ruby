@@ -55,13 +55,13 @@ export default {
         this.data = [];
         let response = {};
         if (this.month && this.month.length > 0) {
-          this.title = `${moment(this.month).format("MMMM, YYYY")}`;
+          this.title = moment(this.month).utc().format("MMMM, YYYY");
           response = await totals.getMonthGroupedTotals(
             this.year,
-            moment(this.month).format("MM")
+            moment(this.month).utc().format("MM")
           );
         } else if (this.date && this.date.length > 0) {
-          this.title = `${moment(this.date).format("LL")}`;
+          this.title = moment(this.date).utc().format("LL");
           response = await transactions.getTransactionsForDate(this.date);
         }
         let incomes = { type: "Incomes" };
