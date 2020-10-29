@@ -50,8 +50,7 @@ export default {
     }
   },
   mounted() {
-    let debouncedGetYears = this.debounce(this.mappedGetYears, 250);
-    window.addEventListener("resize", debouncedGetYears)
+    window.addEventListener("resize", this.debouncedGetYears)
   },
   computed: {
     ...mapState(["me", "theme"]),
@@ -75,6 +74,9 @@ export default {
     mappedGetYears(){
       if (!this.me) return;
       this.getYears()
+    },
+    debouncedGetYears() {
+      return this.debounce(this.mappedGetYears, 200);
     },
     debounce(func, wait, immediate) {
       let timeout;

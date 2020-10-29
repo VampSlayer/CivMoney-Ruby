@@ -56,13 +56,13 @@ export default new Vuex.Store({
           let data = monthTotalsResponse.data;
           let months = data.map(x => { return x.datemonth });
           data.forEach(x => {
-            x.datemonth = moment(`${year.dateyear}-${x.datemonth}-01`).utc().format();
+            x.datemonth = moment(`${year.dateyear}-${x.datemonth}-01`).utcOffset(0, true).format();
           });
           [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(x => {
             if (!months.includes(x)) {
               data.push({
                 amount: 0,
-                datemonth: moment(`${year.dateyear}-${x}-01`).utc().format()
+                datemonth: moment(`${year.dateyear}-${x}-01`).utcOffset(0, true).format()
               })
             }
           });
