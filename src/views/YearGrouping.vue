@@ -60,6 +60,7 @@ export default {
       if (!this.selectedYear) return;
       try {
         const result = await Total.getYearGroupedTotals(this.selectedYear);
+        // TODO: move to back end
         let incomes = [];
         let expenses = [];
         result.data.forEach(x => {

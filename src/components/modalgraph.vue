@@ -67,6 +67,7 @@ export default {
         let incomes = { type: "Incomes" };
         let outgoings = { type: "Expenses" };
         let total = { type: "Total", Total: 0 };
+        // TODO: move to back end
         response.data.forEach(element => {
           total.Total += element.amount;
           if (element.amount > 0) {

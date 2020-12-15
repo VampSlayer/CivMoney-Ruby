@@ -106,13 +106,38 @@ module Sinatra
       # /api/transactions/yearsMonthTotals?year=2019
       app.get "/api/transactions/yearsMonthTotals", :auth => [:user] do
         totals = Transaction.find_by_sql ["SELECT
-              date_part('month', transactions.date) AS Datemonth,
+              date_part('month', transactions.date) AS datemonth,
               ROUND(SUM(transactions.amount)::numeric,2) AS amount
             FROM public.transactions
             WHERE date_part('year', transactions.date) = ? AND user_id = ?
-            GROUP BY Datemonth
+            GROUP BY datemonth
             ORDER BY 1 ASC", params[:year], session[:id]]
-        totals.to_json
+
+        months = Array.new(12) { |m| m = m + 1 }
+
+        parsedTotals = Array[]
+
+        totals.each do |total|
+          parsedTotal = Hash.new
+          parsedTotal[:id] = total[:datemonth].to_i
+          if months.include?(parsedTotal[:id])
+            months -= [parsedTotal[:id]]
+          end
+          parsedTotal[:date] = DateTime.new(params[:year].to_i, total[:datemonth].to_i, 1).strftime('%FT%T%:z')
+          parsedTotal[:amount] = total[:amount]
+          parsedTotals.push(parsedTotal)
+        end
+
+        # fill in missing months with 0 amount
+        months.each do |month|
+          parsedTotal = Hash.new
+          parsedTotal[:id] = month
+          parsedTotal[:date] = DateTime.new(params[:year].to_i, month, 1).strftime('%FT%T%:z')
+          parsedTotal[:amount] = 0.0
+          parsedTotals.push(parsedTotal)
+        end
+
+        parsedTotals.to_json
       end
     end
   end

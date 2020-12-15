@@ -37,7 +37,7 @@ export default {
       let chart = am4core.create("dashboard-chart", am4charts.XYChart);
       chart.data = this.data;
 
-      let dateAxis = graphing.createDateAxis(chart, "datemonth", "DD");
+      let dateAxis = graphing.createDateAxis(chart, "date", "DD");
         dateAxis.renderer.labels.template.events.on(
           "hit",
           event => {

@@ -81,6 +81,7 @@ export default {
       try {
         const result = await statsX.getMonthStatsForYear(this.selectedYear);
         let monthlyStatsForYear = result.data;
+        // TODO: move to back end
         monthlyStatsForYear.forEach(x => {
           x.id = x.datemonth;
           x.datemonth = moment()

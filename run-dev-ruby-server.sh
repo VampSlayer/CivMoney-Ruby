@@ -6,4 +6,4 @@ export SESSION_SECRET="developement-super-session-secret-1234567890"
 printenv | grep GOOGLE_CLIENT_ID
 printenv | grep SESSION_SECRET
 
-rackup
+rerun --pattern **/*.{rb} --quiet 'rackup'

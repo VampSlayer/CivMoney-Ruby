@@ -39,8 +39,8 @@ export default {
       trend.stroke = trend.fill = am4core.color(theme.orange);
     }
 
-    const dataFirstDate = data[0].date || data[0].datemonth
-    const dataLastDate = data[data.length - 1].date || data[data.length - 1].datemonth
+    const dataFirstDate = data[0].date
+    const dataLastDate = data[data.length - 1].date
     const trendData = [
       { date: dataLastDate, value: sumOfData },
       { date: dataFirstDate, value: sumOfData }

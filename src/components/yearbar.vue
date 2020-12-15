@@ -35,7 +35,7 @@ export default {
       let chart = am4core.create("dashboard-chart", am4charts.XYChart);
       chart.data = this.data;
 
-      let dateAxis = graphing.createDateAxis(chart, "datemonth", "MMMM");
+      let dateAxis = graphing.createDateAxis(chart, "date", "MMMM");
         dateAxis.renderer.labels.template.events.on(
           "hit",
           event => {
@@ -54,14 +54,14 @@ export default {
 
       let series = graphing.createSeries(
         chart,
-        "datemonth",
+        "date",
         this.me.currency,
         this.theme
       );
         series.columns.template.events.on(
           "hit",
           event => {
-            this.drawModalMonth(event.target.dataItem.dataContext.datemonth);
+            this.drawModalMonth(event.target.dataItem.dataContext.date);
           },
           this
         );

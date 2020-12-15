@@ -54,11 +54,13 @@ export default {
       if (!this.selectedYear) return;
       try {
         const result = await statsX.getMonthAvgsForYear(this.selectedYear);
-        this.monthlyAvgsForYear = result.data;
-        this.monthlyAvgsForYear.forEach(x => {
+        const data = result.data;
+        // TODO: move to back end
+        data.forEach(x => {
           x.id = x.datemonth;
           x.datemonth = `${this.selectedYear}-${x.datemonth}-01`;
         });
+        this.monthlyAvgsForYear = data;
       } catch (error) {
         this.error = error;
       }

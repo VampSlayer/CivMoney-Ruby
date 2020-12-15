@@ -100,6 +100,7 @@ export default {
                 const endFormated = moment(this.range.end).format("YYYY-MM-DD");
                 const resp = await transactions.getTransactionsForRange(startFormated, endFormated);
                 if(resp.data.length === 0) this.noTransactions = true;
+                // TODO: move to back end
                 this.transactions = resp.data.map(x => ({
                     delete: x.id,
                     amount: x.amount,

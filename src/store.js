@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import router from "./router";
 import user from "./services/auth";
 import totals from "./services/totals";
-import moment from "moment";
 
 Vue.use(Vuex);
 
@@ -53,24 +52,10 @@ export default new Vuex.Store({
         let selectableYears = [];
         await years.forEach(async (year) => {
           let monthTotalsResponse = await totals.getTotalPerMonthForYear(year.dateyear);
-          let data = monthTotalsResponse.data;
-          let months = data.map(x => { return x.datemonth });
-          data.forEach(x => {
-            x.datemonth = moment(`${year.dateyear}-${x.datemonth}-01`).utcOffset(0, true).format();
-          });
-          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(x => {
-            if (!months.includes(x)) {
-              data.push({
-                amount: 0,
-                datemonth: moment(`${year.dateyear}-${x}-01`).utcOffset(0, true).format()
-              })
-            }
-          });
-          yearsMap[year.dateyear] = {};
-          yearsMap[year.dateyear].amount = year.amount;
-          yearsMap[year.dateyear].months = data.sort(function (a, b) {
-            return new Date(a.datemonth) - new Date(b.datemonth);
-          });
+          yearsMap[year.dateyear] = {
+            amount: year.amount,
+            months: monthTotalsResponse.data
+          };
           selectableYears.push(year.dateyear);
           commit("updateSelectableYears", selectableYears);
           if (router.app.$route.hash && router.app.$route.hash.split("#")[1].split("/")[0])
