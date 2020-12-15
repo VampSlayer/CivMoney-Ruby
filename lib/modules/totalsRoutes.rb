@@ -18,7 +18,7 @@ module Sinatra
       app.get "/api/transactions/yearsTotals", :auth => [:user] do
         totals = Transaction.find_by_sql ["SELECT
                   date_part('year', transactions.date) AS Dateyear,
-                  SUM(transactions.amount) AS amount
+                  ROUND(SUM(transactions.amount)::numeric,2) AS amount
                 FROM public.transactions
                 WHERE user_id = ?
                 GROUP BY Dateyear

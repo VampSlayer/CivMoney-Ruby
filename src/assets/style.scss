@@ -167,11 +167,13 @@ a:hover {
 
 .red {
     color: $red;
+    fill: $red;
     font-weight: bolder;
 }
 
 .green {
     color: $green;
+    fill: $green;
     font-weight: bolder;
 }
 
@@ -255,4 +257,16 @@ a:hover {
     background-color: $nav-color;
     cursor: pointer;
     border-radius: 1px;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.fade-enter-active, .fade-leave-active { 
+    transition: opacity 1.5s ease; 
+}
+
+.fade-enter, .fade-leave-to { 
+    opacity: 0; 
 }

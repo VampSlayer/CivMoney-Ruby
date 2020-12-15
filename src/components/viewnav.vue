@@ -5,7 +5,7 @@
             <slot></slot>
           </b-nav>
         </div>
-        <year-select></year-select>
+        <year-select v-if="showYearSelect"></year-select>
     </div>
 </template>
 
@@ -13,6 +13,9 @@
 import YearSelect from "./yearselect";
 export default {
     name: "ViewNav",
+    props: {
+      showYearSelect: { type: Boolean, default: true }
+    },
     components: { YearSelect }
 }
 </script>

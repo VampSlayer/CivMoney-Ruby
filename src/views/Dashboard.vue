@@ -21,6 +21,9 @@
         <b-nav-item to="/year">
           <i title="Year" class="fas fa-signal"></i>
         </b-nav-item>
+          <b-nav-item to="/total">
+          <i title="Total" class="fas fa-calculator"></i>
+        </b-nav-item>
       </view-nav>
       <div class="row h-100">
         <vodal

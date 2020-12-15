@@ -35,6 +35,12 @@ export default new Router({
       name: "year",
       component: () => import(/* webpackChunkName: "year" */ "./views/YearGrouping.vue"),
       beforeEnter: Guard.auth
+    },
+    {
+      path: "/total",
+      name: "total",
+      component: () => import(/* webpackChunkName: "total" */ "./views/Total.vue"),
+      beforeEnter: Guard.auth
     }
   ]
 });
