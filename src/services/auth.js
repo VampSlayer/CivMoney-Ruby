@@ -29,16 +29,16 @@ export default {
         theme.resetTheme();
         store.commit("updateMe", null);
     },
-    async get() {
-        return await axios.get("/api/user/getme");
+    get() {
+        return axios.get("/api/user/getme");
     },
-    async login(id_token) {
-        return await axios.post(`/api/login?id_token=${id_token}`);
+    login(id_token) {
+        return axios.post(`/api/login?id_token=${id_token}`);
     },
-    async logout() {
-        return await axios.post("/api/logout");
+    logout() {
+        return axios.post("/api/logout");
     },
-    async updateme(me) {
-        return await axios.post(`/api/user/updateme?currency=${me.currency}&theme=${me.theme}`);
+    updateme(me) {
+        return axios.post(`/api/user/updateme?currency=${me.currency}&theme=${me.theme}`);
     }
 }
