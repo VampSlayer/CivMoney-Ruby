@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden">
+  <div class="overflow-hidden total">
     <div class="mt-2 h-100">
       <view-nav :showYearSelect="false">
         <b-nav-item to="/">
@@ -24,7 +24,7 @@
               <div class="col" v-for="(amount, index) in allYearsTotals" :key="index">
                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" :style="{'--size': normalizeValue(amount)}">
                   <circle style="r: var(--size); cx: 50; cy: 50" :class="getAmountClass(amount)"/>
-                  <text :x="55 - normalizeValue(amount)" y="50" font-size="0.4em" fill="white">{{me.currency}} {{ amount }}</text>
+                  <text :x="62 - normalizeValue(amount)" y="50" font-size="0.4em" style="fill:var(--cm-input-text-color);">{{me.currency}} {{ amount }}</text>
                 </svg>
                 <h1>{{selectableYears[index]}}</h1>
               </div>
@@ -70,10 +70,15 @@ export default {
       const max = Math.max(...this.allYearsTotals)
       const min = Math.min(...this.allYearsTotals)
       let normalized = (x-min)/(max-min)
-      normalized = normalized * 25
+      if (isNaN(normalized) || normalized === 0 || normalized < 0.1) normalized = 0.1
+      normalized = normalized * 50
       if (isNaN(normalized)) return 0
       return normalized
     },
   }
 };
 </script>
+
+<style scoped>
+  .total { color: var(--cm-input-text-color); }
+</style>
