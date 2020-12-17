@@ -6,7 +6,10 @@
         <b-nav-item v-on:click="showAddTransaction">
           <i title="Add a Transaction" class="fa fa-plus"></i>
         </b-nav-item>
-        <b-nav-item v-on:click="showAddMonthlyTransactions" data-hint="Welcome to CivMoney. To get started add this months Incomes and Expense here. Once added the visuals begin!">
+        <b-nav-item v-if="!userHasData && !userHasSeenIntro" class="intro-pulse" v-on:click="showIntroModal">
+          <i title="Introduction" class="fa fa-calendar"></i>
+        </b-nav-item>
+        <b-nav-item v-else :class="{'intro-pulse': !userHasData}" v-on:click="showAddMonthlyTransactions">
           <i title="Monthly Income & Expenses" class="fa fa-calendar"></i>
         </b-nav-item>
         <b-nav-item v-on:click="showSearchTransactions">
@@ -35,7 +38,8 @@
           :duration="500"
           :closeButton="false"
           :closeOnEsc="true">
-          <modal-graph :year="Number(selectedYear)" :month="monthBar" :date="selectedDate" :showing="show"></modal-graph>
+          <modal-graph v-if="userHasData" :year="Number(selectedYear)" :month="monthBar" :date="selectedDate" :showing="show"></modal-graph>
+          <intro v-else></intro>
         </vodal>
         <year-bar v-if="monthData.length === 0" :data="data" v-on:draw-month="showMonth" v-on:draw-month-modal="showMonthModal"></year-bar>
         <month-bar v-else :data="monthData" v-on:draw-date-modal="showDateModal"></month-bar>
@@ -46,7 +50,6 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import introJs from "intro.js";
 import totals from "../services/totals";
 import ModalGraph from "../components/modalgraph";
 import AddTransaction from "../components/addtransaction";
@@ -55,10 +58,11 @@ import SearchTransactions from "../components/serachtransactions";
 import ViewNav from "../components/viewnav";
 import YearBar from "../components/yearbar";
 import MonthBar from "../components/monthbar";
+import Intro from "../components/intro"
 
 export default {
   name: "dashboard",
-  components: { ModalGraph, ViewNav, YearBar, MonthBar },
+  components: { ModalGraph, ViewNav, YearBar, MonthBar, Intro },
   data() {
     return {
       modalHeight: 0,
@@ -68,7 +72,8 @@ export default {
       selectedDate: "",
       monthBar: "",
       data: [],
-      monthData: []
+      monthData: [],
+      userHasSeenIntro: localStorage.getItem("cm--intro-seen") === "true",
     };
   },
   watch: {
@@ -110,15 +115,15 @@ export default {
       }
       this.modalHeight = window.innerHeight / 2;
     };
-    if(localStorage.getItem("cm--intro-seen") !== "seen"){
-      introJs.introJs().addHints().onhintclose(() => { localStorage.setItem("cm--intro-seen", "seen") });
-    }
   },
   created: function() {
     this.getYears();
   },
   computed: {
     ...mapState(["years", "me", "selectedYear", "selectableYears", "selectedMonth"]),
+    userHasData() {
+      return this.data.length
+    }
   },
   methods: {
     ...mapActions(["getYears"]),
@@ -177,6 +182,11 @@ export default {
       this.monthBar = ""
       this.selectedDate = date;
       this.show = true;
+    },
+    showIntroModal() {
+      this.show = true
+      this.userHasSeenIntro = true
+      localStorage.setItem("cm--intro-seen", true)
     }
   }
 };

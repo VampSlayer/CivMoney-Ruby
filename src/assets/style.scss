@@ -70,31 +70,6 @@ a:hover {
 	background-color: $nav-color !important;
 }
 
-.introjs-tooltip {
-	background-color: $nav-color;
-	border: 1px solid $text-color;
-}
-
-.introjs-tooltiptext {
-	color: $text-color !important;
-	background-color: $nav-color;
-}
-
-.introjs-button {
-	background: $background-color;
-	text-shadow: none;
-	color: $input-text-color !important;
-}
-
-.introjs-hint-dot {
-	border: 10px solid $input-text-color !important;
-}
-
-.introjs-hint-pulse {
-	border: 5px solid $input-text-color !important;
-	background-color: $nav-color !important;
-}
-
 .btn-transaction-type {
 	border: 1px solid $background-color !important;
 	border-radius: 0px !important;
@@ -291,4 +266,27 @@ a:hover {
 	background-color: $background-color;
 	color: $input-text-color;
 	border: none;
+}
+
+.intro-pulse {
+	transform: scale(1);
+	animation: pulse 2s infinite;
+
+	a {
+		color: $red !important;
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.7);
+	}
+
+	70% {
+		transform: scale(1.4);
+	}
+
+	100% {
+		transform: scale(0.7);
+	}
 }
