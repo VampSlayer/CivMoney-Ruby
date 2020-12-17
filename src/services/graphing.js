@@ -38,9 +38,8 @@ export default {
     } else {
       trend.stroke = trend.fill = am4core.color(theme.orange);
     }
-
-    const dataFirstDate = data[0].date
-    const dataLastDate = data[data.length - 1].date
+    const dataFirstDate = data.find(x => x.id === 1).date
+    const dataLastDate = data.find(x => x.id === 12).date
     const trendData = [
       { date: dataLastDate, value: sumOfData },
       { date: dataFirstDate, value: sumOfData }
@@ -95,6 +94,8 @@ export default {
 
     let lineSeries = chart.series.push(new am4charts.LineSeries());
     lineSeries.dataFields.valueY = "amount";
+        // eslint-disable-next-line
+    console.log(dateX)
     lineSeries.dataFields.dateX = dateX;
     lineSeries.tensionX = 0.7;
     lineSeries.stroke = am4core.color(theme.yearLine);
