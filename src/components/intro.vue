@@ -27,7 +27,7 @@ img {
 	width: 75%;
 }
 
-h2 {
-	color: var(--cm-text-color);
+h3 {
+	color: var(--cm-input-text-color);
 }
 </style>
