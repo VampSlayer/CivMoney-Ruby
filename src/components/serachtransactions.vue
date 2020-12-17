@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import moment from "moment";
 import transactions from "../services/transactions";
 import { mapActions } from "vuex";
 import utils from "../services/utils"
+import dateFormatter from '../services/dateFormatter'
 
 export default {
     name: "SearchTransactions",
@@ -97,8 +97,8 @@ export default {
             this.noTransactions = false;
             if(!this.range || !this.range.start || !this.range.end) return;
             try {
-                const startFormated = moment(this.range.start).format("YYYY-MM-DD");
-                const endFormated = moment(this.range.end).format("YYYY-MM-DD");
+                const startFormated = dateFormatter.format(this.range.start, "YYYY-MM-DD");
+                const endFormated = dateFormatter.format(this.range.end, "YYYY-MM-DD");
                 const resp = await transactions.getTransactionsForRange(startFormated, endFormated);
                 if(resp.data.length === 0) this.noTransactions = true;
                 // TODO: move to back end
@@ -106,9 +106,11 @@ export default {
                     delete: x.id,
                     amount: x.amount,
                     description: x.description,
-                    date: moment(x.date).format("LL")
+                    date: dateFormatter.format(x.date, "LL")
                 }))
             } catch (error) {
+                // eslint-disable-next-line
+                console.error(error)
                 this.error = error;  
             }
         },

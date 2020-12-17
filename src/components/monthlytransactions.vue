@@ -56,8 +56,9 @@
 import transactionsService from "../services/transactions";
 import { mapActions } from "vuex";
 import Multiselect from "vue-multiselect";
-import moment from "moment";
 import Switches from "vue-switches";
+import dateFormatter from '../services/dateFormatter';
+
 export default {
     name: "monthlyTransactions",
     components: { Multiselect, Switches },
@@ -76,7 +77,7 @@ export default {
     },
     created: function(){
         this.month = this.months.find(month => {
-            if(month.name === moment().format("MMMM")){
+            if (month.name === dateFormatter.today('MMMM')){
                 return month;
             }
         }); 

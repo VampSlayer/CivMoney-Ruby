@@ -8,11 +8,11 @@
 
 <script>
 import { mapState } from "vuex";
-import moment from "moment";
 import totals from "../services/totals";
 import transactions from "../services/transactions";
 import Bar from "./bar";
 import Pie from "./pie";
+import dateFormatter from '../services/dateFormatter';
 
 export default {
   name: "modalgraph",
@@ -55,13 +55,13 @@ export default {
         this.data = [];
         let response = {};
         if (this.month && this.month.length > 0) {
-          this.title = moment(this.month).utc().format("MMMM, YYYY");
+          this.title = dateFormatter.format(this.month, "MMMM, YYYY");
           response = await totals.getMonthGroupedTotals(
             this.year,
-            moment(this.month).utc().format("MM")
+            dateFormatter.format(this.month, "MM")
           );
         } else if (this.date && this.date.length > 0) {
-          this.title = moment(this.date).utc().format("LL");
+          this.title = dateFormatter.format(this.date, "LL");
           response = await transactions.getTransactionsForDate(this.date);
         } else if (this.year && !isNaN(this.year)) {
           this.title = this.year.toString()
@@ -70,7 +70,6 @@ export default {
         let incomes = { type: "Incomes" };
         let outgoings = { type: "Expenses" };
         let total = { type: "Total", Total: 0 };
-        // TODO: move to back end
         response.data.forEach(element => {
           total.Total += element.amount;
           if (element.amount > 0) {
@@ -92,6 +91,8 @@ export default {
         this.data.push(outgoings);
         this.data.push(total);
       } catch (error) {
+        // eslint-disable-next-line
+        console.error(error)
         this.error = error;
       }
     },

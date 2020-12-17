@@ -32,8 +32,9 @@
 <script>
 import transactions from "../services/transactions";
 import { mapActions } from "vuex";
-import moment from "moment"
+import dateFormatter from '../services/dateFormatter'
 import Switches from "vue-switches";
+
 export default {
     name: "AddTransaction",
     components: { Switches },
@@ -41,7 +42,7 @@ export default {
         return {
             amount: 0,
             description: "",
-            date: moment().format('YYYY-MM-DD'),
+            date: dateFormatter.today('YYYY-MM-DD'),
             income: true,
             error: "",
             shake: false

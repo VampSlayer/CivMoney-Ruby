@@ -73,8 +73,8 @@ export default {
     },
     drawModalYear(year) {
       if (!year) return;
-      if (year.includes('/')) {
-        year = year.split('/').slice(-1)[0]
+      if (year.includes('-')) {
+        year = year.split('-')[0]
       }
       this.$emit("draw-year-modal", year);
     }

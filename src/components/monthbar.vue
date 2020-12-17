@@ -6,8 +6,8 @@
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import { mapState } from "vuex";
-import moment from "moment";
 import graphing from "../services/graphing";
+import dateFormatter from '../services/dateFormatter';
 
 export default {
   name: "MonthBar",
@@ -42,7 +42,7 @@ export default {
           "hit",
           event => {
             this.drawDateModal(
-              moment(event.target.dataItem.dates.date).format("YYYY-MM-DD")
+             dateFormatter.format(event.target.dataItem.dates.date, "YYYY-MM-DD")
             );
           },
           this

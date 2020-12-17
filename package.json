@@ -17,7 +17,6 @@
     "bootstrap-vue": "^2.0.0-rc.26",
     "core-js": "^2.6.5",
     "intro.js": "^2.9.3",
-    "moment": "^2.24.0",
     "v-calendar": "^1.0.0-beta.16",
     "vodal": "^2.4.0",
     "vue": "^2.6.10",

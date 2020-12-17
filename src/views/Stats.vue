@@ -39,7 +39,7 @@ import { mapState, mapActions } from "vuex";
 import Pictorialbar from "../components/pictoralbar";
 import ViewNav from "../components/viewnav";
 import statsX from "../services/stats";
-import moment from "moment";
+import dateFormatter from '../services/dateFormatter'
 
 export default {
   name: "Stats",
@@ -84,9 +84,7 @@ export default {
         // TODO: move to back end
         monthlyStatsForYear.forEach(x => {
           x.id = x.datemonth;
-          x.datemonth = moment()
-            .month(x.datemonth - 1)
-            .format("MMMM");
+          x.datemonth = dateFormatter.months(x.datemonth - 1, true)
         });
         this.monthlyStatsForYear = monthlyStatsForYear;
       } catch (error) {

@@ -39,7 +39,6 @@ import { mapState, mapActions } from "vuex";
 import ViewNav from "../components/viewnav";
 import TotalBar from "../components/totalbar"
 import ModalGraph from "../components/modalgraph";
-import moment from 'moment';
 import utils from '../services/utils'
 
 export default {
@@ -82,7 +81,7 @@ export default {
           allYearsTotals.push(
             {
               amount: this.years[year].amount,
-              date: moment(`${year}-01-01`).format('L'),
+              date: `${year}-01-01`,
               id: year
             })
         }
