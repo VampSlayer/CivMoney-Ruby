@@ -65,7 +65,7 @@ export default {
           response = await transactions.getTransactionsForDate(this.date);
         } else if (this.year && !isNaN(this.year)) {
           this.title = this.year.toString()
-          response = await transactions.getTransactionsForYear(this.year);
+          response = await totals.getYearGroupedTotals(this.year);
         }
         let incomes = { type: "Incomes" };
         let outgoings = { type: "Expenses" };
