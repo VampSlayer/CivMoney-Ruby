@@ -35,7 +35,7 @@
                                     <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                                     <div class="row">
                                         <div class="col-10">
-                                            <switches v-model="transaction.income" text-enabled="Income" text-disabled="Expense" color="blue" theme="custom"></switches>
+                                            <toggle onText="Income" offText="Expense" :transaction="transaction"></toggle>
                                         </div>
                                         <div class="col">
                                             <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-right cursor mb-minus-15"><i class="fa fa-minus"></i></a>
@@ -56,12 +56,12 @@
 import transactionsService from "../services/transactions";
 import { mapActions } from "vuex";
 import Multiselect from "vue-multiselect";
-import Switches from "vue-switches";
 import dateFormatter from '../services/dateFormatter';
+import Toggle from './toggle'
 
 export default {
     name: "monthlyTransactions",
-    components: { Multiselect, Switches },
+    components: { Multiselect, Toggle },
     data() {
         return {
             months: [{name: "January", value: "01"}, {name: "Febuary", value: "02"}, {name: "March", value: "03"}, {name: "April", value: "04"}, {name: "May", value: "05"},
@@ -126,7 +126,7 @@ export default {
             } finally{
                 this.loading = false
             }
-        }
+        },
     }
 }
 </script>

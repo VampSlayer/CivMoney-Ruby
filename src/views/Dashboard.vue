@@ -126,7 +126,7 @@ export default {
     showAddTransaction(){
      this.$showPanel({
         component: AddTransaction,
-        height: ((this.modalHeight * 2) / 100) * 27.5,
+        height: ((this.modalHeight * 2) / 100) * 35,
         openOn: "top",
         cssClass: "slideout-bg"
      }); 

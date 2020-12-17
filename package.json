@@ -23,7 +23,6 @@
     "vue-google-login": "^2.0.2",
     "vue-multiselect": "^2.1.6",
     "vue-router": "^3.0.3",
-    "vue-switches": "^2.0.1",
     "vue2-slideout-panel": "^2.2.3",
     "vuex": "^3.0.1"
   },

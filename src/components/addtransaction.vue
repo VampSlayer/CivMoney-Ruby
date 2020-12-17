@@ -12,12 +12,12 @@
             <div class="col-4 col-md-4 col-lg-4 col-xl-3" :class="{'btn-shake' : shake === true}">
                 <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                 <b-card>
-                    <b-input :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1"></b-input>
-                    <b-input :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
-                    <b-input :state="dateState" v-model="date" type="date" class="mb-1"></b-input>
+                    <b-input :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1" @keyup.enter="addTransaction"></b-input>
+                    <b-input :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Description" @keyup.enter="addTransaction"></b-input>
+                    <v-date-picker v-model="date"/>
                     <div class="row">
                         <div class="col-10">
-                            <switches v-model="income" text-enabled="Income" text-disabled="Expense" color="blue" theme="custom"></switches>
+                            <toggle onText="Income" offText="Expense" v-on:toggle="setIncomeOrExpense"></toggle>
                         </div>
                         <div class="col-2 pt-44">
                         <button class="float-right add-st-btn" title="Add Transaction" v-on:click="addTransaction" > <i class="fa fa-plus"></i></button>
@@ -32,17 +32,16 @@
 <script>
 import transactions from "../services/transactions";
 import { mapActions } from "vuex";
-import dateFormatter from '../services/dateFormatter'
-import Switches from "vue-switches";
+import Toggle from "./toggle"
 
 export default {
     name: "AddTransaction",
-    components: { Switches },
+    components: { Toggle },
     data() {
         return {
             amount: 0,
             description: "",
-            date: dateFormatter.today('YYYY-MM-DD'),
+            date: new Date(),
             income: true,
             error: "",
             shake: false
@@ -50,15 +49,11 @@ export default {
     },
     computed: {
       amountState() {
-        this.shake =false;
+        this.shake = false;
         return this.amount > 0;
       },
-      dateState() {
-        this.shake =false;
-        return this.date.length > 0;
-      },
       descriptionState() {
-        this.shake =false;
+        this.shake = false;
         return this.description.length > 0;
       }
     },
@@ -66,7 +61,7 @@ export default {
         ...mapActions(["getYears"]),
         async addTransaction(){
             this.shake = false;
-            if(!this.amountState || !this.descriptionState || !this.dateState){
+            if(!this.amountState || !this.descriptionState){
                 this.shake = true;
                 return;
             }
@@ -82,6 +77,9 @@ export default {
         },
         close(){
             this.$emit("closePanel", {})
+        },
+        setIncomeOrExpense(status) {
+            this.income = status
         }
     }
 }
