@@ -11,10 +11,12 @@
                         <b-card>
                             <b-card-body>
                                 <h4>Monthly Income & Expenses</h4> 
-                                Here you can add Incomes and Expenses for any month this year.
+                                <p>Here you can add Incomes and Expenses for any month this year.
                                 Simply add something like "Wages" as an Income and "Rent" as an Expense.
-                                Or
-                                <a class="cursor font-weight-bold" :disabled="loading" variant="light" v-on:click="CreateSampleData">click here to create sample Transactions.</a>
+                                </p>
+                                <p class="text-center">
+                                    <button class="cursor font-weight-bold btn btn-danger" :disabled="loading" variant="light" v-on:click="CreateSampleData">Or click here to create sample Transactions</button>
+                                </p>
                                 This will then been shown as breakdown visualizations on the dashboard.
                                 <div class="text-center mt-2" v-if="loading"><b-spinner label="Spinning"></b-spinner></div>
                             </b-card-body>
