@@ -151,6 +151,16 @@ a:hover {
 	font-weight: bolder;
 }
 
+.red-background {
+	background-color: $red;
+	transition: all 0.5s ease;
+}
+
+.green-background {
+	background-color: $green;
+	transition: all 0.5s ease;
+}
+
 .w-100 {
 	width: 100%;
 }

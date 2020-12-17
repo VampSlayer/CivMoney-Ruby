@@ -32,7 +32,7 @@
                     <div class="col-8 col-md-8 col-lg-8 col-xl-9">
                         <div class="row">
                             <div v-for="(transaction, index) in transactions" :key="index" class="col-4 col-md-4 col-lg-4 col-xl-2 mt-2">
-                                <b-card>
+                                <b-card :class="transaction.income ? 'green-background': 'red-background'">
                                     <b-input min=0 step="0.01" v-model="transaction.amount" type="number" class="mb-1" placeholder="Amount"></b-input>
                                     <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                                     <div class="row">
