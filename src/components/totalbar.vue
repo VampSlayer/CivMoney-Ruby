@@ -61,7 +61,7 @@ export default {
       series.columns.template.events.on(
           "hit",
           event => {
-            this.goToYear(event.target.dataItem.dataContext.date);
+            this.drawModalYear(event.target.dataItem.dataContext.date);
           },
           this
         );
@@ -69,10 +69,14 @@ export default {
       graphing.createSeriesRange(valueAxis, series);
     },
     goToYear(year) {
+      this.$router.push({name: 'home', hash: `#${year}`})
+    },
+    drawModalYear(year) {
+      if (!year) return;
       if (year.includes('/')) {
         year = year.split('/').slice(-1)[0]
       }
-      this.$router.push({name: 'home', hash: `#${year}`})
+      this.$emit("draw-year-modal", year);
     }
   }
 };

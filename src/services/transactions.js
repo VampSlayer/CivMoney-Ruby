@@ -1,6 +1,9 @@
 import axios from "axios"
 
 export default {
+    getTransactionsForYear(year) {
+        return axios.get(`/api/transactions/year?year=${year}`);
+    },
     getTransactionsForDate(date){
         return axios.get(`/api/transactions/date?date=${date}`);
     },

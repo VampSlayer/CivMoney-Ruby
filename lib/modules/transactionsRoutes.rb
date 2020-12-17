@@ -21,6 +21,16 @@ module Sinatra
         transactions.to_json
       end
 
+      # get transactions for year
+      # /api/transactions/year?year=2020
+      app.get "/api/transactions/year", :auth => [:user] do
+        transactions = Transaction.find_by_sql ["SELECT *
+          FROM public.transactions
+          WHERE date_part('year', transactions.date) = ? AND user_id = ?
+          ORDER BY 1 ASC", params[:year], session[:id]]
+        transactions.to_json
+      end
+
       # get transactions for range
       # /api/transactions/rangeAll?dateStart=2019.01.01&dateEnd=2019.01.02
       app.get "/api/transactions/rangeAll", :auth => [:user] do

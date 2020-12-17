@@ -16,7 +16,18 @@
           </transition>
         </div>
         <div class="row h-95">
-          <total-bar :data="allYearsTotals"></total-bar>
+           <vodal
+            :show="show"
+            animation="slideUp"
+            v-on:hide="hideModal"
+            :width="modalWidth"
+            :height="modalHeight"
+            :duration="500"
+            :closeButton="false"
+            :closeOnEsc="true">
+            <modal-graph :year="Number(year)" :showing="show"></modal-graph>
+          </vodal>
+          <total-bar :data="allYearsTotals" v-on:draw-year-modal="showModal"></total-bar>
         </div>
       </div>
     </div>
@@ -27,14 +38,40 @@
 import { mapState, mapActions } from "vuex";
 import ViewNav from "../components/viewnav";
 import TotalBar from "../components/totalbar"
+import ModalGraph from "../components/modalgraph";
 import moment from 'moment';
 import utils from '../services/utils'
 
 export default {
   name: "Total",
-  components: { ViewNav, TotalBar},
+  components: { ViewNav, TotalBar, ModalGraph },
+  data() {
+    return {
+      modalHeight: 0,
+      modalWidth: 0,
+      show: false,
+      year: null
+    }
+  },
   created: function() {
     this.getYears();
+  },
+  mounted() {
+    // TODO move to utils
+    this.modalHeight = window.innerHeight / 2;
+    if (window.innerWidth > 1500) {
+      this.modalWidth = window.innerWidth / 3;
+    } else {
+      this.modalWidth = window.innerWidth - 100;
+    }
+    window.onresize = () => {
+      if (window.innerWidth > 1500) {
+        this.modalWidth = window.innerWidth / 3;
+      } else {
+        this.modalWidth = window.innerWidth - 100;
+      }
+      this.modalHeight = window.innerHeight / 2;
+    };
   },
   computed: {
     ...mapState(["years", "selectableYears", "me"]),
@@ -61,7 +98,15 @@ export default {
   },
   methods: {
     ...mapActions(["getYears"]),
-  }
+    hideModal(){
+      this.year = null;
+      this.show = false;
+    },
+    showModal(year) {
+      this.year = year;
+      this.show = true;
+    }
+  },
 };
 </script>
 
