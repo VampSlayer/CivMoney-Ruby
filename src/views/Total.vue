@@ -1,37 +1,24 @@
 <template>
-  <div class="overflow-hidden total">
+  <div>
     <div class="mt-2 h-100">
       <view-nav :showYearSelect="false">
         <b-nav-item to="/">
           <i title="Dashboard" class="fas fa-chart-bar"></i>
         </b-nav-item>
       </view-nav>
-      <transition name="fade" appear>
-        <div class="h-100" key="1">
-          <div class="text-center h-100">
-            <div class="row">
-              <div class="col-11">
-                <h2><u>Total {{selectableYears[0]}}-{{selectableYears[selectableYears.length - 1]}}</u></h2>
-                <h1 :class="getAmountClass(total)">{{me.currency}}{{ total }}</h1>
-              </div>
+      <div class="h-100">
+        <div class="row text-center">
+          <transition name="fade" mode="out-in" appear>
+            <div v-show="total" class="col">
+              <h6 class="total"><u>Total {{ selectableYears[0] }}-{{ selectableYears[selectableYears.length - 1] }}</u></h6>
+              <h4 :class="totalClass">{{ me.currency }}{{ total }}</h4>
             </div>
-            <div class="row">
-                <div class="col">
-                  <div style="height: 1em"></div>
-                </div>
-            </div>
-            <div class="row">
-              <div class="col" v-for="(amount, index) in allYearsTotals" :key="index">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" :style="{'--size': normalizeValue(amount)}">
-                  <circle style="r: var(--size); cx: 50; cy: 50" :class="getAmountClass(amount)"/>
-                  <text :x="62 - normalizeValue(amount)" y="50" font-size="0.4em" style="fill:var(--cm-input-text-color);">{{me.currency}} {{ amount }}</text>
-                </svg>
-                <h1>{{selectableYears[index]}}</h1>
-              </div>
-            </div>
-          </div>
+          </transition>
         </div>
-      </transition>
+        <div class="row h-95">
+          <total-bar :data="allYearsTotals"></total-bar>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -39,10 +26,13 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import ViewNav from "../components/viewnav";
+import TotalBar from "../components/totalbar"
+import moment from 'moment';
+import utils from '../services/utils'
 
 export default {
   name: "Total",
-  components: { ViewNav },
+  components: { ViewNav, TotalBar},
   created: function() {
     this.getYears();
   },
@@ -51,30 +41,26 @@ export default {
     allYearsTotals() {
       let allYearsTotals = []
       this.selectableYears.forEach(year => {
-        if (this.years[year]) allYearsTotals.push(this.years[year].amount)
+        if (this.years[year]) {
+          allYearsTotals.push(
+            {
+              amount: this.years[year].amount,
+              date: moment(`${year}-01-01`).format('L'),
+              id: year
+            })
+        }
       });
       return allYearsTotals
     },
     total() {
-      return this.allYearsTotals.reduce((a, b) => a + b, 0).toFixed(2)
+      return this.allYearsTotals.map(x => {return x.amount}).reduce((a, b) => a + b, 0).toFixed(2)
+    },
+    totalClass() {
+      return utils.getAmountClass(this.total)
     }
   },
   methods: {
     ...mapActions(["getYears"]),
-    getAmountClass(value){
-      if (value === 0 || value === 0.00) return "orange"
-      return value > 0 ? "green" : "red"
-    },
-    normalizeValue(x) {
-      x = Math.abs(x)
-      const max = Math.max(...this.allYearsTotals)
-      const min = Math.min(...this.allYearsTotals)
-      let normalized = (x-min)/(max-min)
-      if (isNaN(normalized) || normalized === 0 || normalized < 0.1) normalized = 0.1
-      normalized = normalized * 50
-      if (isNaN(normalized)) return 0
-      return normalized
-    },
   }
 };
 </script>

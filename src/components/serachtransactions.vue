@@ -37,6 +37,8 @@
 import moment from "moment";
 import transactions from "../services/transactions";
 import { mapActions } from "vuex";
+import utils from "../services/utils"
+
 export default {
     name: "SearchTransactions",
     data() {
@@ -72,8 +74,7 @@ export default {
     methods: {
         ...mapActions(["getYears"]),
         getAmountClass(value){
-            if (value === 0 || value === 0.00) return "orange"
-            return value > 0 ? "green" : "red"
+           return utils.getAmountClass(value)
         },
         deleteTransaction: async function(id){
             if(!id) return;
