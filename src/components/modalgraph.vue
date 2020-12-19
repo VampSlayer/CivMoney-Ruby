@@ -9,7 +9,6 @@
 <script>
 import { mapState } from "vuex";
 import totals from "../services/totals";
-import transactions from "../services/transactions";
 import Bar from "./bar";
 import Pie from "./pie";
 import dateFormatter from '../services/dateFormatter';
@@ -62,34 +61,24 @@ export default {
           );
         } else if (this.date && this.date.length > 0) {
           this.title = dateFormatter.format(this.date, "LL");
-          response = await transactions.getTransactionsForDate(this.date);
+          response = await totals.getDateGroupedTotals(this.date);
         } else if (this.year && !isNaN(this.year)) {
           this.title = this.year.toString()
           response = await totals.getYearGroupedTotals(this.year);
         }
         let incomes = { type: "Incomes" };
-        let outgoings = { type: "Expenses" };
-        let total = { type: "Total", Total: 0 };
-        response.data.forEach(element => {
-          total.Total += element.amount;
-          if (element.amount > 0) {
-            if (element.description in incomes) {
-              incomes[element.description] += element.amount;
-            } else {
-              incomes[element.description] = element.amount;
-            }
-          }
-          if (element.amount < 0) {
-            if (element.description in outgoings) {
-              outgoings[element.description] += element.amount;
-            } else {
-              outgoings[element.description] = element.amount;
-            }
-          }
-        });
-        this.data.push(incomes);
-        this.data.push(outgoings);
-        this.data.push(total);
+        let expenses = { type: "Expenses" };
+        let total = { type: "Total", Total: response.data.total };
+
+        response.data.incomes.forEach(x => {
+          incomes[x.description] = x.amount;
+        })
+
+        response.data.expenses.forEach(x => {
+          expenses[x.description] = x.amount;
+        })
+
+        this.data = [incomes, expenses, total];
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)

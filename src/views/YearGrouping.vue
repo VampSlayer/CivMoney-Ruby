@@ -60,13 +60,7 @@ export default {
       if (!this.selectedYear) return;
       try {
         const result = await Total.getYearGroupedTotals(this.selectedYear);
-        let incomes = [];
-        let expenses = [];
-        result.data.forEach(x => {
-          if (x.amount > 0) incomes.push(x);
-          if (x.amount < 0) expenses.push(x);
-        });
-        this.yearGroupedIncomes = incomes.map(x => {
+        this.yearGroupedIncomes = result.data.incomes.map(x => {
           return {
             name: x.description,
             children: [
@@ -77,7 +71,7 @@ export default {
             ]
           };
         });
-        this.yearGroupedExpenses = expenses.map(x => {
+        this.yearGroupedExpenses = result.data.expenses.map(x => {
           return {
             name: x.description,
             children: [

@@ -96,6 +96,28 @@ module Sinatra
         parsed_averages.to_json
       end
 
+      # get grouped transactions sum for date
+      # /api/transactions/dateGroupedTotals?date=2016.08.03
+      app.get "/api/transactions/dateGroupedTotals", :auth => [:user] do
+        sums = Transaction.select(:description, :amount).where(date: params[:date], user_id: session[:id]).group(:description, :amount)
+
+        data = Hash.new
+        data[:incomes] = Array[]
+        data[:expenses] = Array[]
+        data[:total] = 0
+
+        sums.each do |sum|
+          data[:total] += sum.amount
+          if sum.amount > 0 
+            data[:incomes].push(sum)
+          else 
+            data[:expenses].push(sum)
+          end
+        end
+        
+        data.to_json
+      end
+
       # get grouped transactions sum for month
       # /api/transactions/monthGroupedTotals?month=01&year=2019
       app.get "/api/transactions/monthGroupedTotals", :auth => [:user] do
@@ -106,7 +128,22 @@ module Sinatra
             WHERE date_part('month', transactions.date) = ? AND date_part('year', transactions.date) = ? AND user_id = ?
             GROUP BY description
             ORDER BY 1 ASC", params[:month], params[:year], session[:id]]
-        sums.to_json
+
+        data = Hash.new
+        data[:incomes] = Array[]
+        data[:expenses] = Array[]
+        data[:total] = 0
+
+        sums.each do |sum|
+          data[:total] += sum.amount
+          if sum.amount > 0 
+            data[:incomes].push(sum)
+          else 
+            data[:expenses].push(sum)
+          end
+        end
+        
+        data.to_json
       end
 
       # get grouped transactions sum for year
@@ -119,7 +156,22 @@ module Sinatra
             WHERE date_part('year', transactions.date) = ? AND user_id = ?
             GROUP BY description
             ORDER BY 1 ASC", params[:year], session[:id]]
-        sums.to_json
+
+        data = Hash.new
+        data[:incomes] = Array[]
+        data[:expenses] = Array[]
+        data[:total] = 0
+
+        sums.each do |sum|
+          data[:total] += sum.amount
+          if sum.amount > 0 
+            data[:incomes].push(sum)
+          else 
+            data[:expenses].push(sum)
+          end
+        end
+        
+        data.to_json
       end
 
       # get monthly totals for year

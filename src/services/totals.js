@@ -10,6 +10,9 @@ export default {
     getTotalPerDayForMonth(year, month){
         return axios.get(`/api/transactions/dailyTotalMonth?year=${year}&month=${month}`);
     },
+    getDateGroupedTotals(date) {
+        return axios.get(`/api/transactions/dateGroupedTotals?date=${date}`);
+    },
     getMonthGroupedTotals(year, month){
         return axios.get(`/api/transactions/monthGroupedTotals?year=${year}&month=${month}`);
     },
