@@ -94,8 +94,6 @@ export default {
 
     let lineSeries = chart.series.push(new am4charts.LineSeries());
     lineSeries.dataFields.valueY = "amount";
-        // eslint-disable-next-line
-    console.log(dateX)
     lineSeries.dataFields.dateX = dateX;
     lineSeries.tensionX = 0.7;
     lineSeries.stroke = am4core.color(theme.yearLine);

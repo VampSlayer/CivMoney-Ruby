@@ -47,7 +47,7 @@ export default {
       var valueAxisX = chart.xAxes.push(new am4charts.DateAxis());
       valueAxisX.renderer.minGridDistance = 50;
       valueAxisX.renderer.grid.template.location = 0.5;
-      valueAxisX.dateFormats.setKey("datemonth", "MMMM");
+      valueAxisX.dateFormats.setKey("date", "MMMM");
 
       // Create value axis
       var valueAxisY = chart.yAxes.push(new am4charts.ValueAxis());
@@ -58,7 +58,7 @@ export default {
       var lineSeries = chart.series.push(new am4charts.LineSeries());
       lineSeries.name = `Average ${this.me.currency} Spent Per Day`
       lineSeries.dataFields.valueY = "spent";
-      lineSeries.dataFields.dateX = "datemonth";
+      lineSeries.dataFields.dateX = "date";
       lineSeries.stroke = am4core.color(this.theme.red)
       lineSeries.strokeWidth = 3;
       lineSeries.strokeOpacity = 0.75;
@@ -67,7 +67,7 @@ export default {
       var lineSeries2 = chart.series.push(new am4charts.LineSeries());
       lineSeries2.name = `Average ${this.me.currency} Saved Per Day`
       lineSeries2.dataFields.valueY = "saved";
-      lineSeries2.dataFields.dateX = "datemonth";
+      lineSeries2.dataFields.dateX = "date";
       lineSeries2.stroke = am4core.color(this.theme.green)
       lineSeries2.strokeWidth = 3;
       lineSeries2.strokeOpacity = 0.75;

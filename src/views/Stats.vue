@@ -23,7 +23,7 @@
         <div class="row h-20">
           <div class="col" v-for="month in monthlyStatsForYear" :key="month.id">
             <pictorialbar
-              :title="month.datemonth"
+              :title="month.date"
               :alignLabels="false"
               :data="{spent:month.spent, saved:month.saved}">
             </pictorialbar>
@@ -39,7 +39,6 @@ import { mapState, mapActions } from "vuex";
 import Pictorialbar from "../components/pictoralbar";
 import ViewNav from "../components/viewnav";
 import statsX from "../services/stats";
-import dateFormatter from '../services/dateFormatter'
 
 export default {
   name: "Stats",
@@ -80,13 +79,7 @@ export default {
       if (!this.selectedYear) return;
       try {
         const result = await statsX.getMonthStatsForYear(this.selectedYear);
-        let monthlyStatsForYear = result.data;
-        // TODO: move to back end
-        monthlyStatsForYear.forEach(x => {
-          x.id = x.datemonth;
-          x.datemonth = dateFormatter.months(x.datemonth - 1, true)
-        });
-        this.monthlyStatsForYear = monthlyStatsForYear;
+        this.monthlyStatsForYear = result.data;
       } catch (error) {
         this.error = error;
       }

@@ -58,7 +58,8 @@ import SearchTransactions from "../components/serachtransactions";
 import ViewNav from "../components/viewnav";
 import YearBar from "../components/yearbar";
 import MonthBar from "../components/monthbar";
-import Intro from "../components/intro"
+import Intro from "../components/intro";
+import utils from '../services/utils';
 
 export default {
   name: "dashboard",
@@ -100,21 +101,9 @@ export default {
       }
     }
   },
-  mounted: function() {
-    this.modalHeight = window.innerHeight / 2;
-    if (window.innerWidth > 1500) {
-      this.modalWidth = window.innerWidth / 3;
-    } else {
-      this.modalWidth = window.innerWidth - 100;
-    }
-    window.onresize = () => {
-      if (window.innerWidth > 1500) {
-        this.modalWidth = window.innerWidth / 3;
-      } else {
-        this.modalWidth = window.innerWidth - 100;
-      }
-      this.modalHeight = window.innerHeight / 2;
-    };
+   mounted() {
+    this.setModalSize()
+    window.onresize = () => { this.setModalSize() };
   },
   created: function() {
     this.getYears();
@@ -187,6 +176,11 @@ export default {
       this.show = true
       this.userHasSeenIntro = true
       localStorage.setItem("cm--intro-seen", true)
+    },
+    setModalSize() {
+      const modalSize = utils.calculateModalSize()
+      this.modalHeight = modalSize.height
+      this.modalWidth = modalSize.width
     }
   }
 };

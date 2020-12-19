@@ -101,13 +101,7 @@ export default {
                 const endFormated = dateFormatter.format(this.range.end, "YYYY-MM-DD");
                 const resp = await transactions.getTransactionsForRange(startFormated, endFormated);
                 if(resp.data.length === 0) this.noTransactions = true;
-                // TODO: move to back end
-                this.transactions = resp.data.map(x => ({
-                    delete: x.id,
-                    amount: x.amount,
-                    description: x.description,
-                    date: dateFormatter.format(x.date, "LL")
-                }))
+                this.transactions = resp.data
             } catch (error) {
                 // eslint-disable-next-line
                 console.error(error)

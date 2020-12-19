@@ -45,35 +45,55 @@ module Sinatra
       # /api/transactions/yearMonthsStats?year=2019
       app.get "/api/transactions/yearMonthStats", :auth => [:user] do
         stats = Transaction.find_by_sql ["SELECT
-                date_part('month', transactions.date) AS Datemonth,
+                date_part('month', transactions.date) AS datemonth,
               ROUND(SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END)::numeric,2) AS spent,
               ROUND((SUM(CASE WHEN transactions.amount > 0 THEN transactions.amount ELSE 0 END)
               - SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END))::numeric,2) AS saved
               FROM public.transactions
               WHERE date_part('year', transactions.date) = ? AND user_id = ?
-              GROUP BY Datemonth
+              GROUP BY datemonth
               ORDER BY 1 ASC", params[:year], session[:id]]
-        stats.to_json
+
+        parsed_stats = Array[]
+
+        stats.each do |stat|
+          parsed = Hash.new
+          parsed[:id] = stat[:datemonth]
+          parsed[:spent] = stat[:spent]
+          parsed[:saved] = stat[:saved]
+          parsed[:date] = DateTime.new(params[:year].to_i, stat[:datemonth], 1).strftime('%B')
+          parsed_stats.push(parsed)
+        end
+
+        parsed_stats.to_json
       end
 
       # get month transaction averages for year
       # /api/transactions/yearMonthAvgs?year=2019
       app.get "/api/transactions/yearMonthAvgs", :auth => [:user] do
         averages = Transaction.find_by_sql ["SELECT
-              date_part('month', transactions.date) AS Datemonth,
+              date_part('month', transactions.date) AS datemonth,
               SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END)::numeric AS spent,
               (SUM(CASE WHEN transactions.amount > 0 THEN transactions.amount ELSE 0 END)
               - SUM(CASE WHEN transactions.amount < 0 THEN ABS(transactions.amount) ELSE 0 END))::numeric AS saved
             FROM public.transactions
             WHERE date_part('year', transactions.date) = ? AND user_id = ?
-            GROUP BY Datemonth
+            GROUP BY datemonth
             ORDER BY 1 ASC", params[:year], session[:id]]
-        averages.each do |transaction|
-          number_of_days_in_month = Time.days_in_month(transaction[:datemonth].to_i, params[:year].to_i)
-          transaction[:spent] = (transaction[:spent] / number_of_days_in_month).to_f.round(2)
-          transaction[:saved] = (transaction[:saved] / number_of_days_in_month).to_f.round(2)
+        
+        parsed_averages = Array[]
+
+        averages.each do |average|
+          number_of_days_in_month = Time.days_in_month(average[:datemonth].to_i, params[:year].to_i)
+          parsed = Hash.new
+          parsed[:spent] = (average[:spent] / number_of_days_in_month).to_f.round(2)
+          parsed[:saved] = (average[:saved] / number_of_days_in_month).to_f.round(2)
+          parsed[:id] = average[:datemonth].to_i
+          parsed[:date] = DateTime.new(params[:year].to_i, average[:datemonth], 1).strftime('%F')
+          parsed_averages.push(parsed)
         end
-        averages.to_json
+
+        parsed_averages.to_json
       end
 
       # get grouped transactions sum for month
@@ -115,29 +135,29 @@ module Sinatra
 
         months = Array.new(12) { |m| m = m + 1 }
 
-        parsedTotals = Array[]
+        parsed_totals = Array[]
 
         totals.each do |total|
-          parsedTotal = Hash.new
-          parsedTotal[:id] = total[:datemonth].to_i
-          if months.include?(parsedTotal[:id])
-            months -= [parsedTotal[:id]]
+          parsed_total = Hash.new
+          parsed_total[:id] = total[:datemonth].to_i
+          if months.include?(parsed_total[:id])
+            months -= [parsed_total[:id]]
           end
-          parsedTotal[:date] = DateTime.new(params[:year].to_i, total[:datemonth].to_i, 1).strftime('%FT%T%:z')
-          parsedTotal[:amount] = total[:amount]
-          parsedTotals.push(parsedTotal)
+          parsed_total[:date] = DateTime.new(params[:year].to_i, total[:datemonth].to_i, 1).strftime('%FT%T%:z')
+          parsed_total[:amount] = total[:amount]
+          parsed_totals.push(parsed_total)
         end
 
         # fill in missing months with 0 amount
         months.each do |month|
-          parsedTotal = Hash.new
-          parsedTotal[:id] = month
-          parsedTotal[:date] = DateTime.new(params[:year].to_i, month, 1).strftime('%FT%T%:z')
-          parsedTotal[:amount] = 0.0
-          parsedTotals.push(parsedTotal)
+          parsed_total = Hash.new
+          parsed_total[:id] = month
+          parsed_total[:date] = DateTime.new(params[:year].to_i, month, 1).strftime('%FT%T%:z')
+          parsed_total[:amount] = 0.0
+          parsed_totals.push(parsed_total)
         end
 
-        parsedTotals.to_json
+        parsed_totals.to_json
       end
     end
   end

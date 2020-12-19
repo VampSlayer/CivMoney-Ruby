@@ -37,7 +37,19 @@ module Sinatra
         date_start = Date.parse(params[:dateStart])
         date_end = Date.parse(params[:dateEnd])
         transactions = Transaction.where(date: (date_start)..date_end, user_id: session[:id]).order(:date)
-        transactions.to_json
+
+        parsed_transactions = Array[]
+
+        transactions.each do |transaction|
+          parsed = Hash.new
+          parsed[:delete] = transaction[:id]
+          parsed[:amount] = transaction[:amount]
+          parsed[:description] = transaction[:description]
+          parsed[:date] = transaction[:date].strftime('%B %-d, %Y')
+          parsed_transactions.push(parsed)
+        end
+
+        parsed_transactions.to_json
       end
 
       # delete transaction

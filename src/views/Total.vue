@@ -39,7 +39,7 @@ import { mapState, mapActions } from "vuex";
 import ViewNav from "../components/viewnav";
 import TotalBar from "../components/totalbar"
 import ModalGraph from "../components/modalgraph";
-import utils from '../services/utils'
+import utils from '../services/utils';
 
 export default {
   name: "Total",
@@ -56,21 +56,8 @@ export default {
     this.getYears();
   },
   mounted() {
-    // TODO move to utils
-    this.modalHeight = window.innerHeight / 2;
-    if (window.innerWidth > 1500) {
-      this.modalWidth = window.innerWidth / 3;
-    } else {
-      this.modalWidth = window.innerWidth - 100;
-    }
-    window.onresize = () => {
-      if (window.innerWidth > 1500) {
-        this.modalWidth = window.innerWidth / 3;
-      } else {
-        this.modalWidth = window.innerWidth - 100;
-      }
-      this.modalHeight = window.innerHeight / 2;
-    };
+    this.setModalSize()
+    window.onresize = () => { this.setModalSize() };
   },
   computed: {
     ...mapState(["years", "selectableYears", "me"]),
@@ -104,6 +91,11 @@ export default {
     showModal(year) {
       this.year = year;
       this.show = true;
+    },
+    setModalSize() {
+      const modalSize = utils.calculateModalSize()
+      this.modalHeight = modalSize.height
+      this.modalWidth = modalSize.width
     }
   },
 };
