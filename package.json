@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "concurrently --kill-others \"npm run serve:back\" \"npm run serve:front\"",
-    "serve": "concurrently --kill-others \"npm run serve:back\" \"npm run serve:front\"",
     "serve:front": "vue-cli-service serve --open",
     "serve:back": "./run-dev-ruby-server.sh",
+    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
