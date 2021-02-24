@@ -26,6 +26,17 @@ module Sinatra
           return 500
         end
       end
+
+      # get user top 10 descriptions
+      app.get "/api/user/gettopdeescriptions", :auth => [:user] do
+        descriptions = Transaction.select("description").where(user_id: session[:id]).limit(10).distinct
+
+        parsed_descriptions = Array[]
+        descriptions.each do |description|
+          parsed_descriptions.push(description.description)
+        end
+        parsed_descriptions.to_json
+      end
     end
   end
 end

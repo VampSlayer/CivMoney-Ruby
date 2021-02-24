@@ -15,7 +15,8 @@ export default new Vuex.Store({
     selectedMonth: null,
     loggingIn: false,
     loginError: null,
-    theme: {}
+    theme: {},
+    topDescriptions: []
   },
   mutations: {
     loginStart: state => (state.loggingIn = true),
@@ -41,7 +42,10 @@ export default new Vuex.Store({
     },
     updateTheme: (state, theme) => {
       state.theme = theme;
-    }
+    },
+    updateTopDescriptions: (state, topDescriptions) => {
+      state.topDescriptions = topDescriptions
+    },
   },
   actions: {
     async getYears({ commit }) {
@@ -91,6 +95,15 @@ export default new Vuex.Store({
       await user.logout();
       user.remove();
       router.push("/login");
-    }
+    },
+    async getTopDescriptions({ commit }) {
+      try {
+        const response = await user.getTopDescriptions()
+        commit("updateTopDescriptions", response.data)
+      } catch (error) {
+        // eslint-disable-next-line
+        console.error(error)
+      }
+    },
   }
 });

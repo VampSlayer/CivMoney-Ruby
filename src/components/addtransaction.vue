@@ -13,7 +13,12 @@
                 <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                 <b-card :class="income ? 'green-background': 'red-background'">
                     <b-input :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1" @keyup.enter="addTransaction"></b-input>
-                    <b-input :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Description" @keyup.enter="addTransaction"></b-input>
+                    <b-form-select class="form-control mb-1" v-model="topDescription" :options="topDescriptions">
+                        <template #first>
+                            <option value="null" selected>New Description</option>
+                        </template>
+                    </b-form-select>
+                    <b-input :disabled="topDescriptionState" :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="New Description" @keyup.enter="addTransaction"></b-input>
                     <v-date-picker v-model="date"/>
                     <div class="row">
                         <div class="col-10">
@@ -31,7 +36,7 @@
 
 <script>
 import transactions from "../services/transactions";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import Toggle from "./toggle"
 
 export default {
@@ -40,7 +45,8 @@ export default {
     data() {
         return {
             amount: 0,
-            description: "",
+            description: null,
+            topDescription: null,
             date: new Date(),
             income: true,
             error: "",
@@ -48,14 +54,23 @@ export default {
         };
     },
     computed: {
+      ...mapState(["topDescriptions"]),
       amountState() {
         this.shake = false;
         return this.amount > 0;
       },
       descriptionState() {
         this.shake = false;
-        return this.description.length > 0;
+        return (this.description && this.description.length > 0) || (this.topDescription && this.topDescription.length > 0 && this.topDescription !== "null");
+      },
+      topDescriptionState() {
+        return this.topDescription !== null && this.topDescription !== "null"
       }
+    },
+    watch: {
+        topDescription() {
+            this.description = null
+        }
     },
     methods:{
         ...mapActions(["getYears"]),
@@ -65,10 +80,11 @@ export default {
                 this.shake = true;
                 return;
             }
+            let description = this.description ? this.description : this.topDescription
             try {
                 let amount = this.amount;
                 if(this.income === false) amount = -amount;
-                await transactions.addTransaction(amount, this.description, this.date);
+                await transactions.addTransaction(amount, description, this.date);
                 await this.getYears();
                 this.close();
             } catch (error) {

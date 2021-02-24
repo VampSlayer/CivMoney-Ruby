@@ -40,5 +40,8 @@ export default {
     },
     updateme(me) {
         return axios.post(`/api/user/updateme?currency=${me.currency}&theme=${me.theme}`);
-    }
+    },
+    getTopDescriptions() {
+        return axios.get("/api/user/gettopdeescriptions");
+    },
 }

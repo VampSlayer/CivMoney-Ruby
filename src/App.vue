@@ -49,6 +49,9 @@ export default {
       }
     }
   },
+  created() {
+    this.getTopDescriptions()
+  },
   mounted() {
     window.addEventListener("resize", this.debouncedGetYears)
   },
@@ -56,7 +59,7 @@ export default {
     ...mapState(["me", "theme"]),
   },
   methods: {
-    ...mapActions(["logout", "loginFaliure", "getYears"]),
+    ...mapActions(["logout", "loginFaliure", "getYears", "getTopDescriptions"]),
     showProfile(){
       this.$showPanel({
         component: Profile,
@@ -91,7 +94,7 @@ export default {
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
       }
-    }
+    },
   }
 };
 </script>
