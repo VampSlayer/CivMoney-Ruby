@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "sinatra"
 gem "sinatra-contrib"
-gem "activerecord", "5.0.0"
+gem "activerecord", "5.2.4.5"
 gem "sinatra-activerecord"
 gem "pg", "0.18.4"
 gem "json"
