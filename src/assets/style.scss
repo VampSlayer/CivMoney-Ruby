@@ -28,7 +28,7 @@ body {
 	background-color: $background-color !important;
 	color: $text-color !important;
 	height: 100%;
-	font-family: "Roboto", sans-serif !important;
+	font-family: "Titillium Web";
 }
 
 a {
@@ -37,6 +37,8 @@ a {
 
 a:hover {
 	color: $nav-color;
+	transform: scale(1.2);
+	transition: all .2s ease;
 }
 
 .google-logout {
@@ -46,13 +48,13 @@ a:hover {
 	color: $nav-text-color;
 }
 
-.google-logout:hover {
-	color: rgba($nav-text-color, 0.8);
+.nav-item .active {
+	font-weight: bolder;
+	text-decoration: underline;
 }
 
-.nav-item .active {
-	color: $year-active-color !important;
-	font-weight: bold;
+.navbar-dark .navbar-nav .nav-link:hover {
+	color: $nav-text-color;
 }
 
 .vodal-dialog {
@@ -87,15 +89,22 @@ a:hover {
 }
 
 .form-control {
-	border-radius: 0px !important;
 	background: $background-color !important;
 	color: $input-text-color !important;
 	border: 1px solid $background-color !important;
 }
 
 .card {
-	border-radius: 0px !important;
 	background: transparent;
+	border-color: $background-color;
+}
+
+.card h4 {
+	font-family: "Titillium Web" !important;
+	font-weight: 200;
+}
+.card .card-body {
+	font-family: "Raleway" !important;
 }
 
 .btn-shake {
@@ -272,7 +281,6 @@ a:hover {
 }
 
 .vc-reset input {
-	border-radius: 0px !important;
 	background-color: $background-color;
 	color: $input-text-color;
 	border: none;
@@ -299,4 +307,21 @@ a:hover {
 	100% {
 		transform: scale(0.7);
 	}
+}
+
+.btn-danger {
+	background-color: $red;
+	border-color: $red;
+	opacity: 0.8;
+}
+
+.btn-danger:hover {
+	background-color: $red;
+	border-color: $red;
+	opacity: 1;
+}
+
+// google sign in button
+.abcRioButtonLightBlue {
+	border-radius: 5px !important;
 }
