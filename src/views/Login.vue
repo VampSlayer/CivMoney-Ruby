@@ -1,6 +1,6 @@
 <style scoped>
 .login-right {
-  background: #248df0;
+  background: var(--cm-nav-color);
   height: calc(100% + 120px) !important;
 }
 .img-div {
@@ -13,6 +13,7 @@
   height: auto;
   position: absolute;
   padding: 2rem;
+  filter: brightness(0) invert(1);
 }
 @media only screen and (min-width: 2200px) {
   .img-div img {
@@ -30,6 +31,7 @@
 .p-text {
   padding-left: 6em;
   padding-right: 4em;
+  font-family: "Raleway" !important;
 }
 p {
   font-size: 1.1em;
@@ -45,6 +47,7 @@ p {
 .img-link {
   height: 40px;
   width: auto;
+  filter: invert(0.8);
 }
 .p-copyright {
   padding-left: 5em;
@@ -55,11 +58,19 @@ h1 {
   font-weight: bolder;
 }
 .text-size-year {
-  font-size:0.6em
+  font-size: 0.6em;
 }
 .civ-link {
   font-weight: bolder;
-  color:white
+  color: var(--cm-nav-text-color);
+}
+
+.green {
+  color: #26BF82;
+}
+
+.red {
+  color: #FF5433;
 }
 </style>
 

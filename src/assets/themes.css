@@ -1,111 +1,110 @@
 html {
     --cm-theme-name:dark;
 
-    --cm-background:#153057;
+    --cm-background:#0F223D;
 
-    --cm-text-color:white;
-    --cm-input-text-color:white;
-    --cm-chart-text-color:white;
-    --cm-year-active-color:white;
+    --cm-text-color:#0F223D;
+    --cm-input-text-color:#EAF1FB;
+    --cm-chart-text-color:#EAF1FB;
+    --cm-year-active-color:#EAF1FB;
 
-    --cm-green:#00ff7f;
-    --cm-red:#ff3333;
-    --cm-orange:#ff8000;
-    --cm-year-line-color:white;
+    --cm-green:#4DFFB9;
+    --cm-red:#FF3333;
+    --cm-orange:#FFD640;
+    --cm-year-line-color:#EAF1FB;
 
-    --cm-nav-color:#248df0;
-    --cm-nav-text-color:rgba(255, 255, 255, 0.5);
+    --cm-nav-color:#EAF1FB;
+    --cm-nav-text-color:#0F223D;
 
-    --cm-luminosity:0.5;
-    --cm-logo:1;
+    --cm-luminosity:0.7;
+    --cm-logo:0;
 
-    --cm-themes: ["Dark", "Light", "Matrix", "Grayscale", "Invert Grayscale"]
+    --cm-themes: ["Dark", "Light", "Mint", "Grayscale", "Invert Grayscale"]
 }
 
 html[data-theme='Light'] {
     --cm-theme-name:light;
 
-    --cm-background:white;
+    --cm-background:#EAF1FB;
 
-    --cm-text-color:white;
-    --cm-input-text-color:#153057;
-    --cm-chart-text-color:#2e9aff;
-    --cm-year-active-color:#2e9aff;
+    --cm-text-color:#EAF1FB;
+    --cm-input-text-color:#0F223D;
+    --cm-chart-text-color:#0F223D;
+    --cm-year-active-color:#0F223D;
 
-    --cm-green:#00ff7f;
-    --cm-red:#ff3333;
-    --cm-orange:#ff8000;
-    --cm-year-line-color:#2e9aff;
+    --cm-green:#45E6A5;
+    --cm-red:#FF5433;
+    --cm-orange:#FFEB40;
+    --cm-year-line-color:#0F223D;
 
-    --cm-nav-color:#2e9aff;
-    --cm-nav-text-color:rgba(255, 255, 255, 0.5);
+    --cm-nav-color:#0F223D;
+    --cm-nav-text-color:#EAF1FB;
 
-    --cm-luminosity:0.8;
+    --cm-luminosity:0.9;
     --cm-logo:1;
 }
 
-html[data-theme='Matrix'] {
-    --cm-theme-name:matrix;
+html[data-theme='Mint'] {
+    --cm-theme-name:mint;
 
-    --cm-background:#0D0208;
+    --cm-background:#0c120f;
 
-    --cm-text-color:#0D0208;
-    --cm-input-text-color:white;
-    --cm-chart-text-color:#008F11;
-    --cm-year-active-color:white;
+    --cm-text-color:#0c120f;
+    --cm-input-text-color:#AAF0D1;
+    --cm-chart-text-color:#AAF0D1;
 
-    --cm-green:#00FF41;
-    --cm-red:#ff3333;
-    --cm-orange:#ff8000;
-    --cm-year-line-color:white;
+    --cm-green:#4DFFB9;
+    --cm-red:#FF3333;
+    --cm-orange:#FFD640;
+    --cm-year-line-color:#AAF0D1;
 
-    --cm-nav-color:#00FF41;
-    --cm-nav-text-color:#0D0208;
+    --cm-nav-color:#AAF0D1;
+    --cm-nav-text-color:#0c120f;
 
-    --cm-luminosity:0.5;
+    --cm-luminosity:0.7;
     --cm-logo:0;
 }
 
 html[data-theme='Grayscale'] {
     --cm-theme-name:grayscale;
 
-    --cm-background:black;
+    --cm-background:#1A1B1C;
 
-    --cm-text-color:black;
-    --cm-input-text-color:white;
-    --cm-chart-text-color:white;
-    --cm-year-active-color:white;
+    --cm-text-color:#1A1B1C;
+    --cm-input-text-color:#dfe6f0;
+    --cm-chart-text-color:#dfe6f0;
+    --cm-year-active-color:#dfe6f0;
 
-    --cm-green:#00ff7f;
-    --cm-red:#ff3333;
-    --cm-orange:#ff8000;
-    --cm-year-line-color:white;
+    --cm-green:#4DFFB9;
+    --cm-red:#FF3333;
+    --cm-orange:#FFD640;
+    --cm-year-line-color:#dfe6f0;
 
-    --cm-nav-color:white;
-    --cm-nav-text-color:black;
+    --cm-nav-color:#dfe6f0;
+    --cm-nav-text-color:#1A1B1C;
 
-    --cm-luminosity:0.5;
+    --cm-luminosity:0.7;
     --cm-logo:0;
 }
 
 html[data-theme='Invert Grayscale'] {
     --cm-theme-name:invert-grayscale;
 
-    --cm-background:white;
+    --cm-background:#dfe6f0;
 
-    --cm-text-color:white;
-    --cm-input-text-color:black;
-    --cm-chart-text-color:black;
-    --cm-year-active-color:black;
+    --cm-text-color:#dfe6f0;
+    --cm-input-text-color:#1A1B1C;
+    --cm-chart-text-color:#1A1B1C;
+    --cm-year-active-color:#1A1B1C;
 
-    --cm-green:#00ff7f;
-    --cm-red:#ff3333;
-    --cm-orange:#ff8000;
-    --cm-year-line-color:black;
+    --cm-green:#45E6A5;
+    --cm-red:#FF5433;
+    --cm-orange:#FFEB40;
+    --cm-year-line-color:#1A1B1C;
 
-    --cm-nav-color:black;
-    --cm-nav-text-color:white;
+    --cm-nav-color:#1A1B1C;
+    --cm-nav-text-color:#dfe6f0;
 
-    --cm-luminosity:0.8;
+    --cm-luminosity:0.9;
     --cm-logo:1;
 }

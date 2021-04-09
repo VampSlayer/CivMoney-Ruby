@@ -13,7 +13,7 @@ export default {
   useTheme(am4core_ext) {
     am4core_ext.unuseAllThemes();
     am4core_ext.useTheme(am4themes_animated);
-    if (store.state.theme.luminosity <= 0.5) {
+    if (store.state.theme.luminosity <= 0.8) {
       am4core_ext.useTheme(am4themes_dark);
     }
     am4core_ext.useTheme(this.am4themes_customText);

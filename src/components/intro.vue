@@ -7,10 +7,12 @@
 		</div>
 		<div class="row text-center">
 			<div class="col">
-				<h3 class="mt-3">
-					Welcome to CivMoney. To get started add your monthly Incomes and
+				<h2 class="mt-3">
+					Welcome to CivMoney
+				</h2>
+				<p>To get started add your monthly Incomes and
 					Expense here or simply create Sample Data. Once added the visuals begin!
-				</h3>
+				</p>
 			</div>
 		</div>
 	</div>
@@ -24,10 +26,17 @@ export default {
 
 <style scoped>
 img {
-	width: 75%;
+	width: 250px;
 }
 
-h3 {
+h2 {
 	color: var(--cm-input-text-color);
+	text-decoration: underline;
+}
+
+p {
+	font-size: 1.3em;
+	color: var(--cm-input-text-color);
+	font-family: "Raleway" !important;
 }
 </style>
