@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid mt-2">
         <div class="row">
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3 position-fixed">
                 <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                 <b-card>
                     <b-card-body>
@@ -12,19 +12,21 @@
                         <span class="red" v-if="noTransactions">No Transactions in that range.</span>
                         <div class="mt-2" v-if="transactions.length > 0">
                             <b-form-input v-model="filter" type="search" placeholder="Type to filter Transactions"></b-form-input>
-                            <b-button v-if="filteredTransactions.length > 0" title="Delete All Transactions" class="mt-2" variant="danger" v-on:click="deleteTransactions">Delete All Transactions</b-button>
+                            <b-button v-if="filteredTransactions.length > 0" title="Delete All Transactions" class="mt-2 btn-delete" variant="danger" v-on:click="deleteTransactions">Delete All Transactions</b-button>
                         </div>
                     </b-card-body>
                 </b-card>
             </div>
-            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-9" v-if="transactions.length > 0">
-                 <b-table class="search-result-text" :items="transactions" head-variant="light" :fields="fields" :filter="filter" :filterIncludedFields="[]" v-on:filtered="setFilteredTransactions">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3" style="z-index:-1;">
+            </div>
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-9 offset" v-if="transactions.length > 0">
+                 <b-table class="search-result-text" :items="transactions" :fields="fields" :filter="filter" :filterIncludedFields="[]" v-on:filtered="setFilteredTransactions">
                      <template slot="amount" slot-scope="data">
-                        <span :class="getAmountClass(data.value)">{{data.value}}</span>
+                        <span>{{data.value}}</span>
                     </template>
                      <template slot="delete" slot-scope="data">
-                        <button title="Delete Transaction" class="btn btn-danger" v-on:click="deleteTransaction(data.value)">
-                            <i class="fa fa-times"></i>
+                        <button title="Delete Transaction" class="btn btn-danger btn-delete" v-on:click="deleteTransaction(data.value)">
+                            <i class="mi mi-Delete"></i>
                         </button>
                     </template>
                  </b-table>

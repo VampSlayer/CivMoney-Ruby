@@ -3,13 +3,10 @@
     <div class="mt-2 h-100">
       <view-nav>
         <b-nav-item to="/">
-          <i title="Dashboard" class="fas fa-chart-bar"></i>
+          <i title="Dashboard" class="mi mi-AreaChart"></i>
         </b-nav-item>
         <b-nav-item to="/stats">
-          <i title="Statistics" class="fa fa-percent"></i>
-        </b-nav-item>
-        <b-nav-item to="/averages">
-          <i title="Averages" class="fas fa-thermometer-empty"></i>
+          <i title="Statistics" class="mi mi-CalculatorPercentage"></i>
         </b-nav-item>
       </view-nav>
       <div class="h-100">

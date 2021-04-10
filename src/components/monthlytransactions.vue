@@ -11,13 +11,13 @@
                         <b-card>
                             <b-card-body>
                                 <h4>Monthly Income & Expenses</h4> 
-                                <p>Here you can add Incomes and Expenses for any month this year.
-                                Simply add something like "Wages" as an Income and "Rent" as an Expense.
-                                </p>
+                                <p>Here you can add Incomes and Expenses for any month this year.</p>
+                                <p>Simply add something like "Wages" as an Income and "Rent" as an Expense.</p>
+                                <p>Or if you wish to explore simply add some sample Transactions.</p>
                                 <p class="text-center">
-                                    <button class="cursor font-weight-bold btn btn-danger" :disabled="loading" variant="light" v-on:click="CreateSampleData">Or click here to create sample Transactions</button>
+                                    <button class="cursor font-weight-bold btn btn-danger btn-delete" :disabled="loading" variant="light" v-on:click="CreateSampleData">Click to add sample Transactions</button>
                                 </p>
-                                This will then been shown as breakdown visualizations on the dashboard.
+                                This will then been shown as data visualizations on the dashboard.
                                 <div class="text-center mt-2" v-if="loading"><b-spinner label="Spinning"></b-spinner></div>
                             </b-card-body>
                         </b-card>
@@ -25,7 +25,7 @@
                          <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                             <b-card title="Add Monthly Income & Expenses" class="text-center add-montly-income-card">
                                 <multiselect v-model="month" :options="months" placeholder="Select Month" label="name" track-by="value"></multiselect>
-                                <a class="cursor add-text" title="Add Monthly Income & Expenses" v-on:click="addMonthlyTransactions"><i class="fa fa-plus"></i></a>
+                                <a class="cursor add-text" title="Add Monthly Income & Expenses" v-on:click="addMonthlyTransactions"><i class="mi mi-Add"></i></a>
                         </b-card>
                         </div>
                     </div>
@@ -33,20 +33,20 @@
                         <div class="row">
                             <div v-for="(transaction, index) in transactions" :key="index" class="col-4 col-md-4 col-lg-4 col-xl-2 mt-2">
                                 <b-card :class="transaction.income ? 'green-background': 'red-background'">
-                                    <b-input min=0 step="0.01" v-model="transaction.amount" type="number" class="mb-1" placeholder="Amount"></b-input>
+                                    <b-input placeholder="Amount" min=0 step="0.01" v-model="transaction.amount" type="number" class="mb-1"></b-input>
                                     <b-input v-model="transaction.description" type="text" class="mt-0 mb-1" placeholder="Description"></b-input>
                                     <div class="row">
                                         <div class="col-10">
                                             <toggle onText="Income" offText="Expense" :transaction="transaction"></toggle>
                                         </div>
                                         <div class="col">
-                                            <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-right cursor mb-minus-15"><i class="fa fa-minus"></i></a>
+                                            <a v-if="transactions.length !== 1" v-on:click="removeTransaction(index)" title="Remove transaction" class="float-right cursor mb-minus-15"><i class="mi mi-CalculatorSubtract"></i></a>
                                         </div>
                                     </div>
                                 </b-card>
                             </div>
                             <div>
-                                <a v-on:click="addTransactionToView" title="Add another" class="float-right cursor"><i class="fa fa-plus"></i></a>
+                                <a v-on:click="addTransactionToView" title="Add another" class="float-right cursor"><i class="mi mi-Add"></i></a>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@ export default {
         },
         addTransactionToView(){
             this.transactions.push({
-                amount: 0,
+                amount: null,
                 description: "",
                 income: true
             })

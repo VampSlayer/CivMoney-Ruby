@@ -3,7 +3,7 @@
     <div class="mt-2 h-100">
       <view-nav :showYearSelect="false">
         <b-nav-item to="/">
-          <i title="Dashboard" class="fas fa-chart-bar"></i>
+          <i title="Dashboard" class="mi mi-AreaChart"></i>
         </b-nav-item>
       </view-nav>
       <div class="h-100">

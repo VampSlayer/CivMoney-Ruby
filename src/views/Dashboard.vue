@@ -4,28 +4,25 @@
     <div class="mt-2 h-100">
       <view-nav>
         <b-nav-item v-on:click="showAddTransaction">
-          <i title="Add a Transaction" class="fa fa-plus"></i>
+          <i title="Add a Transaction" class="mi mi-Add"></i>
         </b-nav-item>
         <b-nav-item v-if="!userHasData && !userHasSeenIntro" class="intro-pulse" v-on:click="showIntroModal">
-          <i title="Introduction" class="fa fa-calendar"></i>
+          <i title="Introduction" class="mi mi-Calendar"></i>
         </b-nav-item>
         <b-nav-item v-else :class="{'intro-pulse': !userHasData}" v-on:click="showAddMonthlyTransactions">
-          <i title="Monthly Income & Expenses" class="fa fa-calendar"></i>
+          <i title="Add Monthly Income & Expenses" class="mi mi-Calendar"></i>
         </b-nav-item>
         <b-nav-item v-on:click="showSearchTransactions">
-          <i title="Search Transactions" class="fa fa-search"></i>
+          <i title="Search Transactions" class="mi mi-Search"></i>
         </b-nav-item>
         <b-nav-item to="/stats">
-          <i title="Statistics" class="fa fa-percent"></i>
-        </b-nav-item>
-        <b-nav-item to="/averages">
-          <i title="Averages" class="fas fa-thermometer-empty"></i>
+          <i title="Monthly & Yearly Statistics" class="mi mi-CalculatorPercentage"></i>
         </b-nav-item>
         <b-nav-item to="/year">
-          <i title="Year" class="fas fa-signal"></i>
+          <i title="Yearly Breakdown By Description" class="mi mi-CollateLandscape"></i>
         </b-nav-item>
           <b-nav-item to="/total">
-          <i title="Total" class="fas fa-calculator"></i>
+          <i title="Net Total & Total Breakdown" class="mi mi-Calculator"></i>
         </b-nav-item>
       </view-nav>
       <div class="row h-100">

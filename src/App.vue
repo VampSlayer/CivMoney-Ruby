@@ -2,6 +2,18 @@
 .h-container{
   height: calc(100% - 120px) !important;
 }
+.no-transform a {
+  transform: none !important;
+}
+.no-transform a:hover {
+  text-decoration: underline;
+}
+.mi-Contact {
+  margin-right: 5px;
+}
+.mi-PowerButton {
+  font-weight: 600;
+}
 </style>
 
 <template>
@@ -15,11 +27,10 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
-            <b-nav-text>{{me.username}}</b-nav-text>
-            <b-nav-item v-on:click="showProfile"><i title="Your Profile" class="fas fa-cog"></i></b-nav-item>
+            <b-nav-item class="mr-1 no-transform" v-on:click="showProfile" title="User Profile"><i title="Your Profile" class="mi mi-Contact"></i> {{me.username}}</b-nav-item>
             <b-nav-item v-on:click="logout">
               <GoogleLogin class="google-logout" :logoutButton="true" :params="params" :onSuccess="onSuccess" :onFailure="onFailure">
-                <i title="Logout" class="fas fa-power-off"></i>
+                <i title="Logout" class="mi mi-PowerButton"></i>
               </GoogleLogin>
             </b-nav-item>
           </b-navbar-nav>

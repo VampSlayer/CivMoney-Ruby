@@ -26,6 +26,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 
 import "vue-multiselect/dist/vue-multiselect.min.css";
 
+import "./assets/micon.min.css";
 import "./assets/themes.css";
 import "./assets/style.scss";
 

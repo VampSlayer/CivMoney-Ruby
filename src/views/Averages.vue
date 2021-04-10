@@ -3,13 +3,13 @@
     <div class="mt-2 h-100">
       <view-nav>
         <b-nav-item to="/">
-          <i title="Dashboard" class="fas fa-chart-bar"></i>
+          <i title="Dashboard" class="mi mi-AreaChart"></i>
         </b-nav-item>
         <b-nav-item to="/stats">
-          <i title="Statistics" class="fa fa-percent"></i>
+          <i title="Statistics" class="mi mi-CalculatorPercentage"></i>
         </b-nav-item>
         <b-nav-item to="/year">
-          <i title="Year" class="fas fa-signal"></i>
+          <i title="Year" class="mi mi-CollateLandscape"></i>
         </b-nav-item>
       </view-nav>
       <div class="h-100">

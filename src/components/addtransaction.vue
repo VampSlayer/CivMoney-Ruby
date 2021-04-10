@@ -12,20 +12,20 @@
             <div class="col-4 col-md-4 col-lg-4 col-xl-3" :class="{'btn-shake' : shake === true}">
                 <b-alert variant="danger" v-if="error">{{error}}</b-alert>
                 <b-card :class="income ? 'green-background': 'red-background'">
-                    <b-input :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1" @keyup.enter="addTransaction"></b-input>
+                    <b-input placeholder="Amount" :state="amountState" min=0 step="0.01" v-model="amount" type="number" class="mb-1" @keyup.enter="addTransaction"></b-input>
                     <b-form-select class="form-control mb-1" v-model="topDescription" :options="topDescriptions">
                         <template #first>
                             <option value="null" selected>New Description</option>
                         </template>
                     </b-form-select>
-                    <b-input :disabled="topDescriptionState" :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="New Description" @keyup.enter="addTransaction"></b-input>
+                    <b-input :disabled="topDescriptionState" :state="descriptionState" v-model="description" type="text" class="mt-0 mb-1" placeholder="Enter New Description" @keyup.enter="addTransaction"></b-input>
                     <v-date-picker v-model="date"/>
                     <div class="row">
                         <div class="col-10">
                             <toggle onText="Income" offText="Expense" v-on:toggle="setIncomeOrExpense"></toggle>
                         </div>
                         <div class="col-2 pt-44">
-                        <button class="float-right add-st-btn" title="Add Transaction" v-on:click="addTransaction" > <i class="fa fa-plus"></i></button>
+                        <button class="float-right add-st-btn" title="Add Transaction" v-on:click="addTransaction" > <i class="mi mi-Add"></i></button>
                         </div>
                     </div>
                 </b-card>
@@ -44,7 +44,7 @@ export default {
     components: { Toggle },
     data() {
         return {
-            amount: 0,
+            amount: null,
             description: null,
             topDescription: null,
             date: new Date(),
