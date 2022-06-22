@@ -1,6 +1,6 @@
 <h3 align="center">CivMoney, a Money Management App</h3>
 
-<a href="https://www.civmoney.com">
+<a href="https://civmoney.herokuapp.com">
 <figure>
 <p align="center"><img src="https://i.imgur.com/oSDhmxl.gif" alt="CivMoney"><p>
   <figcaption><p align="center">Demo Now!</p></figcaption>
